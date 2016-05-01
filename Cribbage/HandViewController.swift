@@ -1,0 +1,361 @@
+//
+//  ViewController.swift
+//  Cribbage
+//
+//  Created by Connor Fitzpatrick on 3/16/16.
+//  Copyright © 2016 Connor Fitzpatrick. All rights reserved.
+//
+
+import UIKit
+
+class HandViewController: UIViewController {
+    
+    func switchturn() -> Bool {
+        Constants.computerturn = !Constants.computerturn
+        return Constants.computerturn
+    }
+    
+    //MARK: - Outlets
+
+    @IBOutlet weak var dealer: UILabel! { didSet {
+        dealer.text = "Dealer: \(CribbageDeck().whoDealtIt())"
+        }
+    }
+    
+    @IBOutlet weak var lastCard: UIImageView! { didSet {
+        lastCard.image = UIImage(named: Constants.lastcard)
+        print("lastcard \(Constants.lastcard)")
+        updateUI()
+        }
+    }
+    
+    @IBOutlet weak var cutCard: UIImageView! { didSet {
+        cutCard.image = UIImage(named: Constants.cutcard)
+        print("cutcard \(Constants.cutcard)")
+        }
+    }
+    
+    @IBOutlet weak var Hand1: UIImageView! { didSet {
+        self.Hand1.userInteractionEnabled = true
+        Hand1.image = UIImage(named: Constants.c1)
+        print("Hand1 \(Constants.c1)")
+
+        }
+    }
+    @IBOutlet weak var Hand2: UIImageView! {
+        didSet {
+            self.Hand2.userInteractionEnabled = true
+            Hand2.image = UIImage(named: Constants.c2)
+            print("Hand2 \(Constants.c2)")
+        }
+    }
+    @IBOutlet weak var Hand3: UIImageView! {
+        didSet {
+            self.Hand3.userInteractionEnabled = true
+            Hand3.image = UIImage(named: Constants.c3)
+            print("Hand3 \(Constants.c3)")
+        }
+    }
+    @IBOutlet weak var Hand4: UIImageView! {
+        didSet {
+            self.Hand4.userInteractionEnabled = true
+            Hand4.image = UIImage(named: Constants.c4)
+            print("Hand4 \(Constants.c4)")
+        }
+    }
+    @IBOutlet weak var Hand5: UIImageView! {
+        didSet {
+            self.Hand5.userInteractionEnabled = true
+            Hand5.image = UIImage(named: Constants.c5)
+            print("Hand5 \(Constants.c5)")
+        }
+    }
+    @IBOutlet weak var Hand6: UIImageView! {
+        didSet {
+            self.Hand6.userInteractionEnabled = true
+            Hand6.image = UIImage(named: Constants.c6)
+            print("Hand6 \(Constants.c6)")
+        }
+    }
+    
+    func updateUI() {
+        lastCard.image = UIImage(named: Constants.lastcard)
+    }
+    
+    //MARK: - ViewDidLoad
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        lastCard.image = UIImage(named:Constants.lastcard)
+        
+        updateUI()
+        //Do any additional setup after loading the view.
+    }
+    
+    // MARK: - Card Taps
+    
+    @IBAction func Card1Tap(sender: UITapGestureRecognizer) {
+        
+        if Constants.crib <= 1 {
+            CribbageDeck().addToCrib(Constants.c1)
+            
+            Constants.crib += 1
+            Hand1.image = nil
+            Hand1.userInteractionEnabled = false
+            if Constants.crib == 2 {
+                cutCardDisplay()
+            }
+        } else {
+            if Constants.computerturn {
+                
+                
+                lastCard.image = UIImage(named:CribbageDeck().computerPlay(Constants.computername))
+                
+                switchturn()
+            } else {
+                Hand1.image = UIImage(named: "bicycleback")
+            
+                CribbageDeck().play(Constants.playername, cardname: Constants.c1)
+                lastCardDisplay(Constants.c1)
+                Hand1.userInteractionEnabled = false
+                switchturn()
+        }
+        }
+    }
+    
+    @IBAction func Card2Tap(sender: UITapGestureRecognizer) {
+        
+        if Constants.crib <= 1 {
+            CribbageDeck().addToCrib(Constants.c2)
+            
+            Constants.crib += 1
+            Hand2.image = nil
+            Hand2.userInteractionEnabled = false
+            if Constants.crib == 2 {
+                cutCardDisplay()
+            }
+        } else {
+            if Constants.computerturn {
+                
+                lastCard.image = UIImage(named:CribbageDeck().computerPlay(Constants.computername))
+                
+                switchturn()
+            } else {
+                Hand2.image = UIImage(named: "bicycleback")
+
+                CribbageDeck().play(Constants.playername, cardname: Constants.c2)
+                lastCardDisplay(Constants.c2)
+                Hand2.userInteractionEnabled = false
+                switchturn()
+            }
+        }
+    }
+    
+    @IBAction func Card3Tap(sender: UITapGestureRecognizer) {
+        
+        if Constants.crib <= 1 {
+            CribbageDeck().addToCrib(Constants.c3)
+            
+            Constants.crib += 1
+            Hand3.image = nil
+            Hand3.userInteractionEnabled = false
+            if Constants.crib == 2 {
+                cutCardDisplay()
+            }
+        } else {
+            if Constants.computerturn {
+                
+                
+                lastCard.image = UIImage(named:CribbageDeck().computerPlay(Constants.computername))
+                
+                switchturn()
+            } else {
+                Hand3.image = UIImage(named: "bicycleback")
+
+                CribbageDeck().play(Constants.playername, cardname: Constants.c3)
+                lastCardDisplay(Constants.c3)
+                Hand3.userInteractionEnabled = false
+                switchturn()
+            }
+        }
+    }
+    
+    @IBAction func Card4Tap(sender: UITapGestureRecognizer) {
+        
+        if Constants.crib <= 1 {
+            CribbageDeck().addToCrib(Constants.c4)
+            
+            Constants.crib += 1
+            Hand4.image = nil
+            Hand4.userInteractionEnabled = false
+            if Constants.crib == 2 {
+                cutCardDisplay()
+            }
+        } else {
+            if Constants.computerturn {
+                
+                
+                lastCard.image = UIImage(named:CribbageDeck().computerPlay(Constants.computername))
+                
+                switchturn()
+            } else {
+                Hand4.image = UIImage(named: "bicycleback")
+
+                CribbageDeck().play(Constants.playername, cardname: Constants.c4)
+                lastCardDisplay(Constants.c4)
+                Hand4.userInteractionEnabled = false
+                switchturn()
+            }
+        }
+    }
+    
+    @IBAction func Card5Tap(sender: UITapGestureRecognizer) {
+        
+        if Constants.crib <= 1 {
+            CribbageDeck().addToCrib(Constants.c5)
+            
+            Constants.crib += 1
+            Hand5.image = nil
+            Hand5.userInteractionEnabled = false
+            if Constants.crib == 2 {
+                cutCardDisplay()
+            }
+        } else {
+            if Constants.computerturn {
+                
+                
+                lastCard.image = UIImage(named:CribbageDeck().computerPlay(Constants.computername))
+                
+                switchturn()
+            } else {
+                Hand5.image = UIImage(named: "bicycleback")
+            
+                CribbageDeck().play(Constants.playername, cardname: Constants.c5)
+                lastCardDisplay(Constants.c5)
+                Hand5.userInteractionEnabled = false
+                switchturn()
+            }
+        }
+    }
+
+    @IBAction func Card6Tap(sender: UITapGestureRecognizer) {
+        
+        if Constants.crib <= 1 {
+            CribbageDeck().addToCrib(Constants.c6)
+            
+            Constants.crib += 1
+            Hand6.image = nil
+            Hand6.userInteractionEnabled = false
+            if Constants.crib == 2 {
+                cutCardDisplay()
+            }
+        } else {
+            if Constants.computerturn {
+                
+                
+                lastCard.image = UIImage(named:CribbageDeck().computerPlay(Constants.computername))
+                
+                switchturn()
+            } else {
+                Hand6.image = UIImage(named: "bicycleback")
+
+                CribbageDeck().play(Constants.playername, cardname: Constants.c6)
+                lastCardDisplay(Constants.c6)
+                Hand6.userInteractionEnabled = false
+                switchturn()
+            }
+        }
+    }
+    
+    // MARK: - Constants
+    
+    private struct Constants {
+        static var cutcard = "bicycleback"
+        static var lastcard = "bicycleback"
+        static var c1 = "bicycleback"
+        static var c2 = "bicycleback"
+        static var c3 = "bicycleback"
+        static var c4 = "bicycleback"
+        static var c5 = "bicycleback"
+        static var c6 = "bicycleback"
+        
+        static var crib = 0
+        
+        static let playername = "Player"
+        static let computername = "Computer"
+        static var computerturn = false
+    }
+    
+    // MARK: - Card Displays
+    
+    func lastCardDisplay(card: String) -> String {
+        Constants.lastcard = card
+        print("sample lastcard \(Constants.lastcard)")
+        updateUI()
+        return Constants.lastcard
+    }
+    
+    func cutCardDisplay() -> String {
+        if Constants.crib >= 1 {
+            Constants.cutcard = CribbageDeck().cutcard().description()
+            print("sample cutcard \(Constants.cutcard)")
+
+        }
+        cutCard.image = UIImage(named: Constants.cutcard)
+        return Constants.cutcard
+    }
+    
+    func c1Display(card: String) -> String {
+        Constants.c1 = card
+        print("c1 \(Constants.c1)")
+        return Constants.c1
+    }
+    
+    func c2Display(card: String) -> String {
+        Constants.c2 = card
+        print("c2 \(Constants.c2)")
+        return Constants.c2
+    }
+    
+    func c3Display(card: String) -> String {
+        Constants.c3 = card
+        print("c3 \(Constants.c3)")
+        return Constants.c3
+    }
+    
+    func c4Display(card: String) -> String {
+        Constants.c4 = card
+        print("c4 \(Constants.c4)")
+        return Constants.c4
+    }
+    
+    func c5Display(card: String) -> String {
+        Constants.c5 = card
+        print("c5 \(Constants.c5)")
+        return Constants.c5
+    }
+    
+    func c6Display(card: String) -> String {
+        Constants.c6 = card
+        print("c6 \(Constants.c6)")
+        return Constants.c6
+    }
+    
+    // MARK: - Memory Warning
+
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+    
+    /*
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+     // Get the new view controller using segue.destinationViewController.
+     // Pass the selected object to the new view controller.
+     }
+     */
+    
+}
