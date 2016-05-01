@@ -19,6 +19,10 @@ class CribbageDeck {
         static var playerDict: [String: Player] = [:]
         
         static var someshuffleddeck: [Card] = []
+        
+        static var count = 0
+        
+        static var scoreDict: [String: Int] = ["":0]
     }
 
     func rankFromDescription(cardname: String) -> Rank {
@@ -111,17 +115,44 @@ class CribbageDeck {
     
     // MARK: - TBC
     
-    func play(player: String, cardname: String) {
+    func play(player: String, cardname: String) -> [String: Int] {
         
-        let player = Constants.playerDict[player]
+        var man = Constants.playerDict[player]
+        var cpu = Constants.playerDict["Computer"]
+        
         let rank = rankFromDescription(cardname)
         let suit = suitFromDescription(cardname)
         let playcard = Card(rank: rank, suit: suit)
         
         History().playHistory(playcard)
-        History().playerHistory(player!)
+        History().playerHistory(man!)
         
-        // do play stuff
+        //Scoring
+
+        if Constants.count == 0 {
+            ScoringRun().jackflip()
+            Constants.count += 1
+        }
+        
+        ScoringRun().updateruncount(playcard)
+        let runtotal = ScoringRun().getruncount()
+        
+        let scored = cpu!.score
+        cpu!.score += ScoringRun().go(runtotal)
+        Constants.scoreDict["Computer"] = cpu!.score
+        
+        if scored != cpu!.score {
+            return Constants.scoreDict
+        } else {
+            man!.score += ScoringRun().fifteencount()
+            man!.score += ScoringRun().SomeOfAKind()
+            man!.score += ScoringRun().straight()
+            man!.score += ScoringRun().lastcard()
+            
+            Constants.scoreDict[player] = man!.score
+        
+            return Constants.scoreDict
+        }
 
     }
     

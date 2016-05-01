@@ -3428,12 +3428,14 @@
                         </variation>
                     </view>
                     <connections>
+                        <outlet property="CPUScore" destination="LLV-VZ-5R0" id="N4U-3G-eSc"/>
                         <outlet property="Hand1" destination="Vyd-xU-Yh3" id="HAV-hI-20F"/>
                         <outlet property="Hand2" destination="qOb-P7-7JJ" id="rLV-oZ-bsD"/>
                         <outlet property="Hand3" destination="QNf-Di-TIc" id="iDV-V8-ezU"/>
                         <outlet property="Hand4" destination="9Bn-hg-D1k" id="NgA-xG-tXX"/>
                         <outlet property="Hand5" destination="Pwf-yg-He0" id="1Vm-s0-fzK"/>
                         <outlet property="Hand6" destination="gN5-cN-uHN" id="4Yw-bd-WUb"/>
+                        <outlet property="PlayerScore" destination="qtf-qp-37L" id="ixp-Lb-6ea"/>
                         <outlet property="cutCard" destination="qUY-J4-xhA" id="r7J-C4-cKS"/>
                         <outlet property="dealer" destination="79d-a6-LhG" id="GF7-d9-iUa"/>
                         <outlet property="lastCard" destination="Dml-Kb-cKC" id="W61-fG-TOm"/>
@@ -3497,7 +3499,7 @@
                                                 <constraint firstAttribute="height" constant="28" id="NoC-M1-wLO"/>
                                             </constraints>
                                             <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="20"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Fk5-m4-gc2">
@@ -3509,13 +3511,13 @@
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Play #" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aba-qG-OBo">
                                             <rect key="frame" x="322" y="8" width="270" height="28"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Card" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f4M-Cy-QSo">
                                             <rect key="frame" x="76" y="44" width="516" height="47"/>
                                             <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="20"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>

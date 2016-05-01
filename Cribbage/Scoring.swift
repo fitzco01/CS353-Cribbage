@@ -128,7 +128,7 @@ class ScoringHand {
     
     // MARK: - SubDecks
     
-    func makeSubDecksOf2(somehand: [Card]) -> [String:[Card]] {
+    func makeSubDecksOf2From5(somehand: [Card]) -> [String:[Card]] {
         var subdeckdict2 = ["twodeck1": [somehand[0],somehand[1]]]
         subdeckdict2["twodeck2"] = [somehand[0],somehand[2]]
         subdeckdict2["twodeck3"] = [somehand[0],somehand[3]]
@@ -143,22 +143,22 @@ class ScoringHand {
         return subdeckdict2
     }
     
-    func makeSubDecksOf3(somehand: [Card]) -> [String:[Card]] {
+    func makeSubDecksOf3From5(somehand: [Card]) -> [String:[Card]] {
         var subdeckdict3 = ["threedeck1": [somehand[0],somehand[1],somehand[2]]]
-        subdeckdict3["threedeck2"] = [somehand[0],somehand[2],somehand[3]]
-        subdeckdict3["threedeck3"] = [somehand[0],somehand[3],somehand[4]]
+        subdeckdict3["threedeck2"] = [somehand[0],somehand[1],somehand[3]]
+        subdeckdict3["threedeck5"] = [somehand[0],somehand[1],somehand[4]]
+        subdeckdict3["threedeck3"] = [somehand[0],somehand[2],somehand[3]]
+        subdeckdict3["threedeck6"] = [somehand[0],somehand[2],somehand[4]]
+        subdeckdict3["threedeck8"] = [somehand[0],somehand[3],somehand[4]]
         subdeckdict3["threedeck4"] = [somehand[1],somehand[2],somehand[3]]
-        subdeckdict3["threedeck5"] = [somehand[1],somehand[3],somehand[4]]
-        subdeckdict3["threedeck6"] = [somehand[2],somehand[3],somehand[4]]
-        subdeckdict3["threedeck7"] = [somehand[2],somehand[3],somehand[4]]
-        subdeckdict3["threedeck8"] = [somehand[2],somehand[3],somehand[4]]
-        subdeckdict3["threedeck9"] = [somehand[2],somehand[3],somehand[4]]
+        subdeckdict3["threedeck7"] = [somehand[1],somehand[2],somehand[4]]
+        subdeckdict3["threedeck9"] = [somehand[1],somehand[3],somehand[4]]
         subdeckdict3["threedeck10"] = [somehand[2],somehand[3],somehand[4]]
         
         return subdeckdict3
     }
     
-    func makeSubDecksOf4(somehand: [Card]) -> [String:[Card]] {
+    func makeSubDecksOf4From5(somehand: [Card]) -> [String:[Card]] {
         var subdeckdict4 = ["fourdeck1": [somehand[0],somehand[1],somehand[2],somehand[3]]]
         subdeckdict4["fourdeck2"] = [somehand[0],somehand[1],somehand[2],somehand[4]]
         subdeckdict4["fourdeck3"] = [somehand[0],somehand[1],somehand[3],somehand[4]]
@@ -166,6 +166,29 @@ class ScoringHand {
         subdeckdict4["fourdeck5"] = [somehand[1],somehand[2],somehand[3],somehand[4]]
 
         return subdeckdict4
+    }
+    
+    func makeSubDecksOf4From6(somehand: [Card]) -> [String: [Card]] {
+        
+        //should be 15 combinations
+        //14 so far
+        var subdeckdict4to6 = ["sixdeck1": [somehand[0],somehand[1],somehand[2],somehand[3]]]
+        subdeckdict4to6["sixdeck2"] = [somehand[0],somehand[1],somehand[2],somehand[4]]
+        subdeckdict4to6["sixdeck3"] = [somehand[0],somehand[1],somehand[2],somehand[5]]
+        subdeckdict4to6["sixdeck4"] = [somehand[0],somehand[1],somehand[3],somehand[4]]
+        subdeckdict4to6["sixdeck5"] = [somehand[0],somehand[1],somehand[3],somehand[5]]
+        subdeckdict4to6["sixdeck6"] = [somehand[0],somehand[1],somehand[4],somehand[5]]
+        subdeckdict4to6["sixdeck7"] = [somehand[0],somehand[2],somehand[3],somehand[4]]
+        subdeckdict4to6["sixdeck8"] = [somehand[0],somehand[2],somehand[3],somehand[5]]
+        subdeckdict4to6["sixdeck9"] = [somehand[0],somehand[2],somehand[4],somehand[5]]
+        subdeckdict4to6["sixdeck10"] = [somehand[0],somehand[3],somehand[4],somehand[5]]
+        subdeckdict4to6["sixdeck11"] = [somehand[1],somehand[2],somehand[3],somehand[4]]
+        subdeckdict4to6["sixdeck12"] = [somehand[1],somehand[2],somehand[3],somehand[5]]
+        subdeckdict4to6["sixdeck13"] = [somehand[1],somehand[2],somehand[4],somehand[5]]
+        subdeckdict4to6["sixdeck14"] = [somehand[1],somehand[3],somehand[4],somehand[5]]
+        subdeckdict4to6["sixdeck15"] = [somehand[2],somehand[3],somehand[4],somehand[5]]
+        
+        return subdeckdict4to6
     }
     
     // MARK: - Hand Scoring
@@ -182,9 +205,9 @@ class ScoringHand {
     
     func SomeOfAKind(ahand: [Card]) -> Int {
         var count = 0
-        let twodict = makeSubDecksOf2(ahand)
-        let threedict = makeSubDecksOf3(ahand)
-        let fourdict = makeSubDecksOf4(ahand)
+        let twodict = makeSubDecksOf2From5(ahand)
+        let threedict = makeSubDecksOf3From5(ahand)
+        let fourdict = makeSubDecksOf4From5(ahand)
         
         for (_, value) in twodict {
             if value[0].rank.rawValue == value[1].rank.rawValue {
@@ -209,9 +232,9 @@ class ScoringHand {
     
     func fifteencount(ahand: [Card]) -> Int {
         var count = 0
-        let twodict = makeSubDecksOf2(ahand)
-        let threedict = makeSubDecksOf3(ahand)
-        let fourdict = makeSubDecksOf4(ahand)
+        let twodict = makeSubDecksOf2From5(ahand)
+        let threedict = makeSubDecksOf3From5(ahand)
+        let fourdict = makeSubDecksOf4From5(ahand)
         
         for (_, value) in twodict {
             if value[0].rank.rawValue + value[1].rank.rawValue == 15 {
@@ -236,8 +259,8 @@ class ScoringHand {
     
     func straight(ahand: [Card]) -> Int{
         var count = 0
-        let threedict = makeSubDecksOf3(ahand)
-        let fourdict = makeSubDecksOf4(ahand)
+        let threedict = makeSubDecksOf3From5(ahand)
+        let fourdict = makeSubDecksOf4From5(ahand)
         let sorthand = ahand.sort { $0.rank.rawValue < $1.rank.rawValue }
         
         if sorthand[0].rank.ordinal() == sorthand[1].rank.ordinal() + 1 && sorthand[1].rank.ordinal() == sorthand[2].rank.ordinal() + 1 && sorthand[2].rank.ordinal() == sorthand[3].rank.ordinal() + 1 && sorthand[3].rank.ordinal() == sorthand[4].rank.ordinal() + 1 {

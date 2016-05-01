@@ -17,6 +17,14 @@ class HandViewController: UIViewController {
     
     //MARK: - Outlets
 
+    @IBOutlet weak var PlayerScore: UILabel! { didSet {
+        PlayerScore.text = "Player Score: \(Constants.currentplayerscore)"
+        }
+    }
+    @IBOutlet weak var CPUScore: UILabel! { didSet {
+        CPUScore.text = "CPU SCORE: \(Constants.currentcpuscore)"
+        }
+    }
     @IBOutlet weak var dealer: UILabel! { didSet {
         dealer.text = "Dealer: \(CribbageDeck().whoDealtIt())"
         }
@@ -109,15 +117,34 @@ class HandViewController: UIViewController {
             if Constants.computerturn {
                 
                 
+                //NEED TO WORK ON THIS PART STILL
+                
+                
                 lastCard.image = UIImage(named:CribbageDeck().computerPlay(Constants.computername))
                 
                 switchturn()
             } else {
+                
+                
+                //MAKE SURE ALL OF THE OTHER CARDTAPs match this
+                
+                
                 Hand1.image = UIImage(named: "bicycleback")
             
-                CribbageDeck().play(Constants.playername, cardname: Constants.c1)
+                let tempdict = CribbageDeck().play(Constants.playername, cardname: Constants.c1)
                 lastCardDisplay(Constants.c1)
                 Hand1.userInteractionEnabled = false
+                
+                if tempdict["Computer"] != Constants.currentcpuscore {
+                    CPUScore.text = "CPU Score: \(Constants.currentcpuscore)"
+                    
+                    
+                    //change mark to end/repeat next player's turn
+                    
+                    
+                } else {
+                    PlayerScore.text = "Player Score: \(Constants.currentplayerscore)"
+                }
                 switchturn()
         }
         }
@@ -284,6 +311,10 @@ class HandViewController: UIViewController {
         static let playername = "Player"
         static let computername = "Computer"
         static var computerturn = false
+        
+        static var currentplayerscore = 0
+        static var currentcpuscore = 0
+        static var mark = false
     }
     
     // MARK: - Card Displays

@@ -22,7 +22,7 @@ class BestPlay {
     
     func createAHand(computerhand: [Card]) -> [String : [Card]] {
         let S = ScoringHand()
-        let fourdict = S.makeSubDecksOf4(computerhand)
+        let fourdict = S.makeSubDecksOf4From6(computerhand)
         
         var thisdict = ["": [String:[Card]]()]
         
