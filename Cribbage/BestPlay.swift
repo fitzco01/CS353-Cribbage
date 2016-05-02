@@ -23,7 +23,7 @@ class BestPlay {
     //the other is the [crib cards] (key = "Crib Cards")
     
     func createAHand(computerhand: [Card]) -> [String : [Card]] {
-        let S = ScoringHand()
+        let S = CPUScoringHand()
         let fourdict = S.makeSubDecksOf4From6(computerhand)
         
         var thisdict = ["": [String:[Card]]()]
@@ -67,21 +67,36 @@ class BestPlay {
     
     func pickACard(cpu: Player) -> Card {
         let H = History()
-        let S = ScoringRun()
+        let C = CPUScoringRun()
         
         var tempcard: Card = cpu.hand[0]
         var loopcount = 0
+        Constants.runcount = 0
         
         for acard in cpu.hand {
             var tempcount = 0
-            if acard.rank.rawValue + H.mostRecentPlay().rank.rawValue <= 31 {
+
+            if H.playLength() == 0 {
                 
-                //scoring calls
+                tempcount += C.fifteencount(acard)
+                tempcount += C.SomeOfAKind(acard)
+                tempcount += C.straight(acard)
                 
                 if tempcount >= Constants.runcount {
                     tempcard = acard
+                    Constants.runcount = tempcount
+                }
+            } else if acard.rank.rawValue + H.mostRecentPlay().rank.rawValue <= 31 {
+                tempcount += C.fifteencount(acard)
+                tempcount += C.SomeOfAKind(acard)
+                tempcount += C.straight(acard)
+                
+                if tempcount >= Constants.runcount {
+                    tempcard = acard
+                    Constants.runcount = tempcount
                 }
             }
+            
             loopcount += 1
         }
                     

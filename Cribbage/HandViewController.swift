@@ -117,7 +117,7 @@ class HandViewController: UIViewController {
             if Constants.computerturn {
                 
                 
-                //NEED TO WORK ON THIS PART STILL
+                //NEED TO WORK ON THIS PART STILL?
                 
                 
                 lastCard.image = UIImage(named:CribbageDeck().computerPlay(Constants.computername))
@@ -164,15 +164,35 @@ class HandViewController: UIViewController {
         } else {
             if Constants.computerturn {
                 
+                
+                //NEED TO WORK ON THIS PART STILL?
+                
+                
                 lastCard.image = UIImage(named:CribbageDeck().computerPlay(Constants.computername))
                 
                 switchturn()
             } else {
+                
+                
+                //MAKE SURE ALL OF THE OTHER CARDTAPs match this
+                
+                
                 Hand2.image = UIImage(named: "bicycleback")
-
-                CribbageDeck().play(Constants.playername, cardname: Constants.c2)
+                
+                let tempdict = CribbageDeck().play(Constants.playername, cardname: Constants.c2)
                 lastCardDisplay(Constants.c2)
                 Hand2.userInteractionEnabled = false
+                
+                if tempdict["Computer"] != Constants.currentcpuscore {
+                    CPUScore.text = "CPU Score: \(Constants.currentcpuscore)"
+                    
+                    
+                    //change mark to end/repeat next player's turn
+                    
+                    
+                } else {
+                    PlayerScore.text = "Player Score: \(Constants.currentplayerscore)"
+                }
                 switchturn()
             }
         }
@@ -193,15 +213,34 @@ class HandViewController: UIViewController {
             if Constants.computerturn {
                 
                 
+                //NEED TO WORK ON THIS PART STILL?
+                
+                
                 lastCard.image = UIImage(named:CribbageDeck().computerPlay(Constants.computername))
                 
                 switchturn()
             } else {
+                
+                
+                //MAKE SURE ALL OF THE OTHER CARDTAPs match this
+                
+                
                 Hand3.image = UIImage(named: "bicycleback")
-
-                CribbageDeck().play(Constants.playername, cardname: Constants.c3)
+                
+                let tempdict = CribbageDeck().play(Constants.playername, cardname: Constants.c3)
                 lastCardDisplay(Constants.c3)
                 Hand3.userInteractionEnabled = false
+                
+                if tempdict["Computer"] != Constants.currentcpuscore {
+                    CPUScore.text = "CPU Score: \(Constants.currentcpuscore)"
+                    
+                    
+                    //change mark to end/repeat next player's turn
+                    
+                    
+                } else {
+                    PlayerScore.text = "Player Score: \(Constants.currentplayerscore)"
+                }
                 switchturn()
             }
         }
@@ -222,15 +261,34 @@ class HandViewController: UIViewController {
             if Constants.computerturn {
                 
                 
+                //NEED TO WORK ON THIS PART STILL?
+                
+                
                 lastCard.image = UIImage(named:CribbageDeck().computerPlay(Constants.computername))
                 
                 switchturn()
             } else {
+                
+                
+                //MAKE SURE ALL OF THE OTHER CARDTAPs match this
+                
+                
                 Hand4.image = UIImage(named: "bicycleback")
-
-                CribbageDeck().play(Constants.playername, cardname: Constants.c4)
+                
+                let tempdict = CribbageDeck().play(Constants.playername, cardname: Constants.c4)
                 lastCardDisplay(Constants.c4)
                 Hand4.userInteractionEnabled = false
+                
+                if tempdict["Computer"] != Constants.currentcpuscore {
+                    CPUScore.text = "CPU Score: \(Constants.currentcpuscore)"
+                    
+                    
+                    //change mark to end/repeat next player's turn
+                    
+                    
+                } else {
+                    PlayerScore.text = "Player Score: \(Constants.currentplayerscore)"
+                }
                 switchturn()
             }
         }
@@ -251,19 +309,35 @@ class HandViewController: UIViewController {
             if Constants.computerturn {
                 
                 
+                //NEED TO WORK ON THIS PART STILL?
+                
+                
                 lastCard.image = UIImage(named:CribbageDeck().computerPlay(Constants.computername))
                 
                 switchturn()
             } else {
-                let runtotal = ScoringRun().getruncount()
-                if !CribbageDeck().playerFromName(Constants.playername).cannotPlay(runtotal) {
-                    Hand5.image = UIImage(named: "bicycleback")
+                
+                
+                //MAKE SURE ALL OF THE OTHER CARDTAPs match this
+                
+                
+                Hand5.image = UIImage(named: "bicycleback")
+                
+                let tempdict = CribbageDeck().play(Constants.playername, cardname: Constants.c5)
+                lastCardDisplay(Constants.c5)
+                Hand5.userInteractionEnabled = false
+                
+                if tempdict["Computer"] != Constants.currentcpuscore {
+                    CPUScore.text = "CPU Score: \(Constants.currentcpuscore)"
                     
-                    CribbageDeck().play(Constants.playername, cardname: Constants.c5)
-                    lastCardDisplay(Constants.c5)
-                    Hand5.userInteractionEnabled = false
-                    switchturn()
+                    
+                    //change mark to end/repeat next player's turn
+                    
+                    
+                } else {
+                    PlayerScore.text = "Player Score: \(Constants.currentplayerscore)"
                 }
+                switchturn()
             }
         }
     }
@@ -283,15 +357,34 @@ class HandViewController: UIViewController {
             if Constants.computerturn {
                 
                 
+                //NEED TO WORK ON THIS PART STILL?
+                
+                
                 lastCard.image = UIImage(named:CribbageDeck().computerPlay(Constants.computername))
                 
                 switchturn()
             } else {
+                
+                
+                //MAKE SURE ALL OF THE OTHER CARDTAPs match this
+                
+                
                 Hand6.image = UIImage(named: "bicycleback")
-
-                CribbageDeck().play(Constants.playername, cardname: Constants.c6)
+                
+                let tempdict = CribbageDeck().play(Constants.playername, cardname: Constants.c6)
                 lastCardDisplay(Constants.c6)
                 Hand6.userInteractionEnabled = false
+                
+                if tempdict["Computer"] != Constants.currentcpuscore {
+                    CPUScore.text = "CPU Score: \(Constants.currentcpuscore)"
+                    
+                    
+                    //change mark to end/repeat next player's turn
+                    
+                    
+                } else {
+                    PlayerScore.text = "Player Score: \(Constants.currentplayerscore)"
+                }
                 switchturn()
             }
         }
