@@ -23,6 +23,25 @@ struct Player {
         }
     }
     
+    mutating func somenewhand(somehand: [Card]) {
+        self.hand.removeAll()
+        for acard in somehand {
+            self.hand.append(acard)
+        }
+    }
+    
+    mutating func somenewshorthand(somehand: [Card]) -> [Card]{
+        self.shorthand.removeAll()
+        for acard in somehand {
+            self.shorthand.append(acard)
+        }
+        return self.shorthand
+    }
+    
+    mutating func deletecardfromhand(index: Int) {
+        self.hand.removeAtIndex(index)
+    }
+    
     func printhand() -> [String] {
         var printlist: [String] = []
         for acard in self.hand {
@@ -40,7 +59,6 @@ struct Player {
         if let i = shorthand.indexOf({$0.description() == runcarddescription}) {
             shorthand.removeAtIndex(i)
         }
-        
     }
     
     func cannotPlay(total: Int) -> Bool {

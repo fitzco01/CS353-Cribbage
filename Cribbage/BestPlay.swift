@@ -14,6 +14,8 @@ class BestPlay {
         static var count = 0
         static var newcount = 0
         static var keystring = ""
+        
+        static var runcount = 0
     }
     
     //returns a dictionary with two elements
@@ -62,4 +64,28 @@ class BestPlay {
         
         return finaldict
     }
+    
+    func pickACard(cpu: Player) -> Card {
+        let H = History()
+        let S = ScoringRun()
+        
+        var tempcard: Card = cpu.hand[0]
+        var loopcount = 0
+        
+        for acard in cpu.hand {
+            var tempcount = 0
+            if acard.rank.rawValue + H.mostRecentPlay().rank.rawValue <= 31 {
+                
+                //scoring calls
+                
+                if tempcount >= Constants.runcount {
+                    tempcard = acard
+                }
+            }
+            loopcount += 1
+        }
+                    
+        return tempcard
+    }
+    
 }

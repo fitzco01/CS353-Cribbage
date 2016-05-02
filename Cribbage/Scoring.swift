@@ -96,7 +96,7 @@ class ScoringRun {
     }
     
     //returns 1 if the player cannot play, 0 otherwise
-    //points should be given to the next player, not the current player (like the other functions)
+    //points should be given to the next player, not the current player (unlike the other functions)
     
     func go(runtotal: Int) -> Int {
         if History().mostRecentPlayer().cannotPlay(runtotal) {
@@ -314,6 +314,124 @@ class ScoringHand {
         }
         
         return count
+    }
+    
+}
+
+// MARK: - Scoring Checks for computer cards
+// make this work with BestPlay.PickACard
+// add function calls to BestPlay.PickACard
+
+struct CPUOrder {
+    var historylist = History().showPlayHistory()
+    
+    func orderByValue() -> [Card] {
+        let valueorderlist = historylist.sort { $0.rank.rawValue < $1.rank.rawValue }
+        return valueorderlist
+    }
+    
+    func getHistory() -> [Card] {
+        return historylist
+    }
+}
+
+class CPUScoringRun {
+    
+    private struct Constants {
+        static var boolpoints = false
+        static var someruncount = 0
+    }
+    
+    func updateruncount(somecard: Card) {
+        Constants.someruncount += somecard.rank.rawValue
+    }
+    
+    // MARK: - Run Scoring
+    
+    func straight(cardone: Card) -> Int {
+        var i = 0
+        let orderlist = Order().orderByValue()
+        if orderlist.count >= 3 {
+            while (i + 1) < orderlist.count {
+                if orderlist[i].rank.ordinal() == (orderlist[i + 1].rank.ordinal() + 1) {
+                    Constants.boolpoints = true
+                    i += 1
+                } else {
+                    Constants.boolpoints = false
+                    i = orderlist.count
+                }
+            }
+        }
+        if Constants.boolpoints {
+            Constants.boolpoints = false
+            return orderlist.count
+        } else {
+            return 0
+        }
+    }
+    
+    func fifteencount(cardone: Card) -> Int {
+        let orderlist = Order().orderByValue()
+        var count = 0
+        for acard in orderlist {
+            count += acard.rank.rawValue
+        }
+        if count == 15 || count == 31 {
+            return 2
+        } else {
+            return 0
+        }
+    }
+    
+    func SomeOfAKind(cardone: Card) -> Int {
+        var historylist = Order().getHistory()
+        let temp0 = historylist.removeFirst()
+        let temp1 = historylist.removeFirst()
+        let temp2 = historylist.removeFirst()
+        let temp3 = historylist.removeFirst()
+        var count = 0
+        
+        if temp3.rank.description() == temp2.rank.description() && temp2.rank.description() == temp1.rank.description() && temp1.rank.description() == temp0.rank.description() {
+            count = 12
+        } else if temp2.rank.description() == temp1.rank.description() && temp1.rank.description() == temp0.rank.description() {
+            count = 6
+        } else if temp1.rank.description() == temp0.rank.description() {
+            count = 2
+        } else {
+            count = 0
+        }
+        return count
+    }
+    
+    func getruncount(cardone: Card) -> Int {
+        return Constants.someruncount
+    }
+    
+    //returns 1 if the player cannot play, 0 otherwise
+    //points should be given to the next player, not the current player (unlike the other functions)
+    
+    func go(runtotal: Int) -> Int {
+        if History().mostRecentPlayer().cannotPlay(runtotal) {
+            return 1
+        } else {
+            return 0
+        }
+    }
+    
+    func lastcard() -> Int {
+        if Order().getHistory().count == 8 {
+            return 1
+        } else {
+            return 0
+        }
+    }
+    
+    func jackflip() -> Int {
+        if CribbageDeck().cutcard().rank.description() == "jack" {
+            return 2
+        } else {
+            return 0
+        }
     }
     
 }

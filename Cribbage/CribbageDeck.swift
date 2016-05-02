@@ -23,6 +23,10 @@ class CribbageDeck {
         static var count = 0
         
         static var scoreDict: [String: Int] = ["":0]
+        
+        static var tempcpuhand: [Card] = []
+        
+        static var cribcards: [Card] = []
     }
 
     func rankFromDescription(cardname: String) -> Rank {
@@ -142,6 +146,7 @@ class CribbageDeck {
         Constants.scoreDict["Computer"] = cpu!.score
         
         if scored != cpu!.score {
+            
             return Constants.scoreDict
         } else {
             man!.score += ScoringRun().fifteencount()
@@ -165,9 +170,31 @@ class CribbageDeck {
     func computerPlay(cpu: String) -> String{
 
         // get the computer to pick the card it plays
-        if let computer = Constants.playerDict[cpu] {
-            let selectedcard = computer.hand[0]
         
+        if var computer = Constants.playerDict[cpu] {
+            
+            if computer.shorthand.count != 4 {
+                let newcpuhand = BestPlay().createAHand(computer.hand)
+                
+                computer.somenewhand(newcpuhand["Computer Hand"]!)
+                computer.somenewshorthand(newcpuhand["Computer Hand"]!)
+                
+                for acard in newcpuhand["Crib Cards"]! {
+                    Constants.cribcards.append(acard)
+                }
+                
+            }
+            
+            let selectedcard = BestPlay().pickACard(computer)
+                        
+            var counter = 0
+            for acard in computer.hand {
+                if acard.description() == selectedcard.description() {
+                    computer.deletecardfromhand(counter)
+                }
+                counter += 1
+            }
+                    
             History().playHistory(selectedcard)
             History().playerHistory(computer)
                     

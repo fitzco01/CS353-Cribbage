@@ -255,12 +255,15 @@ class HandViewController: UIViewController {
                 
                 switchturn()
             } else {
-                Hand5.image = UIImage(named: "bicycleback")
-            
-                CribbageDeck().play(Constants.playername, cardname: Constants.c5)
-                lastCardDisplay(Constants.c5)
-                Hand5.userInteractionEnabled = false
-                switchturn()
+                let runtotal = ScoringRun().getruncount()
+                if !CribbageDeck().playerFromName(Constants.playername).cannotPlay(runtotal) {
+                    Hand5.image = UIImage(named: "bicycleback")
+                    
+                    CribbageDeck().play(Constants.playername, cardname: Constants.c5)
+                    lastCardDisplay(Constants.c5)
+                    Hand5.userInteractionEnabled = false
+                    switchturn()
+                }
             }
         }
     }
@@ -314,7 +317,8 @@ class HandViewController: UIViewController {
         
         static var currentplayerscore = 0
         static var currentcpuscore = 0
-        static var mark = false
+        static var playercango = true
+        static var computercango = true
     }
     
     // MARK: - Card Displays
