@@ -22,11 +22,13 @@ class CribbageDeck {
         
         static var count = 0
         
-        static var scoreDict: [String: Int] = ["":0]
+        static var scoreDict: [String: Int] = ["Player":0]
         
         static var tempcpuhand: [Card] = []
         
         static var cribcards: [Card] = []
+        
+        static var starthand = 0
     }
 
     func rankFromDescription(cardname: String) -> Rank {
@@ -119,13 +121,14 @@ class CribbageDeck {
     
     // MARK: - TBC
     
-    func play(player: String, cardname: String) -> [String: Int] {
+    func play(cardname: String) -> [String: Int] {
         
-        var man = Constants.playerDict[player]
+        var man = Constants.playerDict["Player"]
         var cpu = Constants.playerDict["Computer"]
         
         let rank = rankFromDescription(cardname)
         let suit = suitFromDescription(cardname)
+        
         let playcard = Card(rank: rank, suit: suit)
         
         History().playHistory(playcard)
@@ -144,7 +147,7 @@ class CribbageDeck {
         let scored = cpu!.score
         cpu!.score += ScoringRun().go(runtotal)
         Constants.scoreDict["Computer"] = cpu!.score
-        
+                
         if scored != cpu!.score {
             
             return Constants.scoreDict
@@ -154,7 +157,11 @@ class CribbageDeck {
             man!.score += ScoringRun().straight()
             man!.score += ScoringRun().lastcard()
             
-            Constants.scoreDict[player] = man!.score
+            Constants.scoreDict["Player"] = man!.score
+            
+            print("PLAYER SCORE \(Constants.scoreDict["Player"])")
+            print("COMPUTER SCORE \(Constants.scoreDict["Computer"])")
+
         
             return Constants.scoreDict
         }
@@ -167,42 +174,42 @@ class CribbageDeck {
     
     // MARK: - TBC
     
-    func computerPlay(cpu: String) -> String{
-
-        // get the computer to pick the card it plays
+    func computerPlay() -> (String, [String: Int]) {
         
-        if var computer = Constants.playerDict[cpu] {
+        // When the computer is the dealer, it plays a duplicate card
+        // NEXT THING TO WORK ON!!!
+        // get the computer to pick the card it plays
+        //need to add Go!!!
+        
+        if Constants.starthand == 0 {
+            Constants.starthand += 1
+            let newcpuhand = BestPlay().createAHand(Constants.playerDict["Computer"]!.hand)
             
-            if computer.shorthand.count != 4 {
-                let newcpuhand = BestPlay().createAHand(computer.hand)
-                
-                computer.somenewhand(newcpuhand["Computer Hand"]!)
-                computer.somenewshorthand(newcpuhand["Computer Hand"]!)
-                
-                for acard in newcpuhand["Crib Cards"]! {
-                    Constants.cribcards.append(acard)
-                }
-                
-            }
+            Constants.playerDict["Computer"]!.somenewhand(newcpuhand["Computer Hand"]!)
+            Constants.playerDict["Computer"]!.somenewshorthand(newcpuhand["Computer Hand"]!)
             
-            let selectedcard = BestPlay().pickACard(computer)
-                        
-            var counter = 0
-            for acard in computer.hand {
-                if acard.description() == selectedcard.description() {
-                    computer.deletecardfromhand(counter)
-                }
-                counter += 1
+            for acard in newcpuhand["Crib Cards"]! {
+                Constants.cribcards.append(acard)
             }
-                    
-            History().playHistory(selectedcard)
-            History().playerHistory(computer)
-                    
-            return selectedcard.description()
-        } else {
-            print("COMPUTER NAMING ERROR")
-            return ""
         }
+            print("\n THISHAND \n \(Constants.playerDict["Computer"]!.hand) \n")
+            let (selectedcard, newhand) = BestPlay().pickACard(Constants.playerDict["Computer"]!.hand)
+                                  
+            History().playHistory(selectedcard)
+            History().playerHistory(Constants.playerDict["Computer"]!)
+        
+            print("HERE")
+            Constants.playerDict["Computer"]!.somenewhand(newhand)
+        
+            Constants.playerDict["Computer"]!.score += ScoringRun().fifteencount()
+            Constants.playerDict["Computer"]!.score += ScoringRun().SomeOfAKind()
+            Constants.playerDict["Computer"]!.score += ScoringRun().straight()
+            Constants.playerDict["Computer"]!.score += ScoringRun().lastcard()
+            
+            Constants.scoreDict["Computer"] = Constants.playerDict["Computer"]!.score
+                
+            print("SELECTEDCARD\(selectedcard.description())")
+            return (selectedcard.description(), Constants.scoreDict)
     }
     
     func cutcard() -> Card {

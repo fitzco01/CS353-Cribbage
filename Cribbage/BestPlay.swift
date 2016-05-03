@@ -61,21 +61,26 @@ class BestPlay {
         var finaldict = [String: [Card]]()
         finaldict["Computer Hand"] = newhand
         finaldict["Crib Cards"] = cribcards
-        
+                
         return finaldict
     }
     
-    func pickACard(cpu: Player) -> Card {
+    func pickACard(cpuhand: [Card]) -> (Card, [Card]) {
         let H = History()
         let C = CPUScoringRun()
         
-        var tempcard: Card = cpu.hand[0]
+        var tempcard: Card = cpuhand[0]
         var loopcount = 0
+        var loopcount2 = 0
         Constants.runcount = 0
+        var remainingcards: [Card] = []
+        var index = 0
         
-        for acard in cpu.hand {
+        print("COMPUTER HAND \n \(cpuhand) \n")
+        
+        for acard in cpuhand {
             var tempcount = 0
-
+            
             if H.playLength() == 0 {
                 
                 tempcount += C.fifteencount(acard)
@@ -83,24 +88,37 @@ class BestPlay {
                 tempcount += C.straight(acard)
                 
                 if tempcount >= Constants.runcount {
-                    tempcard = acard
-                    Constants.runcount = tempcount
-                }
-            } else if acard.rank.rawValue + H.mostRecentPlay().rank.rawValue <= 31 {
-                tempcount += C.fifteencount(acard)
-                tempcount += C.SomeOfAKind(acard)
-                tempcount += C.straight(acard)
-                
-                if tempcount >= Constants.runcount {
-                    tempcard = acard
-                    Constants.runcount = tempcount
-                }
-            }
-            
-            loopcount += 1
-        }
                     
-        return tempcard
+                    tempcard = acard
+                    Constants.runcount = tempcount
+                    index = loopcount
+                }
+            } else {
+                if acard.rank.rawValue + H.mostRecentPlay().rank.rawValue <= 31 {
+                    tempcount += C.fifteencount(acard)
+                    tempcount += C.SomeOfAKind(acard)
+                    tempcount += C.straight(acard)
+                
+                    if tempcount >= Constants.runcount {
+                        tempcard = acard
+                                        
+                        Constants.runcount = tempcount
+                        index = loopcount
+                    }
+                }
+                loopcount += 1
+            }
+        }
+        
+        for acard in cpuhand {
+            if loopcount2 != index {
+                remainingcards.append(acard)
+            }
+            loopcount2 += 1
+        }
+        
+        print("SELECTITSCARD \(tempcard)")
+        return (tempcard, remainingcards)
     }
     
 }

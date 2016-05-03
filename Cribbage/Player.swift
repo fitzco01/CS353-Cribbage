@@ -24,22 +24,17 @@ struct Player {
     }
     
     mutating func somenewhand(somehand: [Card]) {
-        self.hand.removeAll()
-        for acard in somehand {
-            self.hand.append(acard)
-        }
+        print("in some hand with the list of \(somehand.count)")
+        self.hand = somehand
     }
     
-    mutating func somenewshorthand(somehand: [Card]) -> [Card]{
-        self.shorthand.removeAll()
-        for acard in somehand {
-            self.shorthand.append(acard)
-        }
-        return self.shorthand
+    mutating func somenewshorthand(somehand: [Card]) {
+        self.shorthand = somehand
     }
     
-    mutating func deletecardfromhand(index: Int) {
+    mutating func deletecardfromhand(index: Int) -> [Card]{
         self.hand.removeAtIndex(index)
+        return self.hand
     }
     
     func printhand() -> [String] {

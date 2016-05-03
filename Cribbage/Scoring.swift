@@ -73,24 +73,42 @@ class ScoringRun {
     
     func SomeOfAKind() -> Int {
         var historylist = Order().getHistory()
-        var count = 0
-
-        if historylist.count >= 2 {
-            let temp0 = historylist.removeFirst()
-            let temp1 = historylist.removeFirst()
-            let temp2 = historylist.removeFirst()
-            let temp3 = historylist.removeFirst()
         
-            if temp3.rank.description() == temp2.rank.description() && temp2.rank.description() == temp1.rank.description() && temp1.rank.description() == temp0.rank.description() {
-                count = 12
-            } else if temp2.rank.description() == temp1.rank.description() && temp1.rank.description() == temp0.rank.description() {
-                count = 6
-            } else if temp1.rank.description() == temp0.rank.description() {
+        var count = 0
+        
+        if historylist.count >= 2 {
+            
+            let temp0 = historylist[0]
+            let temp1 = historylist[1]
+            
+            if temp1.rank.description() == temp0.rank.description() {
                 count = 2
-            } else {
-                count = 0
             }
         }
+        
+        if historylist.count >= 3 {
+            
+            let temp0 = historylist[0]
+            let temp1 = historylist[1]
+            let temp2 = historylist[2]
+            
+            if temp2.rank.description() == temp1.rank.description() && temp1.rank.description() == temp0.rank.description() {
+                count = 6
+            }
+        }
+        
+        if historylist.count >= 4 {
+            
+            let temp0 = historylist[0]
+            let temp1 = historylist[1]
+            let temp2 = historylist[2]
+            let temp3 = historylist[3]
+            
+            if temp3.rank.description() == temp2.rank.description() && temp2.rank.description() == temp1.rank.description() && temp1.rank.description() == temp0.rank.description() {
+                count = 12
+            }
+        }
+        
         return count
     }
     
@@ -388,8 +406,8 @@ class CPUScoringRun {
 
         if historylist.count >= 2 {
         
-            let temp0 = historylist.removeFirst()
-            let temp1 = historylist.removeFirst()
+            let temp0 = historylist[0]
+            let temp1 = historylist[1]
             
             if temp1.rank.description() == temp0.rank.description() {
                 count = 2
@@ -398,9 +416,9 @@ class CPUScoringRun {
         
         if historylist.count >= 3 {
                 
-            let temp0 = historylist.removeFirst()
-            let temp1 = historylist.removeFirst()
-            let temp2 = historylist.removeFirst()
+            let temp0 = historylist[0]
+            let temp1 = historylist[1]
+            let temp2 = historylist[2]
                 
             if temp2.rank.description() == temp1.rank.description() && temp1.rank.description() == temp0.rank.description() {
                 count = 6
@@ -409,10 +427,10 @@ class CPUScoringRun {
         
         if historylist.count >= 4 {
                 
-            let temp0 = historylist.removeFirst()
-            let temp1 = historylist.removeFirst()
-            let temp2 = historylist.removeFirst()
-            let temp3 = historylist.removeFirst()
+            let temp0 = historylist[0]
+            let temp1 = historylist[1]
+            let temp2 = historylist[2]
+            let temp3 = historylist[3]
                 
             if temp3.rank.description() == temp2.rank.description() && temp2.rank.description() == temp1.rank.description() && temp1.rank.description() == temp0.rank.description() {
                 count = 12
