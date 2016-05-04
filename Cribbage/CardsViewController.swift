@@ -10,6 +10,8 @@ import UIKit
 
 class CardsViewController: UIViewController {
 
+    @IBAction func Next(sender: UIButton) {
+    }
     @IBOutlet weak var Dealer: UILabel!
     @IBOutlet weak var CPUScore: UILabel!
     @IBOutlet weak var PlayerScore: UILabel!

@@ -17,6 +17,9 @@ class HandViewController: UIViewController {
     
     //MARK: - Outlets
 
+    @IBAction func Next(sender: UIButton) {
+    }
+    
     @IBOutlet weak var PlayerScore: UILabel! { didSet {
         PlayerScore.text = "Player Score: \(Constants.currentplayerscore)"
         }
