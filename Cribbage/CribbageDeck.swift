@@ -176,10 +176,12 @@ class CribbageDeck {
     
     func computerPlay() -> (String, [String: Int]) {
         
-        // When the computer is the dealer, it plays a duplicate card
-        // NEXT THING TO WORK ON!!!
-        // get the computer to pick the card it plays
-        //need to add Go!!!
+        // When the player is the dealer, computer plays a duplicate card (the first one)
+        // The card isn't necessarily played immediately if the computer can score
+        // Am I duplicating the computer or it's hand somewhere??!!!
+
+        //need to add Go!!! (how to end the run, as well as the points)
+        //Straights don't work!!!
         
         if Constants.starthand == 0 {
             Constants.starthand += 1
@@ -198,7 +200,6 @@ class CribbageDeck {
             History().playHistory(selectedcard)
             History().playerHistory(Constants.playerDict["Computer"]!)
         
-            print("HERE")
             Constants.playerDict["Computer"]!.somenewhand(newhand)
         
             Constants.playerDict["Computer"]!.score += ScoringRun().fifteencount()

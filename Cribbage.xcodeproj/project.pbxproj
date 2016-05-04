@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A61B88181CD9964900D3570D /* CardsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A61B88171CD9964900D3570D /* CardsViewController.swift */; };
 		A645C9231CC341E9007F3783 /* CribViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A645C9221CC341E9007F3783 /* CribViewController.swift */; };
 		A645C9271CC34408007F3783 /* HandViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A645C9261CC34408007F3783 /* HandViewController.swift */; };
 		A6576EAC1CD462E300A23B3F /* PlaysTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6576EAB1CD462E300A23B3F /* PlaysTableViewController.swift */; };
@@ -26,6 +27,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A61B88171CD9964900D3570D /* CardsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardsViewController.swift; sourceTree = "<group>"; };
 		A645C9221CC341E9007F3783 /* CribViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CribViewController.swift; sourceTree = "<group>"; };
 		A645C9261CC34408007F3783 /* HandViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HandViewController.swift; sourceTree = "<group>"; };
 		A6576EAB1CD462E300A23B3F /* PlaysTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaysTableViewController.swift; sourceTree = "<group>"; };
@@ -87,6 +89,7 @@
 				A68F3CAF1CD52B4400FC2FCB /* StartViewController.swift */,
 				A645C9221CC341E9007F3783 /* CribViewController.swift */,
 				A65BCB941C99F37700B2FEA6 /* Main.storyboard */,
+				A61B88171CD9964900D3570D /* CardsViewController.swift */,
 				A6A06E671CD57ABA006652CF /* PlaysTableViewCell.swift */,
 				A6576EAB1CD462E300A23B3F /* PlaysTableViewController.swift */,
 				A6576EAD1CD462F700A23B3F /* ScoresTableViewController.swift */,
@@ -177,6 +180,7 @@
 				A6A06E701CD5DD6F006652CF /* Scoring.swift in Sources */,
 				A6A06E721CD61E0D006652CF /* BestPlay.swift in Sources */,
 				A65BCB911C99F37700B2FEA6 /* AppDelegate.swift in Sources */,
+				A61B88181CD9964900D3570D /* CardsViewController.swift in Sources */,
 				A645C9231CC341E9007F3783 /* CribViewController.swift in Sources */,
 				A65BCBA31C9A207E00B2FEA6 /* CribbageDeck.swift in Sources */,
 				A6A06E6C1CD57C96006652CF /* Card.swift in Sources */,
