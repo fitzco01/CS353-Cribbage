@@ -27,14 +27,14 @@ class HandViewController: UIViewController {
             lastCard.image = UIImage(named: Constants.imagestring)
             switchturn()
             print("HE PLAYED")
-        }
-        
-        if Constants.dictofscores["Computer"] != Constants.currentcpuscore {
-            Constants.currentcpuscore += Constants.dictofscores["Computer"]!
-            CPUScore.text = "CPU Score: \(Constants.currentcpuscore)"
             
-            //change mark to end/repeat next player's turn
-            
+            if Constants.dictofscores["Computer"] != Constants.currentcpuscore {
+                Constants.currentcpuscore += Constants.dictofscores["Computer"]!
+                CPUScore.text = "CPU Score: \(Constants.currentcpuscore)"
+                
+                //change mark to end/repeat next player's turn
+                
+            }
         }
     }
     
@@ -541,29 +541,31 @@ class HandViewController: UIViewController {
      
      // In a storyboard-based application, you will often want to do a little preparation before navigation
      override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if let cvc = segue.destinationViewController as? CardsViewController {
-            if let turn = Constants.computerturn as? Bool {
-                switch turn {
-                    case true:
-                    let (c1,c2,c3,c4,cc) = CribbageDeck().hand("Computer")
-                    cvc.Card1.image = UIImage(named: c1.description())
-                    cvc.Card2.image = UIImage(named: c2.description())
-                    cvc.Card3.image = UIImage(named: c3.description())
-                    cvc.Card4.image = UIImage(named: c4.description())
-                    cvc.CutCard.image = UIImage(named: cc.description())
-                    cvc.PlayerScore.text = "Player Score: \(Constants.currentplayerscore)"
-                    cvc.CPUScore.text = "CPU Score: \(Constants.currentcpuscore)"
-                    cvc.Dealer.text = "Dealer: Computer"
-                case false:
-                    let (c1,c2,c3,c4,cc) = CribbageDeck().hand("Player")
-                    cvc.Card1.image = UIImage(named: c1.description())
-                    cvc.Card2.image = UIImage(named: c2.description())
-                    cvc.Card3.image = UIImage(named: c3.description())
-                    cvc.Card4.image = UIImage(named: c4.description())
-                    cvc.CutCard.image = UIImage(named: cc.description())
-                    cvc.PlayerScore.text = "Player Score: \(Constants.currentplayerscore)"
-                    cvc.CPUScore.text = "CPU Score: \(Constants.currentcpuscore)"
-                    cvc.Dealer.text = "Dealer: Player"
+        if CribbageDeck().cpuHandLength() == 0 {
+            if let cvc = segue.destinationViewController as? CardsViewController {
+                if let turn = Constants.computerturn as? Bool {
+                    switch turn {
+                        case true:
+                        let (c1,c2,c3,c4,cc) = CribbageDeck().hand("Computer")
+                        cvc.Card1.image = UIImage(named: c1.description())
+                        cvc.Card2.image = UIImage(named: c2.description())
+                        cvc.Card3.image = UIImage(named: c3.description())
+                        cvc.Card4.image = UIImage(named: c4.description())
+                        cvc.CutCard.image = UIImage(named: cc.description())
+                        cvc.PlayerScore.text = "Player Score: \(Constants.currentplayerscore)"
+                        cvc.CPUScore.text = "CPU Score: \(Constants.currentcpuscore)"
+                        cvc.Dealer.text = "Dealer: Computer"
+                    case false:
+                        let (c1,c2,c3,c4,cc) = CribbageDeck().hand("Player")
+                        cvc.Card1.image = UIImage(named: c1.description())
+                        cvc.Card2.image = UIImage(named: c2.description())
+                        cvc.Card3.image = UIImage(named: c3.description())
+                        cvc.Card4.image = UIImage(named: c4.description())
+                        cvc.CutCard.image = UIImage(named: cc.description())
+                        cvc.PlayerScore.text = "Player Score: \(Constants.currentplayerscore)"
+                        cvc.CPUScore.text = "CPU Score: \(Constants.currentcpuscore)"
+                        cvc.Dealer.text = "Dealer: Player"
+                    }
                 }
             }
         }
