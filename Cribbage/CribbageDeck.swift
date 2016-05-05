@@ -55,6 +55,16 @@ class CribbageDeck {
         return temp
     }
     
+    func whoDidntDealIt() -> String {
+        var temp = ""
+        for (_, value) in Constants.playerDict {
+            if !value.whoDealt() {
+                temp = value.name
+            }
+        }
+        return temp
+    }
+    
     class Crib {
         
         var crib: [Card] = []
