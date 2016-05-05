@@ -18,6 +18,24 @@ class HandViewController: UIViewController {
     //MARK: - Outlets
 
     @IBAction func Next(sender: UIButton) {
+        if CribbageDeck().cpuHandLength() == 0 {
+            performSegueWithIdentifier("RunToCards", sender: sender)
+            print("I RAN")
+        } else if Constants.computerturn {
+            (Constants.imagestring, Constants.dictofscores) = CribbageDeck().computerPlay()
+            
+            lastCard.image = UIImage(named: Constants.imagestring)
+            switchturn()
+            print("HE PLAYED")
+        }
+        
+        if Constants.dictofscores["Computer"] != Constants.currentcpuscore {
+            Constants.currentcpuscore += Constants.dictofscores["Computer"]!
+            CPUScore.text = "CPU Score: \(Constants.currentcpuscore)"
+            
+            //change mark to end/repeat next player's turn
+            
+        }
     }
     
     @IBOutlet weak var PlayerScore: UILabel! { didSet {
@@ -519,13 +537,65 @@ class HandViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    /*
      // MARK: - Navigation
      
      // In a storyboard-based application, you will often want to do a little preparation before navigation
      override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-     // Get the new view controller using segue.destinationViewController.
+        if let cvc = segue.destinationViewController as? CardsViewController {
+            if let turn = Constants.computerturn as? Bool {
+                switch turn {
+                    case true:
+                    let (c1,c2,c3,c4,cc) = CribbageDeck().hand("Computer")
+                    cvc.Card1.image = UIImage(named: c1.description())
+                    cvc.Card2.image = UIImage(named: c2.description())
+                    cvc.Card3.image = UIImage(named: c3.description())
+                    cvc.Card4.image = UIImage(named: c4.description())
+                    cvc.CutCard.image = UIImage(named: cc.description())
+                    cvc.PlayerScore.text = "Player Score: \(Constants.currentplayerscore)"
+                    cvc.CPUScore.text = "CPU Score: \(Constants.currentcpuscore)"
+                    cvc.Dealer.text = "Dealer: Computer"
+                case false:
+                    let (c1,c2,c3,c4,cc) = CribbageDeck().hand("Player")
+                    cvc.Card1.image = UIImage(named: c1.description())
+                    cvc.Card2.image = UIImage(named: c2.description())
+                    cvc.Card3.image = UIImage(named: c3.description())
+                    cvc.Card4.image = UIImage(named: c4.description())
+                    cvc.CutCard.image = UIImage(named: cc.description())
+                    cvc.PlayerScore.text = "Player Score: \(Constants.currentplayerscore)"
+                    cvc.CPUScore.text = "CPU Score: \(Constants.currentcpuscore)"
+                    cvc.Dealer.text = "Dealer: Player"
+                }
+            }
+        }
      // Pass the selected object to the new view controller.
+     }
+     
+     
+     /*
+     
+     class ViewController: UIViewController {
+     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+     if let ivc = segue.destinationViewController as? ImageViewController {
+     if let identifier = segue.identifier {
+     switch identifier {
+     case "Luther":
+     ivc.imageURL = DemoURL.Luther
+     ivc.title = "Luther"
+     case "Earth":
+     ivc.imageURL = DemoURL.NASA.Earth
+     ivc.title = "Earth"
+     case "Saturn":
+     ivc.imageURL = DemoURL.NASA.Saturn
+     ivc.title = "Saturn"
+     case "Cassini":
+     ivc.imageURL = DemoURL.NASA.Cassini
+     ivc.title = "Cassini"
+     default: break
+     }
+     }
+     }
+     }
+     
      }
      */
     

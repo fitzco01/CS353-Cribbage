@@ -29,6 +29,8 @@ class CribbageDeck {
         static var cribcards: [Card] = []
         
         static var starthand = 0
+        
+        static var cutcard: [Card] = []
     }
 
     func rankFromDescription(cardname: String) -> Rank {
@@ -119,7 +121,24 @@ class CribbageDeck {
         }
     }
     
-    // MARK: - TBC
+    func cpuHandLength() -> Int {
+        return Constants.playerDict["Computer"]!.hand.count
+    }
+    
+    func hand(playername: String) -> (Card, Card, Card, Card, Card) {
+        if playername == "Player" {
+            return ((Constants.playerDict["Player"]?.shorthand[0])!,(Constants.playerDict["Player"]?.shorthand[1])!,(Constants.playerDict["Player"]?.shorthand[2])!,(Constants.playerDict["Player"]?.shorthand[3])!, Constants.cutcard[0])
+        } else if playername == "Computer" {
+            return ((Constants.playerDict["Computer"]?.shorthand[0])!,(Constants.playerDict["Computer"]?.shorthand[1])!,(Constants.playerDict["Computer"]?.shorthand[2])!,(Constants.playerDict["Computer"]?.shorthand[3])!, Constants.cutcard[0])
+        } else {
+            print("ERROR NAMING THE PLAYER")
+            var templist: [Card] = []
+            for acard in (Constants.playerDict["Player"]?.hand)! {
+                templist.append(acard)
+            }
+            return (templist[0], templist[1], templist[2], templist[3], Constants.cutcard[0])
+        }
+    }
     
     func play(cardname: String) -> [String: Int] {
         
@@ -214,8 +233,9 @@ class CribbageDeck {
     }
     
     func cutcard() -> Card {
-        let cutcard = Constants.someshuffleddeck.removeLast()
-        return cutcard
+        Constants.cutcard.removeAll()
+        Constants.cutcard.append(Constants.someshuffleddeck.removeLast())
+        return Constants.cutcard[0]
     }
     
     func start() {
