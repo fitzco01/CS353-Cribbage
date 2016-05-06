@@ -17,7 +17,11 @@ class CribViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        let L = CribbageDeck().getTheCrib()
+        Crib1.image = UIImage(named: L[0].description())
+        Crib2.image = UIImage(named: L[1].description())
+        Crib3.image = UIImage(named: L[2].description())
+        Crib4.image = UIImage(named: L[3].description())
         // Do any additional setup after loading the view.
     }
 

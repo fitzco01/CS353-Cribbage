@@ -23,34 +23,10 @@ class CardsViewController: UIViewController {
     @IBOutlet weak var PlayerScore: UILabel!
     
     @IBOutlet weak var CutCard: UIImageView!
-    
-    @IBOutlet weak var Card1: UIImageView! { didSet {
-        self.Card1.userInteractionEnabled = false
-        Card1.image = UIImage(named: "bicycleback")
-        print("Card1 \(Card1.description)")
-        }
-    }
-    
-    @IBOutlet weak var Card2: UIImageView! { didSet {
-        self.Card2.userInteractionEnabled = false
-        Card2.image = UIImage(named: "bicycleback")
-        print("Card2 \(Card2.description)")
-        }
-    }
-    
-    @IBOutlet weak var Card3: UIImageView! { didSet {
-        self.Card3.userInteractionEnabled = false
-        Card3.image = UIImage(named: "bicycleback")
-        print("Card3 \(Card3.description)")
-        }
-    }
-    
-    @IBOutlet weak var Card4: UIImageView! { didSet {
-        self.Card4.userInteractionEnabled = false
-        Card4.image = UIImage(named: "bicycleback")
-        print("Card4 \(Card4.description)")
-        }
-    }
+    @IBOutlet weak var Card1: UIImageView!
+    @IBOutlet weak var Card2: UIImageView!
+    @IBOutlet weak var Card3: UIImageView!
+    @IBOutlet weak var Card4: UIImageView!
     
     private struct Constants {
         static var playerdidgo = false
