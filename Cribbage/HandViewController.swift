@@ -66,9 +66,9 @@ class HandViewController: UIViewController {
         self.Hand1.userInteractionEnabled = true
         Hand1.image = UIImage(named: Constants.c1)
         print("Hand1 \(Constants.c1)")
-
         }
     }
+    
     @IBOutlet weak var Hand2: UIImageView! {
         didSet {
             self.Hand2.userInteractionEnabled = true
@@ -76,6 +76,7 @@ class HandViewController: UIViewController {
             print("Hand2 \(Constants.c2)")
         }
     }
+    
     @IBOutlet weak var Hand3: UIImageView! {
         didSet {
             self.Hand3.userInteractionEnabled = true
@@ -83,6 +84,7 @@ class HandViewController: UIViewController {
             print("Hand3 \(Constants.c3)")
         }
     }
+    
     @IBOutlet weak var Hand4: UIImageView! {
         didSet {
             self.Hand4.userInteractionEnabled = true
@@ -90,6 +92,7 @@ class HandViewController: UIViewController {
             print("Hand4 \(Constants.c4)")
         }
     }
+    
     @IBOutlet weak var Hand5: UIImageView! {
         didSet {
             self.Hand5.userInteractionEnabled = true
@@ -97,6 +100,7 @@ class HandViewController: UIViewController {
             print("Hand5 \(Constants.c5)")
         }
     }
+    
     @IBOutlet weak var Hand6: UIImageView! {
         didSet {
             self.Hand6.userInteractionEnabled = true
@@ -106,7 +110,9 @@ class HandViewController: UIViewController {
     }
     
     func updateUI() {
-        lastCard.image = UIImage(named: Constants.lastcard)
+        if lastCard != nil {
+            lastCard.image = UIImage(named: Constants.lastcard)
+        }
     }
     
     //MARK: - ViewDidLoad
@@ -114,7 +120,8 @@ class HandViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         lastCard.image = UIImage(named:Constants.lastcard)
-        
+        Constants.crib = 0
+        Constants.playercount = 2
         updateUI()
         //Do any additional setup after loading the view.
     }
@@ -492,7 +499,6 @@ class HandViewController: UIViewController {
             print("sample cutcard \(Constants.cutcard)")
 
         }
-        cutCard.image = UIImage(named: Constants.cutcard)
         return Constants.cutcard
     }
     
@@ -549,8 +555,9 @@ class HandViewController: UIViewController {
      
     override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
         if identifier == "RunToCards" {
+            print("1\(Constants.playercount)")
+            print("2\(CribbageDeck().cpuHandLength())")
             if CribbageDeck().cpuHandLength() == 0 && Constants.playercount == 6 {
-                Constants.playercount = 0
                 return true
             } else {
                 return false

@@ -119,6 +119,9 @@ class CribbageDeck {
     }
     
     func cpuHandLength() -> Int {
+        print("COUNT \(Constants.playerDict["Computer"]!.hand.count)")
+        print("HAND \(Constants.playerDict["Computer"]!.hand)")
+
         return Constants.playerDict["Computer"]!.hand.count
     }
     
@@ -216,6 +219,8 @@ class CribbageDeck {
         }
             print("\n THISHAND \n \(Constants.playerDict["Computer"]!.hand) \n")
             let (selectedcard, newhand) = BestPlay().pickACard(Constants.playerDict["Computer"]!.hand)
+        
+            print("HAND LENGTH \(Constants.playerDict["Computer"]!.hand.count)")
                                   
             History().playHistory(selectedcard)
             History().playerHistory(Constants.playerDict["Computer"]!)
@@ -237,6 +242,10 @@ class CribbageDeck {
         Constants.cutcard.removeAll()
         Constants.cutcard.append(Constants.someshuffleddeck.removeLast())
         return Constants.cutcard[0]
+    }
+    
+    func getCutCard() -> String {
+        return Constants.cutcard[0].description()
     }
     
     func start() {
@@ -296,6 +305,10 @@ class CribbageDeck {
         HVC.c3Display(Constants.playerDict["Player"]!.hand[2].description())
         HVC.c4Display(Constants.playerDict["Player"]!.hand[3].description())
         HVC.c5Display(Constants.playerDict["Player"]!.hand[4].description())
+        HVC.cutCardDisplay()
+        HVC.lastCardDisplay("bicycleback")
+        
+        Constants.starthand = 0
         
         // MARK: - TBC
         
