@@ -75,6 +75,7 @@ struct Player {
     func whoDealt() -> Bool {
         return isDealer
     }
+    
     func printhand() -> String {
         var mystring = ""
         for acard in hand {

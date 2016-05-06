@@ -267,4 +267,41 @@ class CribbageDeck {
             HVC.switchturn()
         }
     }
+    
+    func restart() {
+        let HVC = HandViewController()
+        
+        let theDeck = createDeck()
+        let shuf = shuffle(theDeck)
+
+        let hand1 = deal(shuf)
+        let hand2 = deal(shuf)
+        
+        if Constants.playerDict["Player"]!.isDealer {
+            Constants.playerDict["Player"]!.isDealer = false
+            Constants.playerDict["Computer"]!.isDealer = true
+        } else if Constants.playerDict["Computer"]!.isDealer {
+            Constants.playerDict["Player"]!.isDealer = true
+            Constants.playerDict["Computer"]!.isDealer = false
+        }
+        
+        Constants.playerDict["Player"]!.somenewhand(hand1)
+        Constants.playerDict["Player"]!.somenewshorthand(hand1)
+        
+        Constants.playerDict["Computer"]!.somenewhand(hand2)
+        Constants.playerDict["Computer"]!.somenewshorthand(hand2)
+        
+        HVC.c1Display(Constants.playerDict["Player"]!.hand[0].description())
+        HVC.c2Display(Constants.playerDict["Player"]!.hand[1].description())
+        HVC.c3Display(Constants.playerDict["Player"]!.hand[2].description())
+        HVC.c4Display(Constants.playerDict["Player"]!.hand[3].description())
+        HVC.c5Display(Constants.playerDict["Player"]!.hand[4].description())
+        
+        // MARK: - TBC
+        
+        if !Constants.playerDict["Computer"]!.isDealer {
+            HVC.switchturn()
+        }
+    }
+
 }
