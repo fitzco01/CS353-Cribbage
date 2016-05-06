@@ -197,6 +197,15 @@ class CribbageDeck {
 
     }
     
+    //get the string from HANDVIEWCONTROLLER!!!
+    func addPlayerCardToCrib(cribcard: String) {
+        for acard in Constants.playerDict["Player"]!.hand {
+            if acard.description() == cribcard {
+                Constants.cribcards.append(acard)
+            }
+        }
+    }
+    
     func createPlayer(hand: [Card], score: Int, deals: Bool, name: String) -> Player {
         return Player(hand: hand, shorthand: hand, score: score, isDealer: deals, name: name)
     }

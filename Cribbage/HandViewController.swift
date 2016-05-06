@@ -20,7 +20,7 @@ class HandViewController: UIViewController {
     @IBAction func Next(sender: UIButton) {
         if CribbageDeck().cpuHandLength() == 0 {
             performSegueWithIdentifier("RunToCards", sender: sender)
-        } else {
+        } else if Constants.computerturn {
             (Constants.imagestring, Constants.dictofscores) = CribbageDeck().computerPlay()
             
             lastCard.image = UIImage(named: Constants.imagestring)

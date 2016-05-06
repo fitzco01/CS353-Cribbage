@@ -11,18 +11,18 @@ import UIKit
 class CardsViewController: UIViewController {
 
     @IBAction func Next(sender: UIButton) {
+        if Constants.computerdidgo && Constants.playerdidgo {
+            performSegueWithIdentifier("CardsToCrib", sender: sender)
+        } 
     }
     @IBOutlet weak var Dealer: UILabel!
+    
+    //Need to add these 2 labels still!!!
+    @IBOutlet weak var whoScored: UILabel!
     @IBOutlet weak var CPUScore: UILabel!
     @IBOutlet weak var PlayerScore: UILabel!
-    @IBOutlet weak var Next: UIButton!
     
-    @IBOutlet weak var CutCard: UIImageView! { didSet {
-        self.CutCard.userInteractionEnabled = false
-        CutCard.image = UIImage(named: "bicycleback")
-        print("CutCard \(CutCard.description)")
-        }
-    }
+    @IBOutlet weak var CutCard: UIImageView!
     
     @IBOutlet weak var Card1: UIImageView! { didSet {
         self.Card1.userInteractionEnabled = false
@@ -52,25 +52,38 @@ class CardsViewController: UIViewController {
         }
     }
     
+    private struct Constants {
+        static var playerdidgo = false
+        static var computerdidgo = false
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let (p1,p2,p3,p4,pc) = CribbageDeck().hand("Player")
-        let (c1,c2,c3,c4,cc) = CribbageDeck().hand("Computer")
         let firstplayername = CribbageDeck().whoDidntDealIt()
         
         if firstplayername == "Player" {
+            let (p1,p2,p3,p4,pc) = CribbageDeck().hand("Player")
             Card1.image = UIImage(named: p1.description())
             Card2.image = UIImage(named: p2.description())
             Card3.image = UIImage(named: p3.description())
             Card4.image = UIImage(named: p4.description())
             CutCard.image = UIImage(named: pc.description())
+            //edit this text later!!!
+            whoScored.text = "PLAYER"
+            Dealer.text = "Dealer: Computer"
+            Constants.playerdidgo = true
         } else if firstplayername == "Computer" {
+            let (c1,c2,c3,c4,cc) = CribbageDeck().hand("Computer")
             Card1.image = UIImage(named: c1.description())
             Card2.image = UIImage(named: c2.description())
             Card3.image = UIImage(named: c3.description())
             Card4.image = UIImage(named: c4.description())
             CutCard.image = UIImage(named: cc.description())
+            //edit this text later!!!
+            whoScored.text = "COMPUTER"
+            Dealer.text = "Dealer: Player"
+            Constants.computerdidgo = true
         } else {
             print("CARDVIEW NAMING ERROR")
         }
@@ -82,8 +95,6 @@ class CardsViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-
-    /*
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -91,6 +102,40 @@ class CardsViewController: UIViewController {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
     }
-    */
-
+    
+    override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
+        if identifier == "CardsToCrib" {
+            if Constants.computerdidgo && !Constants.playerdidgo {
+                let (p1,p2,p3,p4,pc) = CribbageDeck().hand("Player")
+                Card1.image = UIImage(named: p1.description())
+                Card2.image = UIImage(named: p2.description())
+                Card3.image = UIImage(named: p3.description())
+                Card4.image = UIImage(named: p4.description())
+                CutCard.image = UIImage(named: pc.description())
+                //edit this text later!!!
+                whoScored.text = "Player"
+                Constants.playerdidgo = true
+                print("FALSE 1")
+                return false
+            } else if Constants.playerdidgo && !Constants.computerdidgo {
+                let (c1,c2,c3,c4,cc) = CribbageDeck().hand("Computer")
+                Card1.image = UIImage(named: c1.description())
+                Card2.image = UIImage(named: c2.description())
+                Card3.image = UIImage(named: c3.description())
+                Card4.image = UIImage(named: c4.description())
+                CutCard.image = UIImage(named: cc.description())
+                //edit this text later!!!
+                whoScored.text = "COMPUTER"
+                Constants.computerdidgo = true
+                print("FALSE 2")
+                return false
+            } else {
+                print("TRUE 1")
+                return true
+            }
+        } else {
+            print("TRUE 2")
+            return true
+        }
+    }
 }
