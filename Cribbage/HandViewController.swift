@@ -19,11 +19,14 @@ class HandViewController: UIViewController {
 
     @IBAction func Next(sender: UIButton) {
         if CribbageDeck().cpuHandLength() == 0 {
+            Constants.pause = false
             performSegueWithIdentifier("RunToCards", sender: sender)
         } else if Constants.computerturn {
             (Constants.imagestring, Constants.dictofscores) = CribbageDeck().computerPlay()
             
             lastCard.image = UIImage(named: Constants.imagestring)
+            Constants.pause = true
+            
             switchturn()
             
             if Constants.dictofscores["Computer"] != Constants.currentcpuscore {
@@ -482,6 +485,7 @@ class HandViewController: UIViewController {
         
         static var dictofscores = ["":0]
         static var imagestring = ""
+        static var pause = false
     }
     
     // MARK: - Card Displays
@@ -552,12 +556,14 @@ class HandViewController: UIViewController {
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Pass the selected object to the new view controller.
      }
+    
+    //add in a delay when the computer is the last one to play!!!
      
     override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
         if identifier == "RunToCards" {
             print("1\(Constants.playercount)")
             print("2\(CribbageDeck().cpuHandLength())")
-            if CribbageDeck().cpuHandLength() == 0 && Constants.playercount == 6 {
+            if CribbageDeck().cpuHandLength() == 0 && Constants.playercount == 6 && !Constants.pause {
                 return true
             } else {
                 return false
