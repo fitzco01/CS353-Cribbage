@@ -73,21 +73,20 @@ class CribbageDeck {
     }
     
     func createDeck() -> [Card] {
-        var n = 1
+        let suits = [Suit.spades, Suit.hearts, Suit.clubs, Suit.diamonds]
         var deck = [Card]()
-        while let rank = Rank(rawValue: n) {
-            var m = 1
-            while let suit = Suit(rawValue: m) {
-                let newcard = Card(rank: rank, suit: suit)
-                deck.append(newcard)
-                
-                let descrip = newcard.description()
-                Constants.suitDict[descrip] = suit
-                Constants.rankDict[descrip] = rank
-                
-                m += 1
+        
+        for theSuit in suits {
+            for theRank in Rank.one.rawValue...Rank.king.rawValue {
+                let thecard = Card(rank: Rank(rawValue: theRank)!, suit: theSuit)
+                let descrip = thecard.description()
+                Constants.suitDict[descrip] = thecard.suit
+                Constants.rankDict[descrip] = thecard.rank
+                deck.append(thecard)
             }
-            n += 1
+        }
+        for acard in deck {
+            print(acard.description())
         }
         return deck
     }
@@ -187,6 +186,7 @@ class CribbageDeck {
 
     }
     
+    
     func getTheCrib() -> ([Card]) {
         return Constants.cribcards
     }
@@ -205,6 +205,10 @@ class CribbageDeck {
 
         //need to add Go!!! (how to end the run, as well as the points)
         //Straights don't work!!!
+        //All scoring needs work!!!
+        //Crib has the wrong cards!!!
+        //player has the wrong cards (related to the crib)!!!
+        //add Score Table View!!!
         
         if Constants.starthand == 0 {
             Constants.starthand += 1
@@ -242,6 +246,10 @@ class CribbageDeck {
         Constants.cutcard.removeAll()
         Constants.cutcard.append(Constants.someshuffleddeck.removeLast())
         return Constants.cutcard[0]
+    }
+    
+    func removeCardFromPlayer(cardname: String) {
+        Constants.playerDict["Player"]!.deletecardfromhandbystring(cardname)
     }
     
     func getCutCard() -> String {

@@ -37,12 +37,10 @@ enum Suit: Int {
 }
 
 enum Rank: Int {
-    case ace, two, three, four, five, six, seven, eight, nine, ten
+    case one, two, three, four, five, six, seven, eight, nine, ten
     case jack, queen, king
     func description() -> String {
         switch self {
-        case .ace:
-            return "ace"
         case .jack:
             return "jack"
         case .queen:
@@ -50,14 +48,12 @@ enum Rank: Int {
         case .king:
             return "king"
         default:
-            return String(self.rawValue)
+            return String(self.rawValue + 1)
         }
     }
     
     func value() -> Int {
         switch self {
-        case .ace:
-            return 1
         case .jack:
             return 10
         case .queen:
@@ -65,13 +61,13 @@ enum Rank: Int {
         case .king:
             return 10
         default:
-            return self.rawValue
+            return self.rawValue + 1
         }
     }
     
     func ordinal() -> Int {
         switch self {
-        case .ace:
+        case .one:
             return 1
         case .two:
             return 2

@@ -60,8 +60,7 @@ class HandViewController: UIViewController {
     }
     
     @IBOutlet weak var cutCard: UIImageView! { didSet {
-        cutCard.image = UIImage(named: Constants.cutcard)
-        print("cutcard \(Constants.cutcard)")
+        cutCard.image = UIImage(named: "bicycleback")
         }
     }
     
@@ -136,6 +135,8 @@ class HandViewController: UIViewController {
         if Constants.crib <= 1 {
             CribbageDeck().addToCrib(Constants.c1)
             
+            CribbageDeck().removeCardFromPlayer(Constants.c1)
+            
             Constants.crib += 1
             Hand1.image = nil
             Hand1.userInteractionEnabled = false
@@ -192,6 +193,8 @@ class HandViewController: UIViewController {
         if Constants.crib <= 1 {
             CribbageDeck().addToCrib(Constants.c2)
             
+            CribbageDeck().removeCardFromPlayer(Constants.c2)
+            
             Constants.crib += 1
             Hand2.image = nil
             Hand2.userInteractionEnabled = false
@@ -246,6 +249,8 @@ class HandViewController: UIViewController {
         
         if Constants.crib <= 1 {
             CribbageDeck().addToCrib(Constants.c3)
+            
+            CribbageDeck().removeCardFromPlayer(Constants.c3)
             
             Constants.crib += 1
             Hand3.image = nil
@@ -304,6 +309,8 @@ class HandViewController: UIViewController {
         if Constants.crib <= 1 {
             CribbageDeck().addToCrib(Constants.c4)
             
+            CribbageDeck().removeCardFromPlayer(Constants.c4)
+            
             Constants.crib += 1
             Hand4.image = nil
             Hand4.userInteractionEnabled = false
@@ -361,6 +368,8 @@ class HandViewController: UIViewController {
         if Constants.crib <= 1 {
             CribbageDeck().addToCrib(Constants.c5)
             
+            CribbageDeck().removeCardFromPlayer(Constants.c5)
+            
             Constants.crib += 1
             Hand5.image = nil
             Hand5.userInteractionEnabled = false
@@ -415,6 +424,8 @@ class HandViewController: UIViewController {
         
         if Constants.crib <= 1 {
             CribbageDeck().addToCrib(Constants.c6)
+            
+            CribbageDeck().removeCardFromPlayer(Constants.c6)
             
             Constants.crib += 1
             Hand6.image = nil

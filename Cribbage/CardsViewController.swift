@@ -40,6 +40,7 @@ class CardsViewController: UIViewController {
         
         if firstplayername == "Player" {
             let (p1,p2,p3,p4,pc) = CribbageDeck().hand("Player")
+            print("PLAYER CARDS + cut \(p1,p2,p3,p4,pc)")
             Card1.image = UIImage(named: p1.description())
             Card2.image = UIImage(named: p2.description())
             Card3.image = UIImage(named: p3.description())
@@ -51,6 +52,7 @@ class CardsViewController: UIViewController {
             Constants.playerdidgo = true
         } else if firstplayername == "Computer" {
             let (c1,c2,c3,c4,cc) = CribbageDeck().hand("Computer")
+            print("COMPUTER CARDS + Cut \(c1,c2,c3,c4,cc)")
             Card1.image = UIImage(named: c1.description())
             Card2.image = UIImage(named: c2.description())
             Card3.image = UIImage(named: c3.description())
@@ -83,6 +85,7 @@ class CardsViewController: UIViewController {
         if identifier == "CardsToCrib" {
             if Constants.computerdidgo && !Constants.playerdidgo {
                 let (p1,p2,p3,p4,pc) = CribbageDeck().hand("Player")
+                print("PLAYER CARDS + cut \(p1,p2,p3,p4,pc)")
                 Card1.image = UIImage(named: p1.description())
                 Card2.image = UIImage(named: p2.description())
                 Card3.image = UIImage(named: p3.description())
@@ -95,6 +98,7 @@ class CardsViewController: UIViewController {
                 return false
             } else if Constants.playerdidgo && !Constants.computerdidgo {
                 let (c1,c2,c3,c4,cc) = CribbageDeck().hand("Computer")
+                print("COMPUTER CARDS + Cut \(c1,c2,c3,c4,cc)")
                 Card1.image = UIImage(named: c1.description())
                 Card2.image = UIImage(named: c2.description())
                 Card3.image = UIImage(named: c3.description())
@@ -107,6 +111,8 @@ class CardsViewController: UIViewController {
                 return false
             } else {
                 print("TRUE 1")
+                Constants.playerdidgo = false
+                Constants.computerdidgo = false
                 return true
             }
         } else {

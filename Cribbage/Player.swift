@@ -32,8 +32,20 @@ struct Player {
         self.shorthand = somehand
     }
     
-    mutating func deletecardfromhand(index: Int) -> [Card]{
+    mutating func deletecardfromhand(index: Int) -> [Card] {
         self.hand.removeAtIndex(index)
+        return self.hand
+    }
+    
+    mutating func deletecardfromhandbystring(cardname: String) -> [Card] {
+        var loop = 0
+        for acard in self.hand {
+            if acard.description() == cardname {
+                self.hand.removeAtIndex(loop)
+            }
+            loop += 1
+        }
+        loop = 0
         return self.hand
     }
     
