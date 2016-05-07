@@ -126,8 +126,12 @@ class CribbageDeck {
     
     func hand(playername: String) -> (Card, Card, Card, Card, Card) {
         if playername == "Player" {
-            return ((Constants.playerDict["Player"]?.shorthand[0])!,(Constants.playerDict["Player"]?.shorthand[1])!,(Constants.playerDict["Player"]?.shorthand[2])!,(Constants.playerDict["Player"]?.shorthand[3])!, Constants.cutcard[0])
+            print("PLAYERS HAND \(Constants.playerDict["Player"]!.hand)")
+            
+            return ((Constants.playerDict["Player"]?.hand[0])!,(Constants.playerDict["Player"]?.hand[1])!,(Constants.playerDict["Player"]?.hand[2])!,(Constants.playerDict["Player"]?.hand[3])!, Constants.cutcard[0])
         } else if playername == "Computer" {
+            print("COMPUTERS HAND \(Constants.playerDict["Computer"]!.shorthand)")
+
             return ((Constants.playerDict["Computer"]?.shorthand[0])!,(Constants.playerDict["Computer"]?.shorthand[1])!,(Constants.playerDict["Computer"]?.shorthand[2])!,(Constants.playerDict["Computer"]?.shorthand[3])!, Constants.cutcard[0])
         } else {
             print("ERROR NAMING THE PLAYER")
@@ -195,6 +199,10 @@ class CribbageDeck {
         return Player(hand: hand, shorthand: hand, score: score, isDealer: deals, name: name)
     }
     
+    func showPlayerHand() -> [Card] {
+        return Constants.playerDict["Player"]!.hand
+    }
+    
     // MARK: - TBC
     
     func computerPlay() -> (String, [String: Int]) {
@@ -206,8 +214,6 @@ class CribbageDeck {
         //need to add Go!!! (how to end the run, as well as the points)
         //Straights don't work!!!
         //All scoring needs work!!!
-        //Crib has the wrong cards!!!
-        //player has the wrong cards (related to the crib)!!!
         //add Score Table View!!!
         
         if Constants.starthand == 0 {
