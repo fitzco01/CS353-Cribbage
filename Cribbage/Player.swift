@@ -11,7 +11,6 @@ import Foundation
 struct Player {
     var hand: [Card]
     var shorthand: [Card]
-    var score: Int
     var isDealer: Bool
     var name: String
     
@@ -98,13 +97,5 @@ struct Player {
     
     func showhand() -> [Card] {
         return hand
-    }
-    
-    mutating func updatescore(points: Int) {
-        self.score += points
-    }
-    
-    func getscore() -> Int {
-        return score
     }
 }

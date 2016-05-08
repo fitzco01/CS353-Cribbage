@@ -65,7 +65,7 @@ class BestPlay {
         return finaldict
     }
     
-    func pickACard(cpuhand: [Card]) -> (Card, [Card]) {
+    func pickACard(cpuhand: [Card]) -> (Card, [Card])? {
         let H = History()
         let C = CPUScoringRun()
         

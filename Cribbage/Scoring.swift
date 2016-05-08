@@ -147,26 +147,14 @@ class ScoringRun {
     //returns 1 if the player cannot play, 0 otherwise
     //points should be given to the next player, not the current player (unlike the other functions)
     
-    func go(playername: String, runtotal: Int) -> Int {
-        if History().mostRecentPlayer().cannotPlay(runtotal) {
-            
-            ScoreHistory().addToHistory(playername, card: History().mostRecentPlay(), othercards: History().showPlayHistory(), scoretype: "go", pointvalue: 1)
-
-            return 1
-        } else {
-            return 0
-        }
+    func go(playername: String) -> Int{
+        ScoreHistory().addToHistory(playername, card: History().mostRecentPlay(), othercards: History().showPlayHistory(), scoretype: "go", pointvalue: 1)
+        return 1
     }
     
     func lastcard(playername: String) -> Int {
-        if Order().getHistory().count == 8 {
-            
-            ScoreHistory().addToHistory(playername, card: History().mostRecentPlay(), othercards: History().showPlayHistory(), scoretype: "last card", pointvalue: 1)
-
-            return 1
-        } else {
-            return 0
-        }
+        ScoreHistory().addToHistory(playername, card: History().mostRecentPlay(), othercards: History().showPlayHistory(), scoretype: "last card", pointvalue: 1)
+        return 1
     }
     
     func jackflip(playername: String) -> Int {

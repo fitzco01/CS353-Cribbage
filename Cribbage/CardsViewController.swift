@@ -31,8 +31,6 @@ class CardsViewController: UIViewController {
     private struct Constants {
         static var playerdidgo = false
         static var computerdidgo = false
-        static var playerscore = 0
-        static var computerscore = 0
     }
     
     override func viewDidLoad() {
@@ -50,12 +48,12 @@ class CardsViewController: UIViewController {
             Card4.image = UIImage(named: p4.description())
             CutCard.image = UIImage(named: CribbageDeck().getCutCard())
             
-            let old = Constants.playerscore
-            Constants.playerscore += CribbageDeck().scoreHand("Player")
+            let old = PlayerScores().getScore("Player")
+            CribbageDeck().scoreHand("Player")
             
-            PlayerScore.text = "Player Score: \(Constants.playerscore)"
-            CPUScore.text = "CPU Score: \(Constants.computerscore)"
-            whoScored.text = "Player scored \(Constants.playerscore - old) points!"
+            PlayerScore.text = "Player Score: \(PlayerScores().getScore("Player"))"
+            CPUScore.text = "CPU Score: \(PlayerScores().getScore("Computer"))"
+            whoScored.text = "Player scored \(PlayerScores().getScore("Player") - old) points!"
             
             
             Dealer.text = "Dealer: Computer"
@@ -70,12 +68,12 @@ class CardsViewController: UIViewController {
             CutCard.image = UIImage(named: CribbageDeck().getCutCard())
             
             
-            let old = Constants.computerscore
-            Constants.computerscore += CribbageDeck().scoreShortHand("Computer")
+            let old = PlayerScores().getScore("Computer")
+            CribbageDeck().scoreShortHand("Computer")
             
-            CPUScore.text = "CPU Score: \(Constants.computerscore)"
-            PlayerScore.text = "Player Score: \(Constants.playerscore)"
-            whoScored.text = "Computer scored \(Constants.computerscore - old) points!"
+            CPUScore.text = "CPU Score: \(PlayerScores().getScore("Computer"))"
+            PlayerScore.text = "Player Score: \(PlayerScores().getScore("Player"))"
+            whoScored.text = "Computer scored \(PlayerScores().getScore("Computer") - old) points!"
 
             Dealer.text = "Dealer: Player"
             Constants.computerdidgo = true
@@ -109,12 +107,12 @@ class CardsViewController: UIViewController {
                 Card4.image = UIImage(named: p4.description())
                 CutCard.image = UIImage(named: CribbageDeck().getCutCard())
                 
-                let old = Constants.playerscore
-                Constants.playerscore += CribbageDeck().scoreHand("Player")
+                let old = PlayerScores().getScore("Player")
+                CribbageDeck().scoreHand("Player")
                 
-                PlayerScore.text = "Player Score: \(Constants.playerscore)"
-                CPUScore.text = "CPU Score: \(Constants.computerscore)"
-                whoScored.text = "Player scored \(Constants.playerscore - old) points!"
+                PlayerScore.text = "Player Score: \(PlayerScores().getScore("Player"))"
+                CPUScore.text = "CPU Score: \(PlayerScores().getScore("Computer"))"
+                whoScored.text = "Player scored \(PlayerScores().getScore("Player") - old) points!"
                 
                 Constants.playerdidgo = true
                 print("FALSE 1")
@@ -128,13 +126,11 @@ class CardsViewController: UIViewController {
                 Card4.image = UIImage(named: c4.description())
                 CutCard.image = UIImage(named: CribbageDeck().getCutCard())
 
-                let old = Constants.computerscore
-                print("OLD \(old)")
-                Constants.computerscore += CribbageDeck().scoreShortHand("Computer")
-                print("NEW \(Constants.computerscore)")
-                CPUScore.text = "CPU Score: \(Constants.computerscore)"
-                PlayerScore.text = "Player Score: \(Constants.playerscore)"
-                whoScored.text = "Computer scored \(Constants.computerscore - old) points!"
+                let old = PlayerScores().getScore("Computer")
+                CribbageDeck().scoreShortHand("Computer")
+                CPUScore.text = "CPU Score: \(PlayerScores().getScore("Computer"))"
+                PlayerScore.text = "Player Score: \(PlayerScores().getScore("Player"))"
+                whoScored.text = "Computer scored \(PlayerScores().getScore("Computer") - old) points!"
                 
                 Constants.computerdidgo = true
                 print("FALSE 2")

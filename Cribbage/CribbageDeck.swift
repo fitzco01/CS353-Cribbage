@@ -22,7 +22,6 @@ class CribbageDeck {
         
         static var count = 0
         
-        static var scoreDict: [String: Int] = ["Player":0]
         
         static var tempcpuhand: [Card] = []
         
@@ -147,51 +146,30 @@ class CribbageDeck {
         }
     }
     
-    func play(cardname: String) -> [String: Int] {
-        
-        var man = Constants.playerDict["Player"]
-        var cpu = Constants.playerDict["Computer"]
+    func play(cardname: String) {
         
         let rank = rankFromDescription(cardname)
         let suit = suitFromDescription(cardname)
         
         let playcard = Card(rank: rank, suit: suit)
-        
+        var score = 0
+
         History().playHistory(playcard)
-        History().playerHistory(man!)
         
         //Scoring
 
         if Constants.count == 0 {
-            ScoringRun().jackflip("Player")
+            score += ScoringRun().jackflip("Player")
             Constants.count += 1
         }
-        
         ScoringRun().updateruncount(playcard)
-        let runtotal = ScoringRun().getruncount()
         
-        let scored = cpu!.score
-        cpu!.score += ScoringRun().go("Computer", runtotal: runtotal)
-        Constants.scoreDict["Computer"] = cpu!.score
-                
-        if scored != cpu!.score {
-            
-            return Constants.scoreDict
-        } else {
-            man!.score += ScoringRun().fifteencount("Player")
-            man!.score += ScoringRun().SomeOfAKind("Player")
-            man!.score += ScoringRun().straight("Player")
-            man!.score += ScoringRun().lastcard("Player")
-            
-            Constants.scoreDict["Player"] = man!.score
-            
-            print("PLAYER SCORE \(Constants.scoreDict["Player"])")
-            print("COMPUTER SCORE \(Constants.scoreDict["Computer"])")
-
+        score += ScoringRun().fifteencount("Player")
+        score += ScoringRun().SomeOfAKind("Player")
+        score += ScoringRun().straight("Player")
+        score += ScoringRun().lastcard("Player")
         
-            return Constants.scoreDict
-        }
-
+        PlayerScores().addScore("Player", newpoints: score)
     }
     
     
@@ -199,15 +177,15 @@ class CribbageDeck {
         return Constants.cribcards
     }
     
-    func createPlayer(hand: [Card], score: Int, deals: Bool, name: String) -> Player {
-        return Player(hand: hand, shorthand: hand, score: score, isDealer: deals, name: name)
+    func createPlayer(hand: [Card], deals: Bool, name: String) -> Player {
+        return Player(hand: hand, shorthand: hand, isDealer: deals, name: name)
     }
     
     func showPlayerHand() -> [Card] {
         return Constants.playerDict["Player"]!.hand
     }
     
-    func scoreHand(name: String) -> Int {
+    func scoreHand(name: String) {
         let S = ScoringHand()
         var handWithCut = Constants.playerDict[name]!.hand
         handWithCut.append(Constants.cutcard[0])
@@ -220,11 +198,27 @@ class CribbageDeck {
         score += S.straight(name, ahand: handWithCut)
         score += S.SomeOfAKind(name, ahand: handWithCut)
         
-        Constants.scoreDict[name]! += score
-        return Constants.scoreDict[name]!
+        PlayerScores().addScore(name, newpoints: score)
     }
     
-    func scoreShortHand(name: String) -> Int {
+    func scoreCrib(name: String) {
+        let S = ScoringHand()
+
+        var cribCardsWithCut = Constants.cribcards
+        cribCardsWithCut.append(Constants.cutcard[0])
+        var score = 0
+        
+        score += S.fifteencount(name, ahand: cribCardsWithCut)
+        score += S.fourflush(name, justplayerhand: Constants.cribcards)
+        score += S.jackinhand(name, somehand: Constants.cribcards)
+        score += S.fiveflush(name, handandcutcardORcrib: cribCardsWithCut)
+        score += S.straight(name, ahand: cribCardsWithCut)
+        score += S.SomeOfAKind(name, ahand: cribCardsWithCut)
+        
+        PlayerScores().addScore(name, newpoints: score)
+    }
+    
+    func scoreShortHand(name: String) {
         let S = ScoringHand()
         var handWithCut = Constants.playerDict[name]!.shorthand
         handWithCut.append(Constants.cutcard[0])
@@ -237,12 +231,24 @@ class CribbageDeck {
         score += S.straight(name, ahand: handWithCut)
         score += S.SomeOfAKind(name, ahand: handWithCut)
         
-        Constants.scoreDict[name]! += score
-        return Constants.scoreDict[name]!
+        PlayerScores().addScore(name, newpoints: score)
     }
-    // MARK: - TBC
     
-    func computerPlay() -> (String, [String: Int]) {
+    func canPlay(name: String, runtotal: Int) -> Bool {
+        var value = 15
+        for acard in Constants.playerDict[name]!.hand {
+            if acard.rank.value() < value {
+                value = acard.rank.value()
+            }
+        }
+        if value + runtotal <= 31 {
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    func computerPlay() -> String {
         
         // When the player is the dealer, computer plays a duplicate card (the first one)
         // The card isn't necessarily played immediately if the computer can score
@@ -253,7 +259,7 @@ class CribbageDeck {
         //crib scoring needs work!!!
         //hand scoring 15 needs work?!!!
         
-        
+        var score = 0
         if Constants.starthand == 0 {
             Constants.starthand += 1
             let newcpuhand = BestPlay().createAHand(Constants.playerDict["Computer"]!.hand)
@@ -265,25 +271,26 @@ class CribbageDeck {
                 Constants.cribcards.append(acard)
             }
         }
-            print("\n THISHAND \n \(Constants.playerDict["Computer"]!.hand) \n")
-            let (selectedcard, newhand) = BestPlay().pickACard(Constants.playerDict["Computer"]!.hand)
         
-            print("HAND LENGTH \(Constants.playerDict["Computer"]!.hand.count)")
-                                  
-            History().playHistory(selectedcard)
-            History().playerHistory(Constants.playerDict["Computer"]!)
+        print("\n THISHAND \n \(Constants.playerDict["Computer"]!.hand) \n")
+        let (selectedcard, newhand) = BestPlay().pickACard(Constants.playerDict["Computer"]!.hand)!
         
-            Constants.playerDict["Computer"]!.somenewhand(newhand)
+        print("SELECTEDCARD\(selectedcard.description())")
+        print("HAND LENGTH \(Constants.playerDict["Computer"]!.hand.count)")
+                              
+        History().playHistory(selectedcard)
+        History().playerHistory(Constants.playerDict["Computer"]!)
+    
+        Constants.playerDict["Computer"]!.somenewhand(newhand)
+    
+        score += ScoringRun().fifteencount("Computer")
+        score += ScoringRun().SomeOfAKind("Computer")
+        score += ScoringRun().straight("Computer")
+        score += ScoringRun().lastcard("Computer")
         
-            Constants.playerDict["Computer"]!.score += ScoringRun().fifteencount("Computer")
-            Constants.playerDict["Computer"]!.score += ScoringRun().SomeOfAKind("Computer")
-            Constants.playerDict["Computer"]!.score += ScoringRun().straight("Computer")
-            Constants.playerDict["Computer"]!.score += ScoringRun().lastcard("Computer")
-            
-            Constants.scoreDict["Computer"] = Constants.playerDict["Computer"]!.score
-                
-            print("SELECTEDCARD\(selectedcard.description())")
-            return (selectedcard.description(), Constants.scoreDict)
+        PlayerScores().addScore("Computer", newpoints: score)
+        
+        return selectedcard.description()
     }
     
     func cutcard() -> Card {
@@ -322,9 +329,9 @@ class CribbageDeck {
 
         let dealer: Bool = makeDealer()
         
-        let human = createPlayer(hand1, score: 0, deals: dealer, name: "Player")
+        let human = createPlayer(hand1, deals: dealer, name: "Player")
         Constants.playerDict["Player"] = human
-        let computer = createPlayer(hand2, score: 0, deals: !dealer, name: "Computer")
+        let computer = createPlayer(hand2, deals: !dealer, name: "Computer")
         Constants.playerDict["Computer"] = computer
 
         HVC.c1Display(human.hand[0].description())

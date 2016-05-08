@@ -16,6 +16,11 @@ class CribViewController: UIViewController {
     @IBOutlet weak var Crib4: UIImageView!
     @IBOutlet weak var CutCard: UIImageView!
     
+    @IBOutlet weak var whoScoredWhat: UILabel!
+    @IBOutlet weak var dealer: UILabel!
+    @IBOutlet weak var computerScore: UILabel!
+    @IBOutlet weak var playerScore: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         let L = CribbageDeck().getTheCrib()
@@ -25,6 +30,16 @@ class CribViewController: UIViewController {
         Crib3.image = UIImage(named: L[2].description())
         Crib4.image = UIImage(named: L[3].description())
         CutCard.image = UIImage(named: CribbageDeck().getCutCard())
+        
+        let name = CribbageDeck().whoDealtIt()
+        dealer.text = "Dealer: \(name)"
+        
+        let old = PlayerScores().getScore(name)
+        CribbageDeck().scoreCrib(name)
+        playerScore.text = "Player Score: \(PlayerScores().getScore("Player"))"
+        computerScore.text = "CPU Score: \(PlayerScores().getScore("Computer"))"
+        whoScoredWhat.text = "\(name) Scored \(PlayerScores().getScore(name) - old) points!"
+
         // Do any additional setup after loading the view.
     }
 
@@ -32,17 +47,12 @@ class CribViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-    private struct Constants {
-        static var count = 0
-    }
 
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        Constants.count += 1
-        print("SEGUE \(Constants.count)")
+        
         CribbageDeck().restart()
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
