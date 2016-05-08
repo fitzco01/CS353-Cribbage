@@ -54,7 +54,7 @@ class CardsViewController: UIViewController {
             Constants.playerscore += CribbageDeck().scoreHand("Player")
             
             PlayerScore.text = "Player Score: \(Constants.playerscore)"
-            
+            CPUScore.text = "CPU Score: \(Constants.computerscore)"
             whoScored.text = "Player scored \(Constants.playerscore - old) points!"
             
             
@@ -74,7 +74,7 @@ class CardsViewController: UIViewController {
             Constants.computerscore += CribbageDeck().scoreShortHand("Computer")
             
             CPUScore.text = "CPU Score: \(Constants.computerscore)"
-            
+            PlayerScore.text = "Player Score: \(Constants.playerscore)"
             whoScored.text = "Computer scored \(Constants.computerscore - old) points!"
 
             Dealer.text = "Dealer: Player"
@@ -113,7 +113,7 @@ class CardsViewController: UIViewController {
                 Constants.playerscore += CribbageDeck().scoreHand("Player")
                 
                 PlayerScore.text = "Player Score: \(Constants.playerscore)"
-                
+                CPUScore.text = "CPU Score: \(Constants.computerscore)"
                 whoScored.text = "Player scored \(Constants.playerscore - old) points!"
                 
                 Constants.playerdidgo = true
@@ -129,10 +129,11 @@ class CardsViewController: UIViewController {
                 CutCard.image = UIImage(named: CribbageDeck().getCutCard())
 
                 let old = Constants.computerscore
+                print("OLD \(old)")
                 Constants.computerscore += CribbageDeck().scoreShortHand("Computer")
-                
+                print("NEW \(Constants.computerscore)")
                 CPUScore.text = "CPU Score: \(Constants.computerscore)"
-                
+                PlayerScore.text = "Player Score: \(Constants.playerscore)"
                 whoScored.text = "Computer scored \(Constants.computerscore - old) points!"
                 
                 Constants.computerdidgo = true

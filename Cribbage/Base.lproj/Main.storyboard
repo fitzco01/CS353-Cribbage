@@ -817,7 +817,7 @@
                                     <outletCollection property="gestureRecognizers" destination="0Yv-vD-OZ4" appends="YES" id="iPu-g3-1M1"/>
                                 </connections>
                             </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" restorationIdentifier="CutCard" image="C1314F52-7F3D-4C01-89F9-AD39B39516E0" translatesAutoresizingMaskIntoConstraints="NO" id="qUY-J4-xhA">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" restorationIdentifier="CutCard" image="78D576D6-F62F-43BC-9027-579F8B715806" translatesAutoresizingMaskIntoConstraints="NO" id="qUY-J4-xhA">
                                 <rect key="frame" x="276" y="172" width="120" height="180"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="qUY-J4-xhA" secondAttribute="height" multiplier="2:3" id="2af-IW-P64"/>
@@ -893,7 +893,7 @@
                                     </mask>
                                 </variation>
                             </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" restorationIdentifier="LastCard" image="C1314F52-7F3D-4C01-89F9-AD39B39516E0" translatesAutoresizingMaskIntoConstraints="NO" id="Dml-Kb-cKC">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" restorationIdentifier="LastCard" image="78D576D6-F62F-43BC-9027-579F8B715806" translatesAutoresizingMaskIntoConstraints="NO" id="Dml-Kb-cKC">
                                 <rect key="frame" x="276" y="400" width="120" height="180"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="Dml-Kb-cKC" secondAttribute="height" multiplier="2:3" id="3fB-Bi-iEz"/>
@@ -4603,7 +4603,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="C1314F52-7F3D-4C01-89F9-AD39B39516E0" width="140" height="198">
+        <image name="78D576D6-F62F-43BC-9027-579F8B715806" width="140" height="198">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGPT5YJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK4HCBMU
 GR4fIyQrLjE3OlUkbnVsbNUJCgsMDQ4PEBESVk5TU2l6ZVYkY2xhc3NcTlNJbWFnZUZsYWdzVk5TUmVw
@@ -6504,7 +6504,7 @@ AAG69AABuvcAAbr8AAG7CwABuw8AAbsWAAG7HgABuysAAbswAAG7MgABuzQAAbs5AAG7QQABu0QAAbtJ
 AAG7UQABu1QAAbtmAAG7aQABu24AAAAAAAAEAQAAAAAAAABBAAAAAAAAAAAAAAAAAAG7cA
 </mutableData>
         </image>
-        <image name="bicycleback" width="140" height="198"/>
+        <image name="bicycleback" width="600" height="662"/>
         <image name="bicycleback01" width="300" height="300"/>
         <image name="d66146d75fef16bd97cbf3b739ac0c5a" width="318" height="400"/>
         <image name="wooden-panel" width="4232" height="2756"/>

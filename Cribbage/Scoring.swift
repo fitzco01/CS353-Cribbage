@@ -18,6 +18,11 @@ struct Order {
         return valueorderlist
     }
     
+    func orderByOrdinal() -> [Card] {
+        let valueorderlist = historylist.sort { $0.rank.ordinal() < $1.rank.ordinal() }
+        return valueorderlist
+    }
+    
     func getHistory() -> [Card] {
         return historylist
     }
@@ -38,15 +43,15 @@ class ScoringRun {
     
     func straight(playername: String) -> Int {
         var i = 0
-        var orderlist = Order().orderByValue()
+        Constants.boolpoints = false
+        var orderlist = Order().orderByOrdinal()
         if orderlist.count >= 3 {
             while (i + 1) < orderlist.count {
                 if orderlist[i].rank.ordinal() == (orderlist[i + 1].rank.ordinal() + 1) {
                     Constants.boolpoints = true
                     i += 1
-                } else {
+                } else if i < 3{
                     Constants.boolpoints = false
-                    i = orderlist.count
                 }
             }
         }
@@ -310,7 +315,7 @@ class ScoringHand {
         var count = 0
         let threedict = makeSubDecksOf3From5(ahand)
         let fourdict = makeSubDecksOf4From5(ahand)
-        let sorthand = ahand.sort { $0.rank.value() < $1.rank.value() }
+        let sorthand = ahand.sort { $0.rank.ordinal() < $1.rank.ordinal() }
         
         if sorthand[0].rank.ordinal() == sorthand[1].rank.ordinal() + 1 && sorthand[1].rank.ordinal() == sorthand[2].rank.ordinal() + 1 && sorthand[2].rank.ordinal() == sorthand[3].rank.ordinal() + 1 && sorthand[3].rank.ordinal() == sorthand[4].rank.ordinal() + 1 {
             count = 5
@@ -321,20 +326,21 @@ class ScoringHand {
         }
         
         for (_, value) in fourdict {
-            if value[0].rank.ordinal() == value[1].rank.ordinal() + 1 && value[1].rank.ordinal() == value[2].rank.ordinal() + 1 && value[2].rank.ordinal() == value[3].rank.ordinal() + 1 {
-                count = 4
-                ScoreHistory().addToHistory(playername, card: value[0], othercards: [value[1],value[2],value[3]], scoretype: "straight", pointvalue: count)
+            let sorthand = value.sort { $0.rank.ordinal() < $1.rank.ordinal() }
 
-                return count
+            if sorthand[0].rank.ordinal() == sorthand[1].rank.ordinal() + 1 && sorthand[1].rank.ordinal() == sorthand[2].rank.ordinal() + 1 && sorthand[2].rank.ordinal() == sorthand[3].rank.ordinal() + 1 {
+                count += 4
+                ScoreHistory().addToHistory(playername, card: value[0], othercards: [value[1],value[2],value[3]], scoretype: "straight", pointvalue: 4)
             }
         }
         
         for (_, value) in threedict {
-            if value[0].rank.ordinal() == value[1].rank.ordinal() + 1 && value[1].rank.ordinal() == value[2].rank.ordinal() + 1 {
-                count = 3
-                ScoreHistory().addToHistory(playername, card: value[0], othercards: [value[1],value[2]], scoretype: "straight", pointvalue: count)
+            let sorthand = value.sort { $0.rank.ordinal() < $1.rank.ordinal() }
 
-                return count
+            if sorthand[0].rank.ordinal() == sorthand[1].rank.ordinal() + 1 && sorthand[1].rank.ordinal() == sorthand[2].rank.ordinal() + 1 {
+                count += 3
+
+                ScoreHistory().addToHistory(playername, card: value[0], othercards: [value[1],value[2]], scoretype: "straight", pointvalue: 3)
             }
         }
         
@@ -387,6 +393,11 @@ struct CPUOrder {
         return valueorderlist
     }
     
+    func orderByOrdinal(cardlist: [Card]) -> [Card] {
+        let valueorderlist = cardlist.sort { $0.rank.ordinal() < $1.rank.ordinal() }
+        return valueorderlist
+    }
+    
     func getHistory() -> [Card] {
         return historylist
     }
@@ -416,26 +427,26 @@ class CPUScoringRun {
     }
     
     // MARK: - Run Scoring
-    
     func straight(cardone: Card) -> Int {
         let history = addcard(cardone)
         
         var i = 0
-        let orderlist = CPUOrder().orderByValue(history)
+        let orderlist = CPUOrder().orderByOrdinal(history)
+        Constants.boolpoints = false
+        
         if orderlist.count >= 3 {
             while (i + 1) < orderlist.count {
                 if orderlist[i].rank.ordinal() == (orderlist[i + 1].rank.ordinal() + 1) {
-                    Constants.boolpoints = true
                     i += 1
-                } else {
+                    Constants.boolpoints = true
+                } else if i <= 3{
                     Constants.boolpoints = false
-                    i = orderlist.count
                 }
             }
         }
         if Constants.boolpoints {
             Constants.boolpoints = false
-            return orderlist.count
+            return i
         } else {
             return 0
         }
@@ -603,10 +614,10 @@ class CPUScoringHand {
     func straight(ahand: [Card]) -> Int{
         var count = 0
         let threedict = makeSubDecksOf3From4(ahand)
-        let sorthand = ahand.sort { $0.rank.value() < $1.rank.value() }
+        let sorthand = ahand.sort { $0.rank.ordinal() < $1.rank.ordinal() }
         
         if sorthand[0].rank.ordinal() == sorthand[1].rank.ordinal() + 1 && sorthand[1].rank.ordinal() == sorthand[2].rank.ordinal() + 1 && sorthand[2].rank.ordinal() == sorthand[3].rank.ordinal() + 1 && sorthand[3].rank.ordinal() == sorthand[4].rank.ordinal() + 1 {
-            count += 5
+            count = 5
             
             return count
         }
