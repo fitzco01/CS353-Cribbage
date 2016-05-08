@@ -369,8 +369,6 @@ class HandViewController: UIViewController {
         // Pass the selected object to the new view controller.
      }
     
-    //add in a delay when the computer is the last one to play!!!
-     
     override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
         if identifier == "RunToCards" {
             if CribbageDeck().cpuHandLength() == 0 && Constants.playercount == 6 && !Constants.pause {                    
@@ -385,8 +383,6 @@ class HandViewController: UIViewController {
     }
     
     //List of things to do!!!
-    //LEFT OFF HERE!!!
-    //dealer was computer and it went first (second time around)!!!
     //fix autolayout (all views and all sizes)
     //add a thing for when the game ends (maybe another view, which goes to the start view?)
     //check to see if the score is >121 every time someone scores (for the thing above)

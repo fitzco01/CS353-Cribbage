@@ -45,11 +45,11 @@ class ScoringRun {
     
     // MARK: - Run Scoring
 
-    //finalcards has the initial card as well...!!!
     func straight(playername: String) -> Int {
         var count = 0
         var checklist = [Card]()
         var finalcards = [Card]()
+        finalcards.removeAll()
         for acard in History().showPlayHistory() {
             checklist.insert(acard, atIndex: 0)
             let valueorderlist = checklist.sort { $0.rank.ordinal() < $1.rank.ordinal() }
@@ -57,38 +57,57 @@ class ScoringRun {
             if valueorderlist.count == 3 {
                 if valueorderlist[0].rank.ordinal() == valueorderlist[1].rank.ordinal() - 1 && valueorderlist[1].rank.ordinal() == valueorderlist[2].rank.ordinal() - 1 {
                     count = 3
-                    finalcards = [valueorderlist[0],valueorderlist[1]]
+                    for i in 0...2 {
+                        if History().mostRecentPlay().description() != valueorderlist[i].description() {
+                            finalcards.append(valueorderlist[i])
+                        }
+                    }
                 }
             }
             if valueorderlist.count == 4 {
                 if valueorderlist[0].rank.ordinal() == valueorderlist[1].rank.ordinal() - 1 && valueorderlist[1].rank.ordinal() == valueorderlist[2].rank.ordinal() - 1 && valueorderlist[2].rank.ordinal() == valueorderlist[3].rank.ordinal() - 1 {
                     count = 4
-                    finalcards = [valueorderlist[0],valueorderlist[1],valueorderlist[2]]
-                }
+                    for i in 0...3 {
+                        if History().mostRecentPlay().description() != valueorderlist[i].description() {
+                            finalcards.append(valueorderlist[i])
+                        }
+                    }                }
             }
             if valueorderlist.count == 5 {
                 if valueorderlist[0].rank.ordinal() == valueorderlist[1].rank.ordinal() - 1 && valueorderlist[1].rank.ordinal() == valueorderlist[2].rank.ordinal() - 1 && valueorderlist[2].rank.ordinal() == valueorderlist[3].rank.ordinal() - 1 && valueorderlist[3].rank.ordinal() == valueorderlist[4].rank.ordinal() - 1{
                     count = 5
-                    finalcards = [valueorderlist[0],valueorderlist[1],valueorderlist[2],valueorderlist[3]]
-                }
+                    for i in 0...4 {
+                        if History().mostRecentPlay().description() != valueorderlist[i].description() {
+                            finalcards.append(valueorderlist[i])
+                        }
+                    }                }
             }
             if valueorderlist.count == 6 {
                 if valueorderlist[0].rank.ordinal() == valueorderlist[1].rank.ordinal() - 1 && valueorderlist[1].rank.ordinal() == valueorderlist[2].rank.ordinal() - 1 && valueorderlist[2].rank.ordinal() == valueorderlist[3].rank.ordinal() - 1 && valueorderlist[3].rank.ordinal() == valueorderlist[4].rank.ordinal() && valueorderlist[4].rank.ordinal() == valueorderlist[5].rank.ordinal() - 1{
                     count = 6
-                    finalcards = [valueorderlist[0],valueorderlist[1],valueorderlist[2],valueorderlist[3],valueorderlist[4]]
-                }
+                    for i in 0...5 {
+                        if History().mostRecentPlay().description() != valueorderlist[i].description() {
+                            finalcards.append(valueorderlist[i])
+                        }
+                    }                }
             }
             if valueorderlist.count == 7 {
                 if valueorderlist[0].rank.ordinal() == valueorderlist[1].rank.ordinal() - 1 && valueorderlist[1].rank.ordinal() == valueorderlist[2].rank.ordinal() - 1 && valueorderlist[2].rank.ordinal() == valueorderlist[3].rank.ordinal() - 1 && valueorderlist[3].rank.ordinal() == valueorderlist[4].rank.ordinal() && valueorderlist[4].rank.ordinal() == valueorderlist[5].rank.ordinal() && valueorderlist[5].rank.ordinal() == valueorderlist[6].rank.ordinal() - 1 {
                     count = 7
-                    finalcards = [valueorderlist[0],valueorderlist[1],valueorderlist[2],valueorderlist[3],valueorderlist[4],valueorderlist[5]]
-                }
+                    for i in 0...6 {
+                        if History().mostRecentPlay().description() != valueorderlist[i].description() {
+                            finalcards.append(valueorderlist[i])
+                        }
+                    }                }
             }
             if valueorderlist.count == 8 {
                 if valueorderlist[0].rank.ordinal() == valueorderlist[1].rank.ordinal() - 1 && valueorderlist[1].rank.ordinal() == valueorderlist[2].rank.ordinal() - 1 && valueorderlist[2].rank.ordinal() == valueorderlist[3].rank.ordinal() - 1 && valueorderlist[3].rank.ordinal() == valueorderlist[4].rank.ordinal() && valueorderlist[4].rank.ordinal() == valueorderlist[5].rank.ordinal() && valueorderlist[5].rank.ordinal() == valueorderlist[6].rank.ordinal() - 1 && valueorderlist[6].rank.ordinal() == valueorderlist[7].rank.ordinal() - 1 {
                     count = 8
-                    finalcards = [valueorderlist[0],valueorderlist[1],valueorderlist[2],valueorderlist[3],valueorderlist[4],valueorderlist[5],valueorderlist[6]]
-                }
+                    for i in 0...7 {
+                        if History().mostRecentPlay().description() != valueorderlist[i].description() {
+                            finalcards.append(valueorderlist[i])
+                        }
+                    }                }
             }
         }
         if count != 0 {
@@ -389,14 +408,9 @@ class ScoringHand {
 
         return count
     }
-    
-    //ADD Good Jack!!!?
-    
 }
 
 // MARK: - Scoring Checks for computer cards
-// make this work with BestPlay.PickACard
-// add function calls to BestPlay.PickACard
 
 struct CPUOrder {
     var historylist = History().showPlayHistory()
