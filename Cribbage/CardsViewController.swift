@@ -34,6 +34,17 @@ class CardsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if History().playLength() != 0 {
+            if ScoringRun().getruncount() != 31 {
+                ScoringRun().lastcard(History().mostRecentPlayer().name)
+                PlayerScores().addScore(History().mostRecentPlayer().name, newpoints: 1)
+            }
+            print("deleting history 4")
+            History().deleteHistory()
+            ScoringRun().resetruncount()
+        }
+        
 
         let firstplayername = CribbageDeck().whoDidntDealIt()
         

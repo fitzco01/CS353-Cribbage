@@ -51,24 +51,54 @@ class HandViewController: UIViewController {
         
         static var imagestring = ""
         static var pause = false
-        static var marker = false
     }
     
     //MARK: - Outlets
 
     @IBAction func Next(sender: UIButton) {
         if CribbageDeck().cpuHandLength() == 0 {
-            Constants.pause = false
-            performSegueWithIdentifier("RunToCards", sender: sender)
-        } else if Constants.computerturn {
-            Constants.imagestring = CribbageDeck().computerPlay()
-            
-            lastCard.image = UIImage(named: Constants.imagestring)
-            Constants.pause = true
-            
-            switchturn()
+            Constants.computercango = CribbageDeck().canPlay("Computer")
+            if !Constants.computercango {
+                if ScoringRun().getruncount() != 31 {
+                    ScoringRun().lastcard(History().mostRecentPlayer().name)
+                    PlayerScores().addScore(History().mostRecentPlayer().name, newpoints: 1)
+                }
+                print("deleting history 3")
+                History().deleteHistory()
+                lastCard.image = UIImage(named: "bicycleback")
+                print("TURN 5 \(Constants.computerturn)")
+                ScoringRun().resetruncount()
+            }
             
             CPUScore.text = "CPU Score: \(PlayerScores().getScore("Computer"))"
+            PlayerScore.text = "Player Score: \(PlayerScores().getScore("Player"))"
+            
+            Constants.pause = false
+            performSegueWithIdentifier("RunToCards", sender: sender)
+            
+        } else if Constants.computerturn {
+            Constants.computercango = CribbageDeck().canPlay("Computer")
+            if !Constants.computercango {
+                if ScoringRun().getruncount() != 31 {
+                    ScoringRun().lastcard(History().mostRecentPlayer().name)
+                    PlayerScores().addScore(History().mostRecentPlayer().name, newpoints: 1)
+                }
+                print("deleting history 3")
+                History().deleteHistory()
+                lastCard.image = UIImage(named: "bicycleback")
+                print("TURN 5 \(Constants.computerturn)")
+                ScoringRun().resetruncount()
+            } else {
+                print("YOU GOT HERE")
+                Constants.imagestring = CribbageDeck().computerPlay()
+            
+                lastCard.image = UIImage(named: Constants.imagestring)
+                Constants.pause = true
+            
+                switchturn()
+            }
+            CPUScore.text = "CPU Score: \(PlayerScores().getScore("Computer"))"
+            PlayerScore.text = "Player Score: \(PlayerScores().getScore("Player"))"
         }
     }
     
@@ -192,7 +222,6 @@ class HandViewController: UIViewController {
                     lastCard.image = UIImage(named: Constants.imagestring)
                     print("TURN 1 \(Constants.computerturn)")
                     switchturn()
-                    Constants.marker = false
                 } else {
                     Constants.playercango = CribbageDeck().canPlay("Player")
                     if Constants.playercango {
@@ -204,12 +233,9 @@ class HandViewController: UIViewController {
                         }
                         print("deleting history 1")
                         History().deleteHistory()
-                        Constants.playercango = true
-                        Constants.computercango = true
                         lastCard.image = UIImage(named: "bicycleback")
                         print("TURN 2 \(Constants.computerturn)")
                         ScoringRun().resetruncount()
-                        Constants.marker = true
                     }
                 }
             } else {
@@ -224,7 +250,6 @@ class HandViewController: UIViewController {
                     lastCardDisplay(cardname)
                     whichHand.userInteractionEnabled = false
                     print("TURN 3 \(Constants.computerturn)")
-                    Constants.marker = false
                     switchturn()
                 } else {
                     Constants.computercango = CribbageDeck().canPlay("Computer")
@@ -239,12 +264,9 @@ class HandViewController: UIViewController {
                         }
                         print("deleting history 2")
                         History().deleteHistory()
-                        Constants.playercango = true
-                        Constants.computercango = true
                         lastCard.image = UIImage(named: "bicycleback")
                         print("TURN 5 \(Constants.computerturn)")
                         ScoringRun().resetruncount()
-                        Constants.marker = true
                     }
                 }
             }
@@ -351,22 +373,10 @@ class HandViewController: UIViewController {
      
     override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
         if identifier == "RunToCards" {
-            if CribbageDeck().cpuHandLength() == 0 && Constants.playercount == 6 && !Constants.pause {
+            if CribbageDeck().cpuHandLength() == 0 && Constants.playercount == 6 && !Constants.pause {                    
                 return true
             } else {
-                print("marker \(Constants.marker)")
-                if Constants.marker == false {
-                    if ScoringRun().getruncount() != 31 {
-                        ScoringRun().lastcard(History().mostRecentPlayer().name)
-                        PlayerScores().addScore(History().mostRecentPlayer().name, newpoints: 1)
-                    }
-                    print("deleting history 3")
-                    History().deleteHistory()
-                    Constants.playercango = true
-                    Constants.computercango = true
-                    lastCard.image = UIImage(named: "bicycleback")
-                    ScoringRun().resetruncount()
-                }
+
                 return false
             }
         } else {
@@ -375,7 +385,8 @@ class HandViewController: UIViewController {
     }
     
     //List of things to do!!!
-    //31 shouldn't score!!!
+    //LEFT OFF HERE!!!
+    //dealer was computer and it went first (second time around)!!!
     //fix autolayout (all views and all sizes)
     //add a thing for when the game ends (maybe another view, which goes to the start view?)
     //check to see if the score is >121 every time someone scores (for the thing above)

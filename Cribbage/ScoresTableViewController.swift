@@ -68,8 +68,8 @@ class ScoresTableViewController: UITableViewController {
         var newdescription = description.substringToIndex(description.endIndex.predecessor())
         newdescription += "."
         
-        if scoretype == "nibs" {
-            newdescription = "no other cards"
+        if scoretype == "nibs" || (scoretype == "last card" && History().playLength() == 1) {
+            newdescription = "no other cards."
         }
 
         cell.configure(card, othercards: newdescription, scoretype: scoretype, player: player, scorenumber: "Score #\(count)", points: pointtotal)

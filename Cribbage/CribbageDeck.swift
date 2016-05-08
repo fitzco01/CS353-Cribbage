@@ -329,7 +329,6 @@ class CribbageDeck {
         if Constants.playerDict["Computer"]!.isDealer {
             HVC.switchturn()
             print("TURN 6 playerturn")
-            
         }
     }
     
@@ -372,11 +371,11 @@ class CribbageDeck {
         Constants.starthand = 0
         Constants.count = 0
         
-        if Constants.playerDict["Computer"]!.isDealer {
-            HVC.switchturn()
-            print("TURN 7 playerturn")
-
-        }
+//        if Constants.playerDict["Computer"]!.isDealer {
+//            HVC.switchturn()
+//            print("TURN 7 playerturn")
+//
+//        }
     }
 
 }
