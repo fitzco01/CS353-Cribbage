@@ -47,6 +47,20 @@ struct Player {
         return self.hand
     }
     
+    mutating func deletecardfromshorthandbystring(cardname: String) -> Card {
+        var loop = 0
+        var deletedcard = [Card]()
+        deletedcard.removeAll()
+        for acard in self.shorthand {
+            if acard.description() == cardname {
+                deletedcard.append(self.shorthand.removeAtIndex(loop))
+            }
+            loop += 1
+        }
+        loop = 0
+        return deletedcard[0]
+    }
+    
     func printhand() -> [String] {
         var printlist: [String] = []
         for acard in self.hand {

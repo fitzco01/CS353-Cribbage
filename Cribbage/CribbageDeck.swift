@@ -64,11 +64,8 @@ class CribbageDeck {
         return temp
     }
     
-    func addToCrib(cardname: String) {
-        let suit = suitFromDescription(cardname)
-        let rank = rankFromDescription(cardname)
-        let cribcard = Card(rank: rank, suit: suit)
-        Constants.cribcards.append(cribcard)
+    func addToCrib(acard: Card) {
+        Constants.cribcards.append(acard)
     }
     
     func clearTheCrib() {
@@ -129,17 +126,17 @@ class CribbageDeck {
     
     func hand(playername: String) -> (Card, Card, Card, Card) {
         if playername == "Player" {
-            print("PLAYERS HAND \(Constants.playerDict["Player"]!.hand)")
+            print("PLAYERS HAND \(Constants.playerDict["Player"]!.shorthand)")
             
-            return ((Constants.playerDict["Player"]?.hand[0])!,(Constants.playerDict["Player"]?.hand[1])!,(Constants.playerDict["Player"]?.hand[2])!,(Constants.playerDict["Player"]?.hand[3])!)
+            return ((Constants.playerDict["Player"]!.shorthand[0]),(Constants.playerDict["Player"]!.shorthand[1]),(Constants.playerDict["Player"]!.shorthand[2]),(Constants.playerDict["Player"]!.shorthand[3]))
         } else if playername == "Computer" {
             print("COMPUTERS HAND \(Constants.playerDict["Computer"]!.shorthand)")
 
-            return ((Constants.playerDict["Computer"]?.shorthand[0])!,(Constants.playerDict["Computer"]?.shorthand[1])!,(Constants.playerDict["Computer"]?.shorthand[2])!,(Constants.playerDict["Computer"]?.shorthand[3])!)
+            return ((Constants.playerDict["Computer"]!.shorthand[0]),(Constants.playerDict["Computer"]!.shorthand[1]),(Constants.playerDict["Computer"]!.shorthand[2]),(Constants.playerDict["Computer"]!.shorthand[3]))
         } else {
             print("ERROR NAMING THE PLAYER")
             var templist: [Card] = []
-            for acard in (Constants.playerDict["Player"]?.hand)! {
+            for acard in (Constants.playerDict["Player"]!.hand) {
                 templist.append(acard)
             }
             return (templist[0], templist[1], templist[2], templist[3])
@@ -148,19 +145,15 @@ class CribbageDeck {
     
     func play(cardname: String) {
         
-        print("HERE 11")
-        
         let rank = rankFromDescription(cardname)
         let suit = suitFromDescription(cardname)
         
         let playcard = Card(rank: rank, suit: suit)
         var score = 0
 
-        History().playHistory(playcard)
         var loop = 0
         for acard in Constants.playerDict["Player"]!.hand {
             if acard.description() == playcard.description() {
-                print("HERE 12")
 
                 Constants.playerDict["Player"]!.deletecardfromhand(loop)
             }
@@ -168,20 +161,17 @@ class CribbageDeck {
         }
 
         if Constants.count == 0 {
-            print("HERE 13")
-
             score += ScoringRun().jackflip("Player")
             Constants.count += 1
         }
         ScoringRun().updateruncount(playcard)
-        
         score += ScoringRun().fifteencount("Player")
         score += ScoringRun().SomeOfAKind("Player")
         score += ScoringRun().straight("Player")
         
         PlayerScores().addScore("Player", newpoints: score)
-        
-        print("HERE 14")
+        History().playHistory(playcard)
+        History().playerHistory(Constants.playerDict["Player"]!)
     }
     
     
@@ -205,7 +195,6 @@ class CribbageDeck {
         var score = 0
         
         score += S.fifteencount(name, ahand: cribCardsWithCut)
-        score += S.fourflush(name, justplayerhand: Constants.cribcards)
         score += S.jackinhand(name, somehand: Constants.cribcards)
         score += S.fiveflush(name, handandcutcardORcrib: cribCardsWithCut)
         score += S.straight(name, ahand: cribCardsWithCut)
@@ -217,9 +206,9 @@ class CribbageDeck {
     func scoreShortHand(name: String) {
         let S = ScoringHand()
         var handWithCut = Constants.playerDict[name]!.shorthand
+        print("Computer hand \(handWithCut)")
         handWithCut.append(Constants.cutcard[0])
         var score = 0
-        
         score += S.fifteencount(name, ahand: handWithCut)
         score += S.fourflush(name, justplayerhand: Constants.playerDict[name]!.shorthand)
         score += S.jackinhand(name, somehand: Constants.playerDict[name]!.shorthand)
@@ -246,10 +235,6 @@ class CribbageDeck {
     
     func computerPlay() -> String {
         
-        // When the player is the dealer, computer plays a duplicate card (the first one)
-        // The card isn't necessarily played immediately if the computer can score
-        // Am I duplicating the computer or it's hand somewhere??!!!
-        
         var score = 0
         if Constants.starthand == 0 {
             Constants.starthand += 1
@@ -257,6 +242,7 @@ class CribbageDeck {
             
             Constants.playerDict["Computer"]!.somenewhand(newcpuhand["Computer Hand"]!)
             Constants.playerDict["Computer"]!.somenewshorthand(newcpuhand["Computer Hand"]!)
+            print("NEW SHORTHAND \(Constants.playerDict["Computer"]!.shorthand)")
             
             for acard in newcpuhand["Crib Cards"]! {
                 Constants.cribcards.append(acard)
@@ -291,6 +277,11 @@ class CribbageDeck {
     
     func removeCardFromPlayer(cardname: String) {
         Constants.playerDict["Player"]!.deletecardfromhandbystring(cardname)
+    }
+    
+    func removeCardFromPlayerShortHand(cardname: String) {
+        let newcribcard = Constants.playerDict["Player"]!.deletecardfromshorthandbystring(cardname)
+        addToCrib(newcribcard)
     }
     
     func getCutCard() -> String {

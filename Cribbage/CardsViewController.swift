@@ -38,8 +38,7 @@ class CardsViewController: UIViewController {
         let firstplayername = CribbageDeck().whoDidntDealIt()
         
         if firstplayername == "Player" {
-            let (p1,p2,p3,p4) = CribbageDeck().hand("Player"
-            )
+            let (p1,p2,p3,p4) = CribbageDeck().hand("Player")
             print("PLAYER CARDS + cut \(p1,p2,p3,p4)")
             Card1.image = UIImage(named: p1.description())
             Card2.image = UIImage(named: p2.description())
@@ -65,7 +64,6 @@ class CardsViewController: UIViewController {
             Card3.image = UIImage(named: c3.description())
             Card4.image = UIImage(named: c4.description())
             CutCard.image = UIImage(named: CribbageDeck().getCutCard())
-            
             
             let old = PlayerScores().getScore("Computer")
             CribbageDeck().scoreShortHand("Computer")

@@ -49,10 +49,11 @@ class ScoringRun {
             while (i + 1) < orderlist.count {
                 if orderlist[i].rank.ordinal() == (orderlist[i + 1].rank.ordinal() + 1) {
                     Constants.boolpoints = true
-                    i += 1
+                    
                 } else if i < 3{
                     Constants.boolpoints = false
                 }
+                i += 1
             }
         }
         if Constants.boolpoints {
@@ -90,28 +91,29 @@ class ScoringRun {
         var historylist = Order().getHistory()
         
         var count = 0
+        var text = ""
         
         if historylist.count >= 2 {
             
             let temp0 = historylist[0]
             let temp1 = historylist[1]
             
-            if temp1.rank.description() == temp0.rank.description() {
+            if temp1.rank.ordinal() == temp0.rank.ordinal() {
                 count = 2
+                text = "pair"
             }
         }
-        
         if historylist.count >= 3 {
             
             let temp0 = historylist[0]
             let temp1 = historylist[1]
             let temp2 = historylist[2]
             
-            if temp2.rank.description() == temp1.rank.description() && temp1.rank.description() == temp0.rank.description() {
+            if temp2.rank.ordinal() == temp1.rank.ordinal() && temp1.rank.ordinal() == temp0.rank.ordinal() {
                 count = 6
+                text = "three of a kind"
             }
         }
-        
         if historylist.count >= 4 {
             
             let temp0 = historylist[0]
@@ -119,34 +121,21 @@ class ScoringRun {
             let temp2 = historylist[2]
             let temp3 = historylist[3]
             
-            if temp3.rank.description() == temp2.rank.description() && temp2.rank.description() == temp1.rank.description() && temp1.rank.description() == temp0.rank.description() {
+            if temp3.rank.ordinal() == temp2.rank.ordinal() && temp2.rank.ordinal() == temp1.rank.ordinal() && temp1.rank.ordinal() == temp0.rank.ordinal() {
                 count = 12
+                text = "four of a kind"
             }
         }
-        
         if count != 0 {
-            
             let othercards : [Card] = Array(historylist[1..<historylist.count])
-            var text = ""
-            if historylist.count == 2 {
-                text = "pair"
-            } else {
-                text = "\(historylist.count) of a kind"
-            }
 
             ScoreHistory().addToHistory(playername, card: historylist[0], othercards: othercards, scoretype: text, pointvalue: count)
         }
-        
         return count
     }
     
     func getruncount() -> Int {
         return Constants.someruncount
-    }
-        
-    func go(playername: String) -> Int{
-        ScoreHistory().addToHistory(playername, card: History().mostRecentPlay(), othercards: History().showPlayHistory(), scoretype: "go", pointvalue: 1)
-        return 1
     }
     
     func lastcard(playername: String) -> Int {
@@ -198,6 +187,9 @@ class ScoringHand {
         subdeckdict3["threedeck9"] = [somehand[1],somehand[3],somehand[4]]
         subdeckdict3["threedeck10"] = [somehand[2],somehand[3],somehand[4]]
         
+        for (_, value) in subdeckdict3 {
+            print("VALUES \(value)")
+        }
         return subdeckdict3
     }
     
@@ -233,7 +225,7 @@ class ScoringHand {
         var marker = ""
         
         for (_, value) in fourdict {
-            if value[0].rank.description() == value[1].rank.description() && value[1].rank.description() == value[2].rank.description() && value[2].rank.description() == value[3].rank.description() {
+            if value[0].rank.ordinal() == value[1].rank.ordinal() && value[1].rank.ordinal() == value[2].rank.ordinal() && value[2].rank.ordinal() == value[3].rank.ordinal() {
                 count = 12
                 
                 ScoreHistory().addToHistory(playername, card: value[0], othercards: [value[1], value[2], value[3]], scoretype: "four of a kind", pointvalue: 12)
@@ -242,7 +234,7 @@ class ScoringHand {
         }
         
         for (_, value) in threedict {
-            if value[0].rank.description() == value[1].rank.description() && value[1].rank.description() == value[2].rank.description() {
+            if value[0].rank.ordinal() == value[1].rank.ordinal() && value[1].rank.ordinal() == value[2].rank.ordinal() {
                 count += 6
                 
                 ScoreHistory().addToHistory(playername, card: value[0], othercards: [value[1], value[2]], scoretype: "three of a kind", pointvalue: 6)
@@ -252,8 +244,8 @@ class ScoringHand {
         }
         
         for (_, value) in twodict {
-            if value[0].rank.description() == value[1].rank.description() {
-                if marker != value[0].rank.description() {
+            if value[0].rank.ordinal() == value[1].rank.ordinal() {
+                if marker != value[0].rank.description() && marker != value[1].rank.description() {
                     count += 2
                 
                     ScoreHistory().addToHistory(playername, card: value[0], othercards: [value[1]], scoretype: "pair", pointvalue: 2)
@@ -302,6 +294,7 @@ class ScoringHand {
         let fourdict = makeSubDecksOf4From5(ahand)
         let sorthand = ahand.sort { $0.rank.ordinal() < $1.rank.ordinal() }
         
+        print("straight check 1 \(sorthand)")
         if sorthand[0].rank.ordinal() == sorthand[1].rank.ordinal() + 1 && sorthand[1].rank.ordinal() == sorthand[2].rank.ordinal() + 1 && sorthand[2].rank.ordinal() == sorthand[3].rank.ordinal() + 1 && sorthand[3].rank.ordinal() == sorthand[4].rank.ordinal() + 1 {
             count = 5
             
@@ -312,6 +305,7 @@ class ScoringHand {
         
         for (_, value) in fourdict {
             let sorthand = value.sort { $0.rank.ordinal() < $1.rank.ordinal() }
+            print("straight check 2 \(sorthand)")
 
             if sorthand[0].rank.ordinal() == sorthand[1].rank.ordinal() + 1 && sorthand[1].rank.ordinal() == sorthand[2].rank.ordinal() + 1 && sorthand[2].rank.ordinal() == sorthand[3].rank.ordinal() + 1 {
                 count += 4
@@ -321,6 +315,7 @@ class ScoringHand {
         
         for (_, value) in threedict {
             let sorthand = value.sort { $0.rank.ordinal() < $1.rank.ordinal() }
+            print("straight check 2 \(sorthand)")
 
             if sorthand[0].rank.ordinal() == sorthand[1].rank.ordinal() + 1 && sorthand[1].rank.ordinal() == sorthand[2].rank.ordinal() + 1 {
                 count += 3
@@ -421,12 +416,13 @@ class CPUScoringRun {
         
         if orderlist.count >= 3 {
             while (i + 1) < orderlist.count {
+                print("straight check 4 \(orderlist)")
                 if orderlist[i].rank.ordinal() == (orderlist[i + 1].rank.ordinal() + 1) {
-                    i += 1
                     Constants.boolpoints = true
-                } else if i <= 3{
+                } else if i <= 3 {
                     Constants.boolpoints = false
                 }
+                i += 1
             }
         }
         if Constants.boolpoints {
@@ -462,7 +458,7 @@ class CPUScoringRun {
             let temp0 = historylist[0]
             let temp1 = historylist[1]
             
-            if temp1.rank.description() == temp0.rank.description() {
+            if temp1.rank.ordinal() == temp0.rank.ordinal() {
                 count = 2
             }
         }
@@ -473,7 +469,7 @@ class CPUScoringRun {
             let temp1 = historylist[1]
             let temp2 = historylist[2]
                 
-            if temp2.rank.description() == temp1.rank.description() && temp1.rank.description() == temp0.rank.description() {
+            if temp2.rank.ordinal() == temp1.rank.ordinal() && temp1.rank.ordinal() == temp0.rank.ordinal() {
                 count = 6
             }
         }
@@ -485,7 +481,7 @@ class CPUScoringRun {
             let temp2 = historylist[2]
             let temp3 = historylist[3]
                 
-            if temp3.rank.description() == temp2.rank.description() && temp2.rank.description() == temp1.rank.description() && temp1.rank.description() == temp0.rank.description() {
+            if temp3.rank.ordinal() == temp2.rank.ordinal() && temp2.rank.ordinal() == temp1.rank.ordinal() && temp1.rank.ordinal() == temp0.rank.ordinal() {
                 count = 12
             }
         }
@@ -554,18 +550,18 @@ class CPUScoringHand {
         let threedict = makeSubDecksOf3From4(ahand)
         
         for (_, value) in twodict {
-            if value[0].rank.description() == value[1].rank.description() {
+            if value[0].rank.ordinal() == value[1].rank.ordinal() {
                 count += 2
             }
         }
         
         for (_, value) in threedict {
-            if value[0].rank.description() == value[1].rank.description() && value[1].rank.description() == value[2].rank.description() {
+            if value[0].rank.ordinal() == value[1].rank.ordinal() && value[1].rank.ordinal() == value[2].rank.ordinal() {
                 count += 4
             }
         }
         
-        if ahand[0].rank.description() == ahand[1].rank.description() && ahand[1].rank.description() == ahand[2].rank.description() && ahand[2].rank.description() == ahand[3].rank.description() {
+        if ahand[0].rank.ordinal() == ahand[1].rank.ordinal() && ahand[1].rank.ordinal() == ahand[2].rank.ordinal() && ahand[2].rank.ordinal() == ahand[3].rank.ordinal() {
             count += 6
         }
         
@@ -601,20 +597,26 @@ class CPUScoringHand {
         let threedict = makeSubDecksOf3From4(ahand)
         let sorthand = ahand.sort { $0.rank.ordinal() < $1.rank.ordinal() }
         
-        if sorthand[0].rank.ordinal() == sorthand[1].rank.ordinal() + 1 && sorthand[1].rank.ordinal() == sorthand[2].rank.ordinal() + 1 && sorthand[2].rank.ordinal() == sorthand[3].rank.ordinal() + 1 && sorthand[3].rank.ordinal() == sorthand[4].rank.ordinal() + 1 {
+        print("straight check 5 \(sorthand)")
+        if sorthand[0].rank.ordinal() == sorthand[1].rank.ordinal() + 1 && sorthand[1].rank.ordinal() == sorthand[2].rank.ordinal() + 1 && sorthand[2].rank.ordinal() == sorthand[3].rank.ordinal() + 1 {
             count = 5
             
             return count
         }
         
-        if ahand[0].rank.ordinal() == ahand[1].rank.ordinal() + 1 && ahand[1].rank.ordinal() == ahand[2].rank.ordinal() + 1 && ahand[2].rank.ordinal() == ahand[3].rank.ordinal() + 1 {
+        let sortinghand = ahand.sort { $0.rank.ordinal() < $1.rank.ordinal() }
+        print("straight check 6 \(sorthand)")
+        if sortinghand[0].rank.ordinal() == sortinghand[1].rank.ordinal() + 1 && sortinghand[1].rank.ordinal() == sortinghand[2].rank.ordinal() + 1 && sortinghand[2].rank.ordinal() == sortinghand[3].rank.ordinal() + 1 {
             count += 4
                 
             return count
         }
         
         for (_, value) in threedict {
-            if value[0].rank.ordinal() == value[1].rank.ordinal() + 1 && value[1].rank.ordinal() == value[2].rank.ordinal() + 1 {
+            let sorthand = value.sort { $0.rank.ordinal() < $1.rank.ordinal() }
+            print("straight check 7 \(sorthand)")
+
+            if sorthand[0].rank.ordinal() == sorthand[1].rank.ordinal() + 1 && sorthand[1].rank.ordinal() == sorthand[2].rank.ordinal() + 1 {
                 count += 3
                 
                 return count

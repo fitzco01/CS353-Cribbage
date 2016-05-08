@@ -28,7 +28,6 @@ class HandViewController: UIViewController {
             Constants.pause = true
             
             switchturn()
-            
 
             CPUScore.text = "CPU Score: \(PlayerScores().getScore("Computer"))"
         }
@@ -119,7 +118,6 @@ class HandViewController: UIViewController {
         lastCard.image = UIImage(named:Constants.lastcard)
         Constants.crib = 0
         Constants.playercount = 2
-        Constants.gocount = 0
         updateUI()
         //Do any additional setup after loading the view.
     }
@@ -147,9 +145,9 @@ class HandViewController: UIViewController {
         }
         
         if Constants.crib <= 1 {
-            CribbageDeck().addToCrib(cardname)
             
             CribbageDeck().removeCardFromPlayer(cardname)
+            CribbageDeck().removeCardFromPlayerShortHand(cardname)
             
             Constants.crib += 1
             whichHand.image = nil
@@ -162,7 +160,6 @@ class HandViewController: UIViewController {
             if Constants.computerturn {
                 
                 Constants.computercango = CribbageDeck().canPlay("Computer")
-                
                 if Constants.computercango {
                     Constants.imagestring = CribbageDeck().computerPlay()
                     
@@ -171,17 +168,10 @@ class HandViewController: UIViewController {
                 } else {
                     Constants.playercango = CribbageDeck().canPlay("Player")
                     if Constants.playercango {
-                        if Constants.gocount == 0 {
-                            Constants.gocount += 1
-                            ScoringRun().go("Player")
-                            PlayerScores().addScore("Player", newpoints: 1)
-                        }
-                        
                         switchturn()
                     } else {
-                        ScoringRun().lastcard("Computer")
-                        PlayerScores().addScore("Computer", newpoints: 1)
-                        Constants.gocount = 0
+                        ScoringRun().lastcard(History().mostRecentPlayer().name)
+                        PlayerScores().addScore(History().mostRecentPlayer().name, newpoints: 1)
                         
                         History().deleteHistory()
                         lastCard.image = UIImage(named: "bicycleback")
@@ -189,8 +179,6 @@ class HandViewController: UIViewController {
                         switchturn()
                     }
                 }
-                
-                
             } else {
                 Constants.playercango = CribbageDeck().canPlay("Player")
                 if Constants.playercango {
@@ -207,19 +195,13 @@ class HandViewController: UIViewController {
                 } else {
                     Constants.computercango = CribbageDeck().canPlay("Computer")
                     if Constants.computercango {
-                        if Constants.gocount == 0 {
-                            Constants.gocount += 1
-                            ScoringRun().go("Computer")
-                            PlayerScores().addScore("Computer", newpoints: 1)
-                        }
-                        
                         switchturn()
                     } else {
-                        ScoringRun().lastcard("Player")
-                        PlayerScores().addScore("Player", newpoints: 1)
-                        Constants.gocount = 0
+                        ScoringRun().lastcard(History().mostRecentPlayer().name)
+                        PlayerScores().addScore(History().mostRecentPlayer().name, newpoints: 1)
                         
                         History().deleteHistory()
+                        print("LAST CARD0")
                         lastCard.image = UIImage(named: "bicycleback")
                         
                         switchturn()
@@ -278,7 +260,6 @@ class HandViewController: UIViewController {
         
         static var imagestring = ""
         static var pause = false
-        static var gocount = 0
     }
     
     // MARK: - Card Displays

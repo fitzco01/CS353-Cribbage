@@ -14,9 +14,8 @@ class BestPlay {
         static var count = 0
         static var newcount = 0
         static var keystring = ""
-        static var newCardCount = 0
-        static var oldCardCount = 0
-        static var pickedCard = Card(rank: .king, suit: .clubs)
+        static var newCardValue = 0
+        static var oldCardValue = 0
     }
     
     
@@ -67,74 +66,49 @@ class BestPlay {
         
         print("HERE 1")
         
-        let H = History()
         let C = CPUScoringRun()
         
-        var tempcard: Card = cpuhand[0]
+        var finalcard: Card = cpuhand[0]
     
-        var remainingcards: [Card] = []
+        var remainingcards = cpuhand
         
-        for acard in cpuhand {
-            Constants.newCardCount = 0
-            
-            if H.playLength() == 0 {
-                
-                Constants.newCardCount += C.fifteencount(acard)
-                Constants.newCardCount += C.SomeOfAKind(acard)
-                Constants.newCardCount += C.straight(acard)
-                
-                print("HERE 3")
-            }
-            
-            if Constants.newCardCount >= Constants.oldCardCount {
-                    
-                tempcard = acard
-                Constants.oldCardCount = Constants.newCardCount
-                index = loopcount
-                    
-                print("HERE 4")
-
-            
-            } else {
-                
-                print("HERE 5")
-
+        
+        if History().playLength() != 0 {
+            for acard in cpuhand {
+                print(acard)
                 if acard.rank.value() + ScoringRun().getruncount() <= 31 {
-                    Constants.newCardCount += C.fifteencount(acard)
-                    Constants.newCardCount += C.SomeOfAKind(acard)
-                    Constants.newCardCount += C.straight(acard)
+                    C.addcard(acard)
+                    Constants.newCardValue += C.fifteencount(acard)
+                    Constants.newCardValue += C.SomeOfAKind(acard)
+                    Constants.newCardValue += C.straight(acard)
                     
-                    print("HERE 6")
+                    print("HERE 2")
                 
-                    if tempcount >= Constants.runcount {
-                        tempcard = acard
+                    if Constants.newCardValue >= Constants.oldCardValue {
+                    
+                        finalcard = acard
+                        Constants.oldCardValue = Constants.newCardValue
                         
-                        print("HERE 7")
+                        print("HERE 3")
                         
-                        Constants.runcount = tempcount
-                        index = loopcount
                     }
                 } else {
-                    //add exception handling!!!
+                    
+                    print("Dikembe Mutumbo")
+                    
                 }
-                
-                loopcount += 1
             }
         }
         
+        remainingcards.removeAll()
         for acard in cpuhand {
-            if loopcount2 != index {
-                
-                print("HERE 8")
-
+            if acard.description() != finalcard.description() {
                 remainingcards.append(acard)
             }
-            loopcount2 += 1
         }
         
-        print("HERE 9")
+        print("HERE 4")
 
-        return (tempcard, remainingcards)
+        return (finalcard, remainingcards)
     }
-    
 }
