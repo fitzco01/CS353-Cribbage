@@ -9,6 +9,7 @@
 import Foundation
 
 class PlayerScores {
+    
     private struct Constants {
         static var playerScoreDict = [String: Int]()
     }

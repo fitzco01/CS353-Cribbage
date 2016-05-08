@@ -9,7 +9,6 @@
 import Foundation
 
 class ScoreHistory {
-    
     private struct Constants {
         static var namelist = [String]()
         static var cardlist = [Card]()

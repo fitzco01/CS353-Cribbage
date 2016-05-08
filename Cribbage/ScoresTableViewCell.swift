@@ -16,7 +16,6 @@ class ScoresTableViewCell: UITableViewCell {
     @IBOutlet weak var scoreNumberLabel: UILabel!
     @IBOutlet weak var pointLabel: UILabel!
     
-    
     func configure(card: Card, othercards: String, scoretype: String, player: String, scorenumber: String, points: Int) {
         playerLabel.text = player
         descriptionLabel.text = "Scored a \(scoretype) with \(card.description()) and \(othercards)"

@@ -143,10 +143,7 @@ class ScoringRun {
     func getruncount() -> Int {
         return Constants.someruncount
     }
-    
-    //returns 1 if the player cannot play, 0 otherwise
-    //points should be given to the next player, not the current player (unlike the other functions)
-    
+        
     func go(playername: String) -> Int{
         ScoreHistory().addToHistory(playername, card: History().mostRecentPlay(), othercards: History().showPlayHistory(), scoretype: "go", pointvalue: 1)
         return 1

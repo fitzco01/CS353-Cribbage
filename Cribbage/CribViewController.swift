@@ -24,7 +24,7 @@ class CribViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         let L = CribbageDeck().getTheCrib()
-        print("CRIB CARDS \(L)")
+
         Crib1.image = UIImage(named: L[0].description())
         Crib2.image = UIImage(named: L[1].description())
         Crib3.image = UIImage(named: L[2].description())

@@ -18,9 +18,6 @@ class BestPlay {
         static var runcount = 0
     }
     
-    //returns a dictionary with two elements
-    //one is the [new computer cards (its hand)] (key = "Computer Hand")
-    //the other is the [crib cards] (key = "Crib Cards")
     
     func createAHand(computerhand: [Card]) -> [String : [Card]] {
         let S = CPUScoringHand()
@@ -76,8 +73,6 @@ class BestPlay {
         var remainingcards: [Card] = []
         var index = 0
         
-        print("COMPUTER HAND \n \(cpuhand) \n")
-        
         for acard in cpuhand {
             var tempcount = 0
             
@@ -117,7 +112,6 @@ class BestPlay {
             loopcount2 += 1
         }
         
-        print("SELECTITSCARD \(tempcard)")
         return (tempcard, remainingcards)
     }
     

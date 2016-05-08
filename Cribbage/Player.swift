@@ -23,7 +23,6 @@ struct Player {
     }
     
     mutating func somenewhand(somehand: [Card]) {
-        print("in some hand with the list of \(somehand.count)")
         self.hand = somehand
     }
     

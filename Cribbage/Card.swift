@@ -39,6 +39,7 @@ enum Suit: Int {
 enum Rank: Int {
     case one, two, three, four, five, six, seven, eight, nine, ten
     case jack, queen, king
+    
     func description() -> String {
         switch self {
         case .jack:

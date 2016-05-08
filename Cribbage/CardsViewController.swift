@@ -17,7 +17,6 @@ class CardsViewController: UIViewController {
     }
     @IBOutlet weak var Dealer: UILabel!
     
-    //Need to add these 2 labels still!!!
     @IBOutlet weak var whoScored: UILabel!
     @IBOutlet weak var CPUScore: UILabel!
     @IBOutlet weak var PlayerScore: UILabel!

@@ -127,16 +127,33 @@ class HandViewController: UIViewController {
     
     // MARK: - Card Taps
     
-    @IBAction func Card1Tap(sender: UITapGestureRecognizer) {
+    func forTheCardTaps(whichHand: UIImageView!, whichTap: Int) {
+        var cardname = ""
+        switch whichTap {
+        case 1:
+            cardname = Constants.c1
+        case 2:
+            cardname = Constants.c2
+        case 3:
+            cardname = Constants.c3
+        case 4:
+            cardname = Constants.c4
+        case 5:
+            cardname = Constants.c5
+        case 6:
+            cardname = Constants.c6
+        default:
+            print("ERROR WITH whichTAP")
+        }
         
         if Constants.crib <= 1 {
-            CribbageDeck().addToCrib(Constants.c1)
+            CribbageDeck().addToCrib(cardname)
             
-            CribbageDeck().removeCardFromPlayer(Constants.c1)
+            CribbageDeck().removeCardFromPlayer(cardname)
             
             Constants.crib += 1
-            Hand1.image = nil
-            Hand1.userInteractionEnabled = false
+            whichHand.image = nil
+            whichHand.userInteractionEnabled = false
             if Constants.crib == 2 {
                 cutCardDisplay()
             }
@@ -144,7 +161,7 @@ class HandViewController: UIViewController {
             if Constants.computerturn {
                 
                 Constants.computercango = CribbageDeck().canPlay("Computer", runtotal: ScoringRun().getruncount())
-
+                
                 if Constants.computercango {
                     Constants.imagestring = CribbageDeck().computerPlay()
                     
@@ -164,334 +181,78 @@ class HandViewController: UIViewController {
                         ScoringRun().lastcard("Computer")
                         PlayerScores().addScore("Computer", newpoints: 1)
                         Constants.gocount = 0
-                        //HERE!!!
-                        //NEWRUN!!!
+                        
+                        History().deleteHistory()
+                        lastCard.image = UIImage(named: "bicycleback")
+                        
                         switchturn()
                     }
                 }
                 
-
+                
             } else {
                 Constants.playercango = CribbageDeck().canPlay("Player", runtotal: ScoringRun().getruncount())
                 if Constants.playercango {
                     
                     Constants.playercount += 1
                     
-                    Hand1.image = UIImage(named: "bicycleback")
-                
-                    CribbageDeck().play(Constants.c1)
-                    lastCardDisplay(Constants.c1)
-                    Hand1.userInteractionEnabled = false
+                    whichHand.image = UIImage(named: "bicycleback")
+                    
+                    CribbageDeck().play(cardname)
+                    lastCardDisplay(cardname)
+                    whichHand.userInteractionEnabled = false
                     
                     switchturn()
                 } else {
                     Constants.computercango = CribbageDeck().canPlay("Computer", runtotal: ScoringRun().getruncount())
                     if Constants.computercango {
+                        if Constants.gocount == 0 {
+                            Constants.gocount += 1
+                            ScoringRun().go("Computer")
+                            PlayerScores().addScore("Computer", newpoints: 1)
+                        }
+                        
                         switchturn()
                     } else {
-                        //NEWRUN!!!
+                        ScoringRun().lastcard("Player")
+                        PlayerScores().addScore("Player", newpoints: 1)
+                        Constants.gocount = 0
+                        
+                        History().deleteHistory()
+                        lastCard.image = UIImage(named: "bicycleback")
+                        
+                        switchturn()
                     }
                 }
             }
             CPUScore.text = "CPU Score: \(PlayerScores().getScore("Computer"))"
             PlayerScore.text = "Player Score: \(PlayerScores().getScore("Player"))"
         }
+    }
+    
+    @IBAction func Card1Tap(sender: UITapGestureRecognizer) {
+        forTheCardTaps(Hand1, whichTap: 1)
     }
     
     @IBAction func Card2Tap(sender: UITapGestureRecognizer) {
-        
-        if Constants.crib <= 1 {
-            CribbageDeck().addToCrib(Constants.c2)
-            
-            CribbageDeck().removeCardFromPlayer(Constants.c2)
-            
-            Constants.crib += 1
-            Hand2.image = nil
-            Hand2.userInteractionEnabled = false
-            if Constants.crib == 2 {
-                cutCardDisplay()
-            }
-        } else {
-            if Constants.computerturn {
-                
-                Constants.computercango = CribbageDeck().canPlay("Computer", runtotal: ScoringRun().getruncount())
-                
-                if Constants.computercango {
-                    Constants.imagestring = CribbageDeck().computerPlay()
-                    
-                    lastCard.image = UIImage(named: Constants.imagestring)
-                    switchturn()
-                } else {
-                    Constants.playercango = CribbageDeck().canPlay("Player", runtotal: ScoringRun().getruncount())
-                    if Constants.playercango {
-                        switchturn()
-                    } else {
-                        //NEWRUN!!!
-                    }
-                }
-                
-                
-            } else {
-                Constants.playercango = CribbageDeck().canPlay("Player", runtotal: ScoringRun().getruncount())
-                if Constants.playercango {
-                    
-                    Constants.playercount += 1
-                    
-                    Hand2.image = UIImage(named: "bicycleback")
-                    
-                    CribbageDeck().play(Constants.c2)
-                    lastCardDisplay(Constants.c2)
-                    Hand2.userInteractionEnabled = false
-                    
-                    switchturn()
-                } else {
-                    Constants.computercango = CribbageDeck().canPlay("Computer", runtotal: ScoringRun().getruncount())
-                    if Constants.computercango {
-                        switchturn()
-                    } else {
-                        //NEWRUN!!!
-                    }
-                }
-            }
-            CPUScore.text = "CPU Score: \(PlayerScores().getScore("Computer"))"
-            PlayerScore.text = "Player Score: \(PlayerScores().getScore("Player"))"
-        }
+        forTheCardTaps(Hand2, whichTap: 2)
     }
     
     @IBAction func Card3Tap(sender: UITapGestureRecognizer) {
-        if Constants.crib <= 1 {
-            CribbageDeck().addToCrib(Constants.c3)
-            
-            CribbageDeck().removeCardFromPlayer(Constants.c3)
-            
-            Constants.crib += 1
-            Hand3.image = nil
-            Hand3.userInteractionEnabled = false
-            if Constants.crib == 2 {
-                cutCardDisplay()
-            }
-        } else {
-            if Constants.computerturn {
-                
-                Constants.computercango = CribbageDeck().canPlay("Computer", runtotal: ScoringRun().getruncount())
-                
-                if Constants.computercango {
-                    Constants.imagestring = CribbageDeck().computerPlay()
-                    
-                    lastCard.image = UIImage(named: Constants.imagestring)
-                    switchturn()
-                } else {
-                    Constants.playercango = CribbageDeck().canPlay("Player", runtotal: ScoringRun().getruncount())
-                    if Constants.playercango {
-                        switchturn()
-                    } else {
-                        //NEWRUN!!!
-                    }
-                }
-                
-                
-            } else {
-                Constants.playercango = CribbageDeck().canPlay("Player", runtotal: ScoringRun().getruncount())
-                if Constants.playercango {
-                    
-                    Constants.playercount += 1
-                    
-                    Hand3.image = UIImage(named: "bicycleback")
-                    
-                    CribbageDeck().play(Constants.c3)
-                    lastCardDisplay(Constants.c3)
-                    Hand3.userInteractionEnabled = false
-                    
-                    switchturn()
-                } else {
-                    Constants.computercango = CribbageDeck().canPlay("Computer", runtotal: ScoringRun().getruncount())
-                    if Constants.computercango {
-                        switchturn()
-                    } else {
-                        //NEWRUN!!!
-                    }
-                }
-            }
-            CPUScore.text = "CPU Score: \(PlayerScores().getScore("Computer"))"
-            PlayerScore.text = "Player Score: \(PlayerScores().getScore("Player"))"
-        }
+        forTheCardTaps(Hand3, whichTap: 3)
+
     }
     
     @IBAction func Card4Tap(sender: UITapGestureRecognizer) {
-        if Constants.crib <= 1 {
-            CribbageDeck().addToCrib(Constants.c4)
-            
-            CribbageDeck().removeCardFromPlayer(Constants.c4)
-            
-            Constants.crib += 1
-            Hand4.image = nil
-            Hand4.userInteractionEnabled = false
-            if Constants.crib == 2 {
-                cutCardDisplay()
-            }
-        } else {
-            if Constants.computerturn {
-                
-                Constants.computercango = CribbageDeck().canPlay("Computer", runtotal: ScoringRun().getruncount())
-                
-                if Constants.computercango {
-                    Constants.imagestring = CribbageDeck().computerPlay()
-                    
-                    lastCard.image = UIImage(named: Constants.imagestring)
-                    switchturn()
-                } else {
-                    Constants.playercango = CribbageDeck().canPlay("Player", runtotal: ScoringRun().getruncount())
-                    if Constants.playercango {
-                        switchturn()
-                    } else {
-                        //NEWRUN!!!
-                    }
-                }
-                
-                
-            } else {
-                Constants.playercango = CribbageDeck().canPlay("Player", runtotal: ScoringRun().getruncount())
-                if Constants.playercango {
-                    
-                    Constants.playercount += 1
-                    
-                    Hand4.image = UIImage(named: "bicycleback")
-                    
-                    CribbageDeck().play(Constants.c4)
-                    lastCardDisplay(Constants.c4)
-                    Hand4.userInteractionEnabled = false
-                    
-                    switchturn()
-                } else {
-                    Constants.computercango = CribbageDeck().canPlay("Computer", runtotal: ScoringRun().getruncount())
-                    if Constants.computercango {
-                        switchturn()
-                    } else {
-                        //NEWRUN!!!
-                    }
-                }
-            }
-            CPUScore.text = "CPU Score: \(PlayerScores().getScore("Computer"))"
-            PlayerScore.text = "Player Score: \(PlayerScores().getScore("Player"))"
-        }
+        forTheCardTaps(Hand4, whichTap: 4)
     }
     
     @IBAction func Card5Tap(sender: UITapGestureRecognizer) {
-        if Constants.crib <= 1 {
-            CribbageDeck().addToCrib(Constants.c5)
-            
-            CribbageDeck().removeCardFromPlayer(Constants.c5)
-            
-            Constants.crib += 1
-            Hand5.image = nil
-            Hand5.userInteractionEnabled = false
-            if Constants.crib == 2 {
-                cutCardDisplay()
-            }
-        } else {
-            if Constants.computerturn {
-                
-                Constants.computercango = CribbageDeck().canPlay("Computer", runtotal: ScoringRun().getruncount())
-                
-                if Constants.computercango {
-                    Constants.imagestring = CribbageDeck().computerPlay()
-                    
-                    lastCard.image = UIImage(named: Constants.imagestring)
-                    switchturn()
-                } else {
-                    Constants.playercango = CribbageDeck().canPlay("Player", runtotal: ScoringRun().getruncount())
-                    if Constants.playercango {
-                        switchturn()
-                    } else {
-                        //NEWRUN!!!
-                    }
-                }
-                
-                
-            } else {
-                Constants.playercango = CribbageDeck().canPlay("Player", runtotal: ScoringRun().getruncount())
-                if Constants.playercango {
-                    
-                    Constants.playercount += 1
-                    
-                    Hand5.image = UIImage(named: "bicycleback")
-                    
-                    CribbageDeck().play(Constants.c5)
-                    lastCardDisplay(Constants.c5)
-                    Hand5.userInteractionEnabled = false
-                    
-                    switchturn()
-                } else {
-                    Constants.computercango = CribbageDeck().canPlay("Computer", runtotal: ScoringRun().getruncount())
-                    if Constants.computercango {
-                        switchturn()
-                    } else {
-                        //NEWRUN!!!
-                    }
-                }
-            }
-            CPUScore.text = "CPU Score: \(PlayerScores().getScore("Computer"))"
-            PlayerScore.text = "Player Score: \(PlayerScores().getScore("Player"))"
-        }
+        forTheCardTaps(Hand5, whichTap: 5)
     }
 
     @IBAction func Card6Tap(sender: UITapGestureRecognizer) {
-        if Constants.crib <= 1 {
-            CribbageDeck().addToCrib(Constants.c6)
-            
-            CribbageDeck().removeCardFromPlayer(Constants.c6)
-            
-            Constants.crib += 1
-            Hand6.image = nil
-            Hand6.userInteractionEnabled = false
-            if Constants.crib == 2 {
-                cutCardDisplay()
-            }
-        } else {
-            if Constants.computerturn {
-                
-                Constants.computercango = CribbageDeck().canPlay("Computer", runtotal: ScoringRun().getruncount())
-                
-                if Constants.computercango {
-                    Constants.imagestring = CribbageDeck().computerPlay()
-                    
-                    lastCard.image = UIImage(named: Constants.imagestring)
-                    switchturn()
-                } else {
-                    Constants.playercango = CribbageDeck().canPlay("Player", runtotal: ScoringRun().getruncount())
-                    if Constants.playercango {
-                        switchturn()
-                    } else {
-                        //NEWRUN!!!
-                    }
-                }
-                
-                
-            } else {
-                Constants.playercango = CribbageDeck().canPlay("Player", runtotal: ScoringRun().getruncount())
-                if Constants.playercango {
-                    
-                    Constants.playercount += 1
-                    
-                    Hand6.image = UIImage(named: "bicycleback")
-                    
-                    CribbageDeck().play(Constants.c6)
-                    lastCardDisplay(Constants.c6)
-                    Hand6.userInteractionEnabled = false
-                    
-                    switchturn()
-                } else {
-                    Constants.computercango = CribbageDeck().canPlay("Computer", runtotal: ScoringRun().getruncount())
-                    if Constants.computercango {
-                        switchturn()
-                    } else {
-                        //NEWRUN!!!
-                    }
-                }
-            }
-            CPUScore.text = "CPU Score: \(PlayerScores().getScore("Computer"))"
-            PlayerScore.text = "Player Score: \(PlayerScores().getScore("Player"))"
-        }
+        forTheCardTaps(Hand6, whichTap: 6)
     }
     
     // MARK: - Constants
@@ -593,7 +354,6 @@ class HandViewController: UIViewController {
     override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
         if identifier == "RunToCards" {
             if CribbageDeck().cpuHandLength() == 0 && Constants.playercount == 6 && !Constants.pause {
-                History().deleteHistory()
                 return true
             } else {
                 return false

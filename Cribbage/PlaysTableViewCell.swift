@@ -9,8 +9,6 @@
 import UIKit
 
 class PlaysTableViewCell: UITableViewCell {
-    
-    // MARK: - Properties
 
     @IBOutlet weak var playerLabel: UILabel!
     @IBOutlet weak var cardLabel: UILabel!

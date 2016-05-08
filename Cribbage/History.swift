@@ -9,7 +9,6 @@
 import Foundation
 
 class History {
-    
     private struct Constants {
         static var playList: [Card] = []
         static var playerList: [Player] = []

@@ -317,12 +317,8 @@ class CribbageDeck {
         let theDeck = createDeck()
         let shuf = shuffle(theDeck)
         
-        print("HERE YA GO \(Constants.cutcard)")
-
         Constants.someshuffleddeck = shuf
         cutcard()
-        print("HERE YA GO \(Constants.cutcard)")
-
         
         let hand1 = deal()
         let hand2 = deal()
@@ -356,9 +352,7 @@ class CribbageDeck {
         clearTheCrib()
         
         Constants.someshuffleddeck = shuf
-        print("HERE YA GO \(Constants.cutcard)")
         cutcard()
-        print("HERE YA GO \(Constants.cutcard)")
         
         let hand1 = deal()
         let hand2 = deal()
