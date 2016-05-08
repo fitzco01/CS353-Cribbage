@@ -39,8 +39,13 @@ class ScoringRun {
         Constants.someruncount += somecard.rank.value()
     }
     
+    func resetruncount() {
+        Constants.someruncount = 0
+    }
+    
     // MARK: - Run Scoring
 
+    //finalcards has the initial card as well...!!!
     func straight(playername: String) -> Int {
         var count = 0
         var checklist = [Card]()

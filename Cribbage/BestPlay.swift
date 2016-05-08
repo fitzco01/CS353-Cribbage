@@ -76,6 +76,8 @@ class BestPlay {
         if History().playLength() != 0 {
             for acard in cpuhand {
                 print(acard)
+                print(acard.rank.value())
+                print(ScoringRun().getruncount())
                 if acard.rank.value() + ScoringRun().getruncount() <= 31 {
                     C.addcard(acard)
                     Constants.newCardValue += C.fifteencount(acard)

@@ -25,7 +25,6 @@ class HandViewController: UIViewController {
         Constants.playercount = 2
         Constants.computercango = true
         Constants.playercango = true
-        Constants.computerturn = true
         updateUI()
         //Do any additional setup after loading the view.
     }
@@ -52,6 +51,7 @@ class HandViewController: UIViewController {
         
         static var imagestring = ""
         static var pause = false
+        static var marker = false
     }
     
     //MARK: - Outlets
@@ -67,9 +67,6 @@ class HandViewController: UIViewController {
             Constants.pause = true
             
             switchturn()
-
-            //I think the issue is here with the player nil thing when player deals!!!
-            //not every time it deals!!!
             
             CPUScore.text = "CPU Score: \(PlayerScores().getScore("Computer"))"
         }
@@ -170,7 +167,7 @@ class HandViewController: UIViewController {
         case 6:
             cardname = Constants.c6
         default:
-            print("ERROR WITH whichTap")
+            print("ERROR WITH TAPS")
         }
         
         if Constants.crib <= 1 {
@@ -193,20 +190,26 @@ class HandViewController: UIViewController {
                     Constants.imagestring = CribbageDeck().computerPlay()
                     
                     lastCard.image = UIImage(named: Constants.imagestring)
+                    print("TURN 1 \(Constants.computerturn)")
                     switchturn()
+                    Constants.marker = false
                 } else {
                     Constants.playercango = CribbageDeck().canPlay("Player")
                     if Constants.playercango {
                         switchturn()
                     } else {
-                        ScoringRun().lastcard(History().mostRecentPlayer().name)
-                        PlayerScores().addScore(History().mostRecentPlayer().name, newpoints: 1)
-                        
+                        if ScoringRun().getruncount() != 31 {
+                            ScoringRun().lastcard(History().mostRecentPlayer().name)
+                            PlayerScores().addScore(History().mostRecentPlayer().name, newpoints: 1)
+                        }
                         print("deleting history 1")
                         History().deleteHistory()
+                        Constants.playercango = true
+                        Constants.computercango = true
                         lastCard.image = UIImage(named: "bicycleback")
-                        
-                        switchturn()
+                        print("TURN 2 \(Constants.computerturn)")
+                        ScoringRun().resetruncount()
+                        Constants.marker = true
                     }
                 }
             } else {
@@ -220,22 +223,28 @@ class HandViewController: UIViewController {
                     CribbageDeck().play(cardname)
                     lastCardDisplay(cardname)
                     whichHand.userInteractionEnabled = false
-                    
+                    print("TURN 3 \(Constants.computerturn)")
+                    Constants.marker = false
                     switchturn()
                 } else {
                     Constants.computercango = CribbageDeck().canPlay("Computer")
                     if Constants.computercango {
+                        print("TURN 4 \(Constants.computerturn)")
+
                         switchturn()
                     } else {
-                        ScoringRun().lastcard(History().mostRecentPlayer().name)
-                        PlayerScores().addScore(History().mostRecentPlayer().name, newpoints: 1)
-                        
+                        if ScoringRun().getruncount() != 31 {
+                            ScoringRun().lastcard(History().mostRecentPlayer().name)
+                            PlayerScores().addScore(History().mostRecentPlayer().name, newpoints: 1)
+                        }
                         print("deleting history 2")
                         History().deleteHistory()
-                        print("LAST CARD0")
+                        Constants.playercango = true
+                        Constants.computercango = true
                         lastCard.image = UIImage(named: "bicycleback")
-                        
-                        switchturn()
+                        print("TURN 5 \(Constants.computerturn)")
+                        ScoringRun().resetruncount()
+                        Constants.marker = true
                     }
                 }
             }
@@ -345,6 +354,19 @@ class HandViewController: UIViewController {
             if CribbageDeck().cpuHandLength() == 0 && Constants.playercount == 6 && !Constants.pause {
                 return true
             } else {
+                print("marker \(Constants.marker)")
+                if Constants.marker == false {
+                    if ScoringRun().getruncount() != 31 {
+                        ScoringRun().lastcard(History().mostRecentPlayer().name)
+                        PlayerScores().addScore(History().mostRecentPlayer().name, newpoints: 1)
+                    }
+                    print("deleting history 3")
+                    History().deleteHistory()
+                    Constants.playercango = true
+                    Constants.computercango = true
+                    lastCard.image = UIImage(named: "bicycleback")
+                    ScoringRun().resetruncount()
+                }
                 return false
             }
         } else {
@@ -352,12 +374,8 @@ class HandViewController: UIViewController {
         }
     }
     
-    //I'm skeptical that the computer picking a hand works properly, lots of skunk hands...!!!
-    //check at the end?
-    //picking a card seems to be ok tho...
-    
     //List of things to do!!!
-    //fix run scoring
+    //31 shouldn't score!!!
     //fix autolayout (all views and all sizes)
     //add a thing for when the game ends (maybe another view, which goes to the start view?)
     //check to see if the score is >121 every time someone scores (for the thing above)
