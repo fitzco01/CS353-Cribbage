@@ -47,7 +47,7 @@ class ScoringRun {
         var orderlist = Order().orderByOrdinal()
         if orderlist.count >= 3 {
             while (i + 1) < orderlist.count {
-                if orderlist[i].rank.ordinal() == (orderlist[i + 1].rank.ordinal() + 1) {
+                if orderlist[i].rank.ordinal() == (orderlist[i + 1].rank.ordinal() - 1) {
                     Constants.boolpoints = true
                     
                 } else if i < 3{
@@ -285,6 +285,11 @@ class ScoringHand {
             }
         }
         
+        if ahand[0].rank.value() + ahand[1].rank.value() + ahand[2].rank.value() + ahand[3].rank.value() + ahand[4].rank.value() == 15 {
+            count += 2
+            ScoreHistory().addToHistory(playername, card: ahand[0], othercards: [ahand[1],ahand[2],ahand[3],ahand[4]], scoretype: "fifteen", pointvalue: 2)
+        }
+        
         return count
     }
     
@@ -295,7 +300,7 @@ class ScoringHand {
         let sorthand = ahand.sort { $0.rank.ordinal() < $1.rank.ordinal() }
         
         print("straight check 1 \(sorthand)")
-        if sorthand[0].rank.ordinal() == sorthand[1].rank.ordinal() + 1 && sorthand[1].rank.ordinal() == sorthand[2].rank.ordinal() + 1 && sorthand[2].rank.ordinal() == sorthand[3].rank.ordinal() + 1 && sorthand[3].rank.ordinal() == sorthand[4].rank.ordinal() + 1 {
+        if sorthand[0].rank.ordinal() == sorthand[1].rank.ordinal() - 1 && sorthand[1].rank.ordinal() == sorthand[2].rank.ordinal() - 1 && sorthand[2].rank.ordinal() == sorthand[3].rank.ordinal() - 1 && sorthand[3].rank.ordinal() == sorthand[4].rank.ordinal() - 1 {
             count = 5
             
             ScoreHistory().addToHistory(playername, card: sorthand[0], othercards: [sorthand[1],sorthand[2],sorthand[3],sorthand[4]], scoretype: "straight", pointvalue: count)
@@ -307,20 +312,21 @@ class ScoringHand {
             let sorthand = value.sort { $0.rank.ordinal() < $1.rank.ordinal() }
             print("straight check 2 \(sorthand)")
 
-            if sorthand[0].rank.ordinal() == sorthand[1].rank.ordinal() + 1 && sorthand[1].rank.ordinal() == sorthand[2].rank.ordinal() + 1 && sorthand[2].rank.ordinal() == sorthand[3].rank.ordinal() + 1 {
+            if sorthand[0].rank.ordinal() == sorthand[1].rank.ordinal() - 1 && sorthand[1].rank.ordinal() == sorthand[2].rank.ordinal() - 1 && sorthand[2].rank.ordinal() == sorthand[3].rank.ordinal() - 1 {
                 count += 4
                 ScoreHistory().addToHistory(playername, card: value[0], othercards: [value[1],value[2],value[3]], scoretype: "straight", pointvalue: 4)
             }
         }
-        
-        for (_, value) in threedict {
-            let sorthand = value.sort { $0.rank.ordinal() < $1.rank.ordinal() }
-            print("straight check 2 \(sorthand)")
+        if count == 0 {
+            for (_, value) in threedict {
+                let sorthand = value.sort { $0.rank.ordinal() < $1.rank.ordinal() }
+                print("straight check 3 \(sorthand)")
 
-            if sorthand[0].rank.ordinal() == sorthand[1].rank.ordinal() + 1 && sorthand[1].rank.ordinal() == sorthand[2].rank.ordinal() + 1 {
-                count += 3
+                if sorthand[0].rank.ordinal() == sorthand[1].rank.ordinal() - 1 && sorthand[1].rank.ordinal() == sorthand[2].rank.ordinal() - 1 {
+                    count += 3
 
-                ScoreHistory().addToHistory(playername, card: value[0], othercards: [value[1],value[2]], scoretype: "straight", pointvalue: 3)
+                    ScoreHistory().addToHistory(playername, card: value[0], othercards: [value[1],value[2]], scoretype: "straight", pointvalue: 3)
+                }
             }
         }
         
@@ -417,7 +423,7 @@ class CPUScoringRun {
         if orderlist.count >= 3 {
             while (i + 1) < orderlist.count {
                 print("straight check 4 \(orderlist)")
-                if orderlist[i].rank.ordinal() == (orderlist[i + 1].rank.ordinal() + 1) {
+                if orderlist[i].rank.ordinal() == (orderlist[i + 1].rank.ordinal() - 1) {
                     Constants.boolpoints = true
                 } else if i <= 3 {
                     Constants.boolpoints = false
@@ -597,29 +603,21 @@ class CPUScoringHand {
         let threedict = makeSubDecksOf3From4(ahand)
         let sorthand = ahand.sort { $0.rank.ordinal() < $1.rank.ordinal() }
         
-        print("straight check 5 \(sorthand)")
-        if sorthand[0].rank.ordinal() == sorthand[1].rank.ordinal() + 1 && sorthand[1].rank.ordinal() == sorthand[2].rank.ordinal() + 1 && sorthand[2].rank.ordinal() == sorthand[3].rank.ordinal() + 1 {
-            count = 5
-            
-            return count
-        }
-        
-        let sortinghand = ahand.sort { $0.rank.ordinal() < $1.rank.ordinal() }
         print("straight check 6 \(sorthand)")
-        if sortinghand[0].rank.ordinal() == sortinghand[1].rank.ordinal() + 1 && sortinghand[1].rank.ordinal() == sortinghand[2].rank.ordinal() + 1 && sortinghand[2].rank.ordinal() == sortinghand[3].rank.ordinal() + 1 {
+        if sorthand[0].rank.ordinal() == sorthand[1].rank.ordinal() - 1 && sorthand[1].rank.ordinal() == sorthand[2].rank.ordinal() - 1 && sorthand[2].rank.ordinal() == sorthand[3].rank.ordinal() - 1 {
             count += 4
                 
             return count
         }
         
-        for (_, value) in threedict {
-            let sorthand = value.sort { $0.rank.ordinal() < $1.rank.ordinal() }
-            print("straight check 7 \(sorthand)")
+        if count == 0 {
+            for (_, value) in threedict {
+                let sorthand = value.sort { $0.rank.ordinal() < $1.rank.ordinal() }
+                print("straight check 7 \(sorthand)")
 
-            if sorthand[0].rank.ordinal() == sorthand[1].rank.ordinal() + 1 && sorthand[1].rank.ordinal() == sorthand[2].rank.ordinal() + 1 {
-                count += 3
-                
-                return count
+                if sorthand[0].rank.ordinal() == sorthand[1].rank.ordinal() - 1 && sorthand[1].rank.ordinal() == sorthand[2].rank.ordinal() - 1 {
+                    count += 3
+                }
             }
         }
         

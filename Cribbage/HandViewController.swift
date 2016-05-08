@@ -29,16 +29,19 @@ class HandViewController: UIViewController {
             
             switchturn()
 
+            //I think the issue is here with the player nil thing when player deals!!!
+            //not every time it deals!!!
+            
             CPUScore.text = "CPU Score: \(PlayerScores().getScore("Computer"))"
         }
     }
     
     @IBOutlet weak var PlayerScore: UILabel! { didSet {
-        PlayerScore.text = "Player Score: 0"
+        PlayerScore.text = "Player Score: \(PlayerScores().getScore("Player"))"
         }
     }
     @IBOutlet weak var CPUScore: UILabel! { didSet {
-        CPUScore.text = "CPU Score: 0"
+        CPUScore.text = "CPU Score: \(PlayerScores().getScore("Computer"))"
         }
     }
     @IBOutlet weak var dealer: UILabel! { didSet {
@@ -118,6 +121,8 @@ class HandViewController: UIViewController {
         lastCard.image = UIImage(named:Constants.lastcard)
         Constants.crib = 0
         Constants.playercount = 2
+        Constants.computercango = true
+        Constants.playercango = true
         updateUI()
         //Do any additional setup after loading the view.
     }
@@ -173,6 +178,7 @@ class HandViewController: UIViewController {
                         ScoringRun().lastcard(History().mostRecentPlayer().name)
                         PlayerScores().addScore(History().mostRecentPlayer().name, newpoints: 1)
                         
+                        print("deleting history 1")
                         History().deleteHistory()
                         lastCard.image = UIImage(named: "bicycleback")
                         
@@ -200,6 +206,7 @@ class HandViewController: UIViewController {
                         ScoringRun().lastcard(History().mostRecentPlayer().name)
                         PlayerScores().addScore(History().mostRecentPlayer().name, newpoints: 1)
                         
+                        print("deleting history 2")
                         History().deleteHistory()
                         print("LAST CARD0")
                         lastCard.image = UIImage(named: "bicycleback")
@@ -344,5 +351,8 @@ class HandViewController: UIViewController {
             return true
         }
     }
+    
+    //I'm skeptical that the computer picking a hand works properly, lots of skunk hands...!!!
+    //picking a card seems to be ok tho...
     
 }

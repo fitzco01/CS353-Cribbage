@@ -38,6 +38,7 @@ class History {
     }
     
     func mostRecentPlayer() -> Player {
+        print("Player list \(Constants.playerList)")
         return Constants.playerList.first!
     }
     

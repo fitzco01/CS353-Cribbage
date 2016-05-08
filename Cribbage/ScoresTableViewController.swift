@@ -81,7 +81,7 @@ class ScoresTableViewController: UITableViewController {
         let othercards = ScoreHistory().getCards()[indexPath.row]
         var height = 100
         for _ in othercards {
-            height += 20
+            height += 30
         }
         return CGFloat(height)
     }
