@@ -148,6 +148,8 @@ class CribbageDeck {
     
     func play(cardname: String) {
         
+        print("HERE 11")
+        
         let rank = rankFromDescription(cardname)
         let suit = suitFromDescription(cardname)
         
@@ -155,10 +157,19 @@ class CribbageDeck {
         var score = 0
 
         History().playHistory(playcard)
-        
-        //Scoring
+        var loop = 0
+        for acard in Constants.playerDict["Player"]!.hand {
+            if acard.description() == playcard.description() {
+                print("HERE 12")
+
+                Constants.playerDict["Player"]!.deletecardfromhand(loop)
+            }
+            loop += 1
+        }
 
         if Constants.count == 0 {
+            print("HERE 13")
+
             score += ScoringRun().jackflip("Player")
             Constants.count += 1
         }
@@ -167,9 +178,10 @@ class CribbageDeck {
         score += ScoringRun().fifteencount("Player")
         score += ScoringRun().SomeOfAKind("Player")
         score += ScoringRun().straight("Player")
-        score += ScoringRun().lastcard("Player")
         
         PlayerScores().addScore("Player", newpoints: score)
+        
+        print("HERE 14")
     }
     
     
@@ -183,22 +195,6 @@ class CribbageDeck {
     
     func showPlayerHand() -> [Card] {
         return Constants.playerDict["Player"]!.hand
-    }
-    
-    func scoreHand(name: String) {
-        let S = ScoringHand()
-        var handWithCut = Constants.playerDict[name]!.hand
-        handWithCut.append(Constants.cutcard[0])
-        var score = 0
-        
-        score += S.fifteencount(name, ahand: handWithCut)
-        score += S.fourflush(name, justplayerhand: Constants.playerDict[name]!.hand)
-        score += S.jackinhand(name, somehand: Constants.playerDict[name]!.hand)
-        score += S.fiveflush(name, handandcutcardORcrib: handWithCut)
-        score += S.straight(name, ahand: handWithCut)
-        score += S.SomeOfAKind(name, ahand: handWithCut)
-        
-        PlayerScores().addScore(name, newpoints: score)
     }
     
     func scoreCrib(name: String) {
@@ -234,14 +230,14 @@ class CribbageDeck {
         PlayerScores().addScore(name, newpoints: score)
     }
     
-    func canPlay(name: String, runtotal: Int) -> Bool {
+    func canPlay(name: String) -> Bool {
         var value = 15
         for acard in Constants.playerDict[name]!.hand {
             if acard.rank.value() < value {
                 value = acard.rank.value()
             }
         }
-        if value + runtotal <= 31 {
+        if value + ScoringRun().getruncount() <= 31 {
             return true
         } else {
             return false
@@ -253,11 +249,6 @@ class CribbageDeck {
         // When the player is the dealer, computer plays a duplicate card (the first one)
         // The card isn't necessarily played immediately if the computer can score
         // Am I duplicating the computer or it's hand somewhere??!!!
-
-        //need to fix Go!!! (how to end the run, as well as the points)
-        //run scoring needs work!!!
-        //crib scoring needs work!!!
-        //hand scoring 15 needs work?!!!
         
         var score = 0
         if Constants.starthand == 0 {
@@ -286,7 +277,6 @@ class CribbageDeck {
         score += ScoringRun().fifteencount("Computer")
         score += ScoringRun().SomeOfAKind("Computer")
         score += ScoringRun().straight("Computer")
-        score += ScoringRun().lastcard("Computer")
         
         PlayerScores().addScore("Computer", newpoints: score)
         
@@ -326,9 +316,11 @@ class CribbageDeck {
         let dealer: Bool = makeDealer()
         
         let human = createPlayer(hand1, deals: dealer, name: "Player")
-        Constants.playerDict["Player"] = human
         let computer = createPlayer(hand2, deals: !dealer, name: "Computer")
         Constants.playerDict["Computer"] = computer
+        Constants.playerDict["Player"] = human
+        PlayerScores().addPlayers("Player")
+        PlayerScores().addPlayers("Computer")
 
         HVC.c1Display(human.hand[0].description())
         HVC.c2Display(human.hand[1].description())

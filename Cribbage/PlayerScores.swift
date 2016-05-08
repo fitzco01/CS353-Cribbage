@@ -14,6 +14,10 @@ class PlayerScores {
         static var playerScoreDict = [String: Int]()
     }
     
+    func addPlayers(playername: String) {
+        Constants.playerScoreDict[playername] = 0
+    }
+    
     func addScore(playername: String, newpoints: Int) {
         Constants.playerScoreDict[playername]! += newpoints
     }

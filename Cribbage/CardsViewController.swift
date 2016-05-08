@@ -48,7 +48,7 @@ class CardsViewController: UIViewController {
             CutCard.image = UIImage(named: CribbageDeck().getCutCard())
             
             let old = PlayerScores().getScore("Player")
-            CribbageDeck().scoreHand("Player")
+            CribbageDeck().scoreShortHand("Player")
             
             PlayerScore.text = "Player Score: \(PlayerScores().getScore("Player"))"
             CPUScore.text = "CPU Score: \(PlayerScores().getScore("Computer"))"
@@ -107,7 +107,7 @@ class CardsViewController: UIViewController {
                 CutCard.image = UIImage(named: CribbageDeck().getCutCard())
                 
                 let old = PlayerScores().getScore("Player")
-                CribbageDeck().scoreHand("Player")
+                CribbageDeck().scoreShortHand("Player")
                 
                 PlayerScore.text = "Player Score: \(PlayerScores().getScore("Player"))"
                 CPUScore.text = "CPU Score: \(PlayerScores().getScore("Computer"))"

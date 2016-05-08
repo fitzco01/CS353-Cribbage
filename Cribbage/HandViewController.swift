@@ -35,11 +35,11 @@ class HandViewController: UIViewController {
     }
     
     @IBOutlet weak var PlayerScore: UILabel! { didSet {
-        PlayerScore.text = "Player Score: \(PlayerScores().getScore("Player"))"
+        PlayerScore.text = "Player Score: 0"
         }
     }
     @IBOutlet weak var CPUScore: UILabel! { didSet {
-        CPUScore.text = "CPU Score: \(PlayerScores().getScore("Computer"))"
+        CPUScore.text = "CPU Score: 0"
         }
     }
     @IBOutlet weak var dealer: UILabel! { didSet {
@@ -143,7 +143,7 @@ class HandViewController: UIViewController {
         case 6:
             cardname = Constants.c6
         default:
-            print("ERROR WITH whichTAP")
+            print("ERROR WITH whichTap")
         }
         
         if Constants.crib <= 1 {
@@ -158,9 +158,10 @@ class HandViewController: UIViewController {
                 cutCardDisplay()
             }
         } else {
+            cutCard.image = UIImage(named: CribbageDeck().getCutCard())
             if Constants.computerturn {
                 
-                Constants.computercango = CribbageDeck().canPlay("Computer", runtotal: ScoringRun().getruncount())
+                Constants.computercango = CribbageDeck().canPlay("Computer")
                 
                 if Constants.computercango {
                     Constants.imagestring = CribbageDeck().computerPlay()
@@ -168,7 +169,7 @@ class HandViewController: UIViewController {
                     lastCard.image = UIImage(named: Constants.imagestring)
                     switchturn()
                 } else {
-                    Constants.playercango = CribbageDeck().canPlay("Player", runtotal: ScoringRun().getruncount())
+                    Constants.playercango = CribbageDeck().canPlay("Player")
                     if Constants.playercango {
                         if Constants.gocount == 0 {
                             Constants.gocount += 1
@@ -191,7 +192,7 @@ class HandViewController: UIViewController {
                 
                 
             } else {
-                Constants.playercango = CribbageDeck().canPlay("Player", runtotal: ScoringRun().getruncount())
+                Constants.playercango = CribbageDeck().canPlay("Player")
                 if Constants.playercango {
                     
                     Constants.playercount += 1
@@ -204,7 +205,7 @@ class HandViewController: UIViewController {
                     
                     switchturn()
                 } else {
-                    Constants.computercango = CribbageDeck().canPlay("Computer", runtotal: ScoringRun().getruncount())
+                    Constants.computercango = CribbageDeck().canPlay("Computer")
                     if Constants.computercango {
                         if Constants.gocount == 0 {
                             Constants.gocount += 1

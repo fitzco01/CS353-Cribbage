@@ -14,8 +14,9 @@ class BestPlay {
         static var count = 0
         static var newcount = 0
         static var keystring = ""
-        
-        static var runcount = 0
+        static var newCardCount = 0
+        static var oldCardCount = 0
+        static var pickedCard = Card(rank: .king, suit: .clubs)
     }
     
     
@@ -63,55 +64,76 @@ class BestPlay {
     }
     
     func pickACard(cpuhand: [Card]) -> (Card, [Card])? {
+        
+        print("HERE 1")
+        
         let H = History()
         let C = CPUScoringRun()
         
         var tempcard: Card = cpuhand[0]
-        var loopcount = 0
-        var loopcount2 = 0
-        Constants.runcount = 0
+    
         var remainingcards: [Card] = []
-        var index = 0
         
         for acard in cpuhand {
-            var tempcount = 0
+            Constants.newCardCount = 0
             
             if H.playLength() == 0 {
                 
-                tempcount += C.fifteencount(acard)
-                tempcount += C.SomeOfAKind(acard)
-                tempcount += C.straight(acard)
+                Constants.newCardCount += C.fifteencount(acard)
+                Constants.newCardCount += C.SomeOfAKind(acard)
+                Constants.newCardCount += C.straight(acard)
                 
-                if tempcount >= Constants.runcount {
+                print("HERE 3")
+            }
+            
+            if Constants.newCardCount >= Constants.oldCardCount {
                     
-                    tempcard = acard
-                    Constants.runcount = tempcount
-                    index = loopcount
-                }
+                tempcard = acard
+                Constants.oldCardCount = Constants.newCardCount
+                index = loopcount
+                    
+                print("HERE 4")
+
+            
             } else {
-                if acard.rank.rawValue + H.mostRecentPlay().rank.rawValue <= 31 {
-                    tempcount += C.fifteencount(acard)
-                    tempcount += C.SomeOfAKind(acard)
-                    tempcount += C.straight(acard)
+                
+                print("HERE 5")
+
+                if acard.rank.value() + ScoringRun().getruncount() <= 31 {
+                    Constants.newCardCount += C.fifteencount(acard)
+                    Constants.newCardCount += C.SomeOfAKind(acard)
+                    Constants.newCardCount += C.straight(acard)
+                    
+                    print("HERE 6")
                 
                     if tempcount >= Constants.runcount {
                         tempcard = acard
-                                        
+                        
+                        print("HERE 7")
+                        
                         Constants.runcount = tempcount
                         index = loopcount
                     }
+                } else {
+                    //add exception handling!!!
                 }
+                
                 loopcount += 1
             }
         }
         
         for acard in cpuhand {
             if loopcount2 != index {
+                
+                print("HERE 8")
+
                 remainingcards.append(acard)
             }
             loopcount2 += 1
         }
         
+        print("HERE 9")
+
         return (tempcard, remainingcards)
     }
     
