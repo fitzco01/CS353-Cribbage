@@ -40,46 +40,68 @@ class ScoringRun {
     }
     
     // MARK: - Run Scoring
-    
+
     func straight(playername: String) -> Int {
-        var i = 0
-        Constants.boolpoints = false
-        var orderlist = Order().orderByOrdinal()
-        if orderlist.count >= 3 {
-            while (i + 1) < orderlist.count {
-                if orderlist[i].rank.ordinal() == (orderlist[i + 1].rank.ordinal() - 1) {
-                    Constants.boolpoints = true
-                    
-                } else if i < 3{
-                    Constants.boolpoints = false
+        var count = 0
+        var checklist = [Card]()
+        var finalcards = [Card]()
+        for acard in History().showPlayHistory() {
+            checklist.insert(acard, atIndex: 0)
+            let valueorderlist = checklist.sort { $0.rank.ordinal() < $1.rank.ordinal() }
+
+            if valueorderlist.count == 3 {
+                if valueorderlist[0].rank.ordinal() == valueorderlist[1].rank.ordinal() - 1 && valueorderlist[1].rank.ordinal() == valueorderlist[2].rank.ordinal() - 1 {
+                    count = 3
+                    finalcards = [valueorderlist[0],valueorderlist[1]]
                 }
-                i += 1
+            }
+            if valueorderlist.count == 4 {
+                if valueorderlist[0].rank.ordinal() == valueorderlist[1].rank.ordinal() - 1 && valueorderlist[1].rank.ordinal() == valueorderlist[2].rank.ordinal() - 1 && valueorderlist[2].rank.ordinal() == valueorderlist[3].rank.ordinal() - 1 {
+                    count = 4
+                    finalcards = [valueorderlist[0],valueorderlist[1],valueorderlist[2]]
+                }
+            }
+            if valueorderlist.count == 5 {
+                if valueorderlist[0].rank.ordinal() == valueorderlist[1].rank.ordinal() - 1 && valueorderlist[1].rank.ordinal() == valueorderlist[2].rank.ordinal() - 1 && valueorderlist[2].rank.ordinal() == valueorderlist[3].rank.ordinal() - 1 && valueorderlist[3].rank.ordinal() == valueorderlist[4].rank.ordinal() - 1{
+                    count = 5
+                    finalcards = [valueorderlist[0],valueorderlist[1],valueorderlist[2],valueorderlist[3]]
+                }
+            }
+            if valueorderlist.count == 6 {
+                if valueorderlist[0].rank.ordinal() == valueorderlist[1].rank.ordinal() - 1 && valueorderlist[1].rank.ordinal() == valueorderlist[2].rank.ordinal() - 1 && valueorderlist[2].rank.ordinal() == valueorderlist[3].rank.ordinal() - 1 && valueorderlist[3].rank.ordinal() == valueorderlist[4].rank.ordinal() && valueorderlist[4].rank.ordinal() == valueorderlist[5].rank.ordinal() - 1{
+                    count = 6
+                    finalcards = [valueorderlist[0],valueorderlist[1],valueorderlist[2],valueorderlist[3],valueorderlist[4]]
+                }
+            }
+            if valueorderlist.count == 7 {
+                if valueorderlist[0].rank.ordinal() == valueorderlist[1].rank.ordinal() - 1 && valueorderlist[1].rank.ordinal() == valueorderlist[2].rank.ordinal() - 1 && valueorderlist[2].rank.ordinal() == valueorderlist[3].rank.ordinal() - 1 && valueorderlist[3].rank.ordinal() == valueorderlist[4].rank.ordinal() && valueorderlist[4].rank.ordinal() == valueorderlist[5].rank.ordinal() && valueorderlist[5].rank.ordinal() == valueorderlist[6].rank.ordinal() - 1 {
+                    count = 7
+                    finalcards = [valueorderlist[0],valueorderlist[1],valueorderlist[2],valueorderlist[3],valueorderlist[4],valueorderlist[5]]
+                }
+            }
+            if valueorderlist.count == 8 {
+                if valueorderlist[0].rank.ordinal() == valueorderlist[1].rank.ordinal() - 1 && valueorderlist[1].rank.ordinal() == valueorderlist[2].rank.ordinal() - 1 && valueorderlist[2].rank.ordinal() == valueorderlist[3].rank.ordinal() - 1 && valueorderlist[3].rank.ordinal() == valueorderlist[4].rank.ordinal() && valueorderlist[4].rank.ordinal() == valueorderlist[5].rank.ordinal() && valueorderlist[5].rank.ordinal() == valueorderlist[6].rank.ordinal() - 1 && valueorderlist[6].rank.ordinal() == valueorderlist[7].rank.ordinal() - 1 {
+                    count = 8
+                    finalcards = [valueorderlist[0],valueorderlist[1],valueorderlist[2],valueorderlist[3],valueorderlist[4],valueorderlist[5],valueorderlist[6]]
+                }
             }
         }
-        if Constants.boolpoints {
-            Constants.boolpoints = false
-            
-            let card = orderlist.removeFirst()
-            
-            ScoreHistory().addToHistory(playername, card: card, othercards: orderlist, scoretype: "straight", pointvalue: orderlist.count)
-            
-            return orderlist.count
-        } else {
-            return 0
+        if count != 0 {
+            ScoreHistory().addToHistory(playername, card: History().mostRecentPlay(), othercards: finalcards, scoretype: "straight", pointvalue: count)
         }
+        return count
     }
     
     func fifteencount(playername: String) -> Int {
-        var orderlist = Order().orderByValue()
         var count = 0
-        for acard in orderlist {
+        for acard in History().showPlayHistory() {
             count += acard.rank.value()
         }
         if count == 15 || count == 31 {
             
-            let card = orderlist.removeFirst()
+            let card = History().mostRecentPlay()
 
-            ScoreHistory().addToHistory(playername, card: card, othercards: orderlist, scoretype: "\(count)", pointvalue: 2)
+            ScoreHistory().addToHistory(playername, card: card, othercards: History().historyMinusLastPlay(), scoretype: "\(count)", pointvalue: 2)
 
             return 2
         } else {
@@ -399,11 +421,7 @@ class CPUScoringRun {
     }
     
     func addcard(somecard: Card) -> [Card] {
-        let runlist = CPUOrder().getHistory()
-        Constants.checkthislist.removeAll()
-        for acard in runlist {
-            Constants.checkthislist.append(acard)
-        }
+        Constants.checkthislist = CPUOrder().getHistory()
         Constants.checkthislist.append(somecard)
         return Constants.checkthislist
     }
@@ -414,37 +432,56 @@ class CPUScoringRun {
     
     // MARK: - Run Scoring
     func straight(cardone: Card) -> Int {
-        let history = addcard(cardone)
+        var history = addcard(cardone)
+        //newest card at the end
+        history.removeLast()
+        history.insert(cardone, atIndex: 0)
         
-        var i = 0
-        let orderlist = CPUOrder().orderByOrdinal(history)
-        Constants.boolpoints = false
-        
-        if orderlist.count >= 3 {
-            while (i + 1) < orderlist.count {
-                print("straight check 4 \(orderlist)")
-                if orderlist[i].rank.ordinal() == (orderlist[i + 1].rank.ordinal() - 1) {
-                    Constants.boolpoints = true
-                } else if i <= 3 {
-                    Constants.boolpoints = false
+        var count = 0
+        var checklist = [Card]()
+        for acard in history {
+            checklist.insert(acard, atIndex: 0)
+            let valueorderlist = checklist.sort { $0.rank.ordinal() < $1.rank.ordinal() }
+            
+            if valueorderlist.count == 3 {
+                if valueorderlist[0].rank.ordinal() == valueorderlist[1].rank.ordinal() - 1 && valueorderlist[1].rank.ordinal() == valueorderlist[2].rank.ordinal() - 1 {
+                    count = 3
                 }
-                i += 1
+            }
+            if valueorderlist.count == 4 {
+                if valueorderlist[0].rank.ordinal() == valueorderlist[1].rank.ordinal() - 1 && valueorderlist[1].rank.ordinal() == valueorderlist[2].rank.ordinal() - 1 && valueorderlist[2].rank.ordinal() == valueorderlist[3].rank.ordinal() - 1 {
+                    count = 4
+                }
+            }
+            if valueorderlist.count == 5 {
+                if valueorderlist[0].rank.ordinal() == valueorderlist[1].rank.ordinal() - 1 && valueorderlist[1].rank.ordinal() == valueorderlist[2].rank.ordinal() - 1 && valueorderlist[2].rank.ordinal() == valueorderlist[3].rank.ordinal() - 1 && valueorderlist[3].rank.ordinal() == valueorderlist[4].rank.ordinal() - 1{
+                    count = 5
+                }
+            }
+            if valueorderlist.count == 6 {
+                if valueorderlist[0].rank.ordinal() == valueorderlist[1].rank.ordinal() - 1 && valueorderlist[1].rank.ordinal() == valueorderlist[2].rank.ordinal() - 1 && valueorderlist[2].rank.ordinal() == valueorderlist[3].rank.ordinal() - 1 && valueorderlist[3].rank.ordinal() == valueorderlist[4].rank.ordinal() && valueorderlist[4].rank.ordinal() == valueorderlist[5].rank.ordinal() - 1{
+                    count = 6
+                }
+            }
+            if valueorderlist.count == 7 {
+                if valueorderlist[0].rank.ordinal() == valueorderlist[1].rank.ordinal() - 1 && valueorderlist[1].rank.ordinal() == valueorderlist[2].rank.ordinal() - 1 && valueorderlist[2].rank.ordinal() == valueorderlist[3].rank.ordinal() - 1 && valueorderlist[3].rank.ordinal() == valueorderlist[4].rank.ordinal() && valueorderlist[4].rank.ordinal() == valueorderlist[5].rank.ordinal() && valueorderlist[5].rank.ordinal() == valueorderlist[6].rank.ordinal() - 1 {
+                    count = 7
+                }
+            }
+            if valueorderlist.count == 8 {
+                if valueorderlist[0].rank.ordinal() == valueorderlist[1].rank.ordinal() - 1 && valueorderlist[1].rank.ordinal() == valueorderlist[2].rank.ordinal() - 1 && valueorderlist[2].rank.ordinal() == valueorderlist[3].rank.ordinal() - 1 && valueorderlist[3].rank.ordinal() == valueorderlist[4].rank.ordinal() && valueorderlist[4].rank.ordinal() == valueorderlist[5].rank.ordinal() && valueorderlist[5].rank.ordinal() == valueorderlist[6].rank.ordinal() - 1 && valueorderlist[6].rank.ordinal() == valueorderlist[7].rank.ordinal() - 1 {
+                    count = 8
+                }
             }
         }
-        if Constants.boolpoints {
-            Constants.boolpoints = false
-            return i
-        } else {
-            return 0
-        }
+        return count
     }
     
     func fifteencount(cardone: Card) -> Int {
         
         let history = addcard(cardone)
-        let orderlist = CPUOrder().orderByValue(history)
         var count = 0
-        for acard in orderlist {
+        for acard in history {
             count += acard.rank.value()
         }
         if count == 15 || count == 31 {

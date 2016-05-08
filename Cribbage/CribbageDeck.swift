@@ -367,7 +367,7 @@ class CribbageDeck {
         
         // MARK: - TBC
         
-        if !Constants.playerDict["Computer"]!.isDealer {
+        if Constants.playerDict["Computer"]!.isDealer {
             HVC.switchturn()
         }
     }

@@ -24,6 +24,22 @@ class History {
         return Constants.playList
     }
     
+    func getHistoryAtIndex(index: Int) -> Card {
+        return Constants.playList[index]
+    }
+    
+    func historyMinusLastPlay() -> [Card] {
+        var returnlist = [Card]()
+        var loop = 0
+        for acard in Constants.playList {
+            if loop != 0 {
+            returnlist.append(acard)
+            }
+            loop += 1
+        }
+        return returnlist
+    }
+    
     func playerHistory(player: Player) -> [Player] {
         Constants.playerList.insert(player, atIndex: 0)
         return Constants.playerList

@@ -10,9 +10,48 @@ import UIKit
 
 class HandViewController: UIViewController {
     
-    func switchturn() -> Bool {
-        Constants.computerturn = !Constants.computerturn
-        return Constants.computerturn
+    func updateUI() {
+        if lastCard != nil {
+            lastCard.image = UIImage(named: Constants.lastcard)
+        }
+    }
+    
+    //MARK: - ViewDidLoad
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        lastCard.image = UIImage(named:Constants.lastcard)
+        Constants.crib = 0
+        Constants.playercount = 2
+        Constants.computercango = true
+        Constants.playercango = true
+        Constants.computerturn = true
+        updateUI()
+        //Do any additional setup after loading the view.
+    }
+    
+    // MARK: - Constants
+    
+    private struct Constants {
+        static var cutcard = "bicycleback"
+        static var lastcard = "bicycleback"
+        static var c1 = "bicycleback"
+        static var c2 = "bicycleback"
+        static var c3 = "bicycleback"
+        static var c4 = "bicycleback"
+        static var c5 = "bicycleback"
+        static var c6 = "bicycleback"
+        
+        static var crib = 0
+        
+        static var computerturn = true
+        
+        static var playercango = true
+        static var computercango = true
+        static var playercount = 0
+        
+        static var imagestring = ""
+        static var pause = false
     }
     
     //MARK: - Outlets
@@ -108,25 +147,10 @@ class HandViewController: UIViewController {
         }
     }
     
-    func updateUI() {
-        if lastCard != nil {
-            lastCard.image = UIImage(named: Constants.lastcard)
-        }
+    func switchturn() -> Bool {
+        Constants.computerturn = !Constants.computerturn
+        return Constants.computerturn
     }
-    
-    //MARK: - ViewDidLoad
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        lastCard.image = UIImage(named:Constants.lastcard)
-        Constants.crib = 0
-        Constants.playercount = 2
-        Constants.computercango = true
-        Constants.playercango = true
-        updateUI()
-        //Do any additional setup after loading the view.
-    }
-    
     
     // MARK: - Card Taps
     
@@ -245,30 +269,6 @@ class HandViewController: UIViewController {
         forTheCardTaps(Hand6, whichTap: 6)
     }
     
-    // MARK: - Constants
-    
-    private struct Constants {
-        static var cutcard = "bicycleback"
-        static var lastcard = "bicycleback"
-        static var c1 = "bicycleback"
-        static var c2 = "bicycleback"
-        static var c3 = "bicycleback"
-        static var c4 = "bicycleback"
-        static var c5 = "bicycleback"
-        static var c6 = "bicycleback"
-        
-        static var crib = 0
-        
-        static var computerturn = false
-        
-        static var playercango = true
-        static var computercango = true
-        static var playercount = 0
-        
-        static var imagestring = ""
-        static var pause = false
-    }
-    
     // MARK: - Card Displays
     
     func lastCardDisplay(card: String) -> String {
@@ -353,6 +353,13 @@ class HandViewController: UIViewController {
     }
     
     //I'm skeptical that the computer picking a hand works properly, lots of skunk hands...!!!
+    //check at the end?
     //picking a card seems to be ok tho...
     
+    //List of things to do!!!
+    //fix run scoring
+    //fix autolayout (all views and all sizes)
+    //add a thing for when the game ends (maybe another view, which goes to the start view?)
+    //check to see if the score is >121 every time someone scores (for the thing above)
+    //add buttons to change the background color and back of the cards
 }
