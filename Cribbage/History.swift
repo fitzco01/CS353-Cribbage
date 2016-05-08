@@ -15,6 +15,11 @@ class History {
         static var playerList: [Player] = []
     }
     
+    func deleteHistory() {
+        Constants.playList.removeAll()
+        Constants.playerList.removeAll()
+    }
+    
     func playHistory(card: Card) -> [Card] {
         Constants.playList.insert(card, atIndex: 0)
         return Constants.playList

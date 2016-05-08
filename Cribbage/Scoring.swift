@@ -14,7 +14,7 @@ struct Order {
     var historylist = History().showPlayHistory()
     
     func orderByValue() -> [Card] {
-        let valueorderlist = historylist.sort { $0.rank.rawValue < $1.rank.rawValue }
+        let valueorderlist = historylist.sort { $0.rank.value() < $1.rank.value() }
         return valueorderlist
     }
     
@@ -31,14 +31,14 @@ class ScoringRun {
     }
     
     func updateruncount(somecard: Card) {
-        Constants.someruncount += somecard.rank.rawValue
+        Constants.someruncount += somecard.rank.value()
     }
     
     // MARK: - Run Scoring
     
-    func straight() -> Int {
+    func straight(playername: String) -> Int {
         var i = 0
-        let orderlist = Order().orderByValue()
+        var orderlist = Order().orderByValue()
         if orderlist.count >= 3 {
             while (i + 1) < orderlist.count {
                 if orderlist[i].rank.ordinal() == (orderlist[i + 1].rank.ordinal() + 1) {
@@ -52,26 +52,36 @@ class ScoringRun {
         }
         if Constants.boolpoints {
             Constants.boolpoints = false
+            
+            let card = orderlist.removeFirst()
+            
+            ScoreHistory().addToHistory(playername, card: card, othercards: orderlist, scoretype: "straight", pointvalue: orderlist.count)
+            
             return orderlist.count
         } else {
             return 0
         }
     }
     
-    func fifteencount() -> Int {
-        let orderlist = Order().orderByValue()
+    func fifteencount(playername: String) -> Int {
+        var orderlist = Order().orderByValue()
         var count = 0
         for acard in orderlist {
-            count += acard.rank.rawValue
+            count += acard.rank.value()
         }
         if count == 15 || count == 31 {
+            
+            let card = orderlist.removeFirst()
+
+            ScoreHistory().addToHistory(playername, card: card, othercards: orderlist, scoretype: "\(count)", pointvalue: 2)
+
             return 2
         } else {
             return 0
         }
     }
     
-    func SomeOfAKind() -> Int {
+    func SomeOfAKind(playername: String) -> Int {
         var historylist = Order().getHistory()
         
         var count = 0
@@ -109,6 +119,19 @@ class ScoringRun {
             }
         }
         
+        if count != 0 {
+            
+            let othercards : [Card] = Array(historylist[1..<historylist.count])
+            var text = ""
+            if historylist.count == 2 {
+                text = "pair"
+            } else {
+                text = "\(historylist.count) of a kind"
+            }
+
+            ScoreHistory().addToHistory(playername, card: historylist[0], othercards: othercards, scoretype: text, pointvalue: count)
+        }
+        
         return count
     }
     
@@ -119,24 +142,33 @@ class ScoringRun {
     //returns 1 if the player cannot play, 0 otherwise
     //points should be given to the next player, not the current player (unlike the other functions)
     
-    func go(runtotal: Int) -> Int {
+    func go(playername: String, runtotal: Int) -> Int {
         if History().mostRecentPlayer().cannotPlay(runtotal) {
+            
+            ScoreHistory().addToHistory(playername, card: History().mostRecentPlay(), othercards: History().showPlayHistory(), scoretype: "go", pointvalue: 1)
+
             return 1
         } else {
             return 0
         }
     }
     
-    func lastcard() -> Int {
+    func lastcard(playername: String) -> Int {
         if Order().getHistory().count == 8 {
+            
+            ScoreHistory().addToHistory(playername, card: History().mostRecentPlay(), othercards: History().showPlayHistory(), scoretype: "last card", pointvalue: 1)
+
             return 1
         } else {
             return 0
         }
     }
     
-    func jackflip() -> Int {
-        if CribbageDeck().cutcard().rank.description() == "jack" {
+    func jackflip(playername: String) -> Int {
+        if CribbageDeck().getCutCardCard().rank.description() == "jack" {
+            
+            ScoreHistory().addToHistory(playername, card: CribbageDeck().getCutCardCard(), othercards: [CribbageDeck().getCutCardCard()], scoretype: "nibs", pointvalue: 2)
+            
             return 2
         } else {
             return 0
@@ -191,94 +223,117 @@ class ScoringHand {
     
     // MARK: - Hand Scoring
     
-    func jackinhand(somehand: [Card]) -> Int {
+    func jackinhand(playername: String, somehand: [Card]) -> Int {
         var count = 0
         for acard in somehand {
-            if acard.rank.description() == "jack" && acard.suit.description() == CribbageDeck().cutcard().suit.description() {
-                count += 1
+            if acard.rank.description() == "jack" && acard.suit.description() == CribbageDeck().getCutCardCard().suit.description() {
+                count = 1
+                ScoreHistory().addToHistory(playername, card: acard, othercards: [CribbageDeck().getCutCardCard()], scoretype: "nobs", pointvalue: 1)
             }
         }
+        
         return count
     }
-    
-    func SomeOfAKind(ahand: [Card]) -> Int {
+
+    func SomeOfAKind(playername: String, ahand: [Card]) -> Int {
         var count = 0
         let twodict = makeSubDecksOf2From5(ahand)
         let threedict = makeSubDecksOf3From5(ahand)
         let fourdict = makeSubDecksOf4From5(ahand)
+        var marker = ""
         
-        for (_, value) in twodict {
-            if value[0].rank.rawValue == value[1].rank.rawValue {
-                count += 2
+        for (_, value) in fourdict {
+            if value[0].rank.description() == value[1].rank.description() && value[1].rank.description() == value[2].rank.description() && value[2].rank.description() == value[3].rank.description() {
+                count = 12
+                
+                ScoreHistory().addToHistory(playername, card: value[0], othercards: [value[1], value[2], value[3]], scoretype: "four of a kind", pointvalue: 12)
+                return count
             }
         }
         
         for (_, value) in threedict {
-            if value[0].rank.rawValue == value[1].rank.rawValue && value[1].rank.rawValue == value[2].rank.rawValue {
-                count += 4
-            }
-        }
-
-        for (_, value) in fourdict {
-            if value[0].rank.rawValue == value[1].rank.rawValue && value[1].rank.rawValue == value[2].rank.rawValue && value[2].rank.rawValue == value[3].rank.rawValue {
+            if value[0].rank.description() == value[1].rank.description() && value[1].rank.description() == value[2].rank.description() {
                 count += 6
+                
+                ScoreHistory().addToHistory(playername, card: value[0], othercards: [value[1], value[2]], scoretype: "three of a kind", pointvalue: 6)
+                
+                marker = value[0].rank.description()
             }
         }
-
+        
+        for (_, value) in twodict {
+            if value[0].rank.description() == value[1].rank.description() {
+                if marker != value[0].rank.description() {
+                    count += 2
+                
+                    ScoreHistory().addToHistory(playername, card: value[0], othercards: [value[1]], scoretype: "pair", pointvalue: 2)
+                }
+            }
+        }
+        
         return count
     }
     
-    func fifteencount(ahand: [Card]) -> Int {
+    func fifteencount(playername: String, ahand: [Card]) -> Int {
         var count = 0
         let twodict = makeSubDecksOf2From5(ahand)
         let threedict = makeSubDecksOf3From5(ahand)
         let fourdict = makeSubDecksOf4From5(ahand)
         
         for (_, value) in twodict {
-            if value[0].rank.rawValue + value[1].rank.rawValue == 15 {
+            if value[0].rank.value() + value[1].rank.value() == 15 {
                 count += 2
+                
+                ScoreHistory().addToHistory(playername, card: value[0], othercards: [value[1]], scoretype: "fifteen", pointvalue: 2)
             }
         }
         
         for (_, value) in threedict {
-            if value[0].rank.rawValue + value[1].rank.rawValue + value[2].rank.rawValue == 15 {
+            if value[0].rank.value() + value[1].rank.value() + value[2].rank.value() == 15 {
                 count += 2
+                ScoreHistory().addToHistory(playername, card: value[0], othercards: [value[1],value[2]], scoretype: "fifteen", pointvalue: 2)
             }
         }
         
         for (_, value) in fourdict {
-            if value[0].rank.rawValue + value[1].rank.rawValue + value[2].rank.rawValue +  value[3].rank.rawValue == 15 {
+            if value[0].rank.value() + value[1].rank.value() + value[2].rank.value() +  value[3].rank.value() == 15 {
                 count += 2
+                ScoreHistory().addToHistory(playername, card: value[0], othercards: [value[1],value[2],value[3]], scoretype: "fifteen", pointvalue: 2)
+
             }
         }
         
         return count
     }
     
-    func straight(ahand: [Card]) -> Int{
+    func straight(playername: String, ahand: [Card]) -> Int{
         var count = 0
         let threedict = makeSubDecksOf3From5(ahand)
         let fourdict = makeSubDecksOf4From5(ahand)
-        let sorthand = ahand.sort { $0.rank.rawValue < $1.rank.rawValue }
+        let sorthand = ahand.sort { $0.rank.value() < $1.rank.value() }
         
         if sorthand[0].rank.ordinal() == sorthand[1].rank.ordinal() + 1 && sorthand[1].rank.ordinal() == sorthand[2].rank.ordinal() + 1 && sorthand[2].rank.ordinal() == sorthand[3].rank.ordinal() + 1 && sorthand[3].rank.ordinal() == sorthand[4].rank.ordinal() + 1 {
-            count += 5
+            count = 5
             
+            ScoreHistory().addToHistory(playername, card: sorthand[0], othercards: [sorthand[1],sorthand[2],sorthand[3],sorthand[4]], scoretype: "straight", pointvalue: count)
+
             return count
         }
         
         for (_, value) in fourdict {
             if value[0].rank.ordinal() == value[1].rank.ordinal() + 1 && value[1].rank.ordinal() == value[2].rank.ordinal() + 1 && value[2].rank.ordinal() == value[3].rank.ordinal() + 1 {
-                count += 4
-                
+                count = 4
+                ScoreHistory().addToHistory(playername, card: value[0], othercards: [value[1],value[2],value[3]], scoretype: "straight", pointvalue: count)
+
                 return count
             }
         }
         
         for (_, value) in threedict {
             if value[0].rank.ordinal() == value[1].rank.ordinal() + 1 && value[1].rank.ordinal() == value[2].rank.ordinal() + 1 {
-                count += 3
-                
+                count = 3
+                ScoreHistory().addToHistory(playername, card: value[0], othercards: [value[1],value[2]], scoretype: "straight", pointvalue: count)
+
                 return count
             }
         }
@@ -286,7 +341,7 @@ class ScoringHand {
         return count
     }
     
-    func fourflush(justplayerhand: [Card]) -> Int {
+    func fourflush(playername: String, justplayerhand: [Card]) -> Int {
         var count = 0
         let suitchecker = justplayerhand[0].suit.description()
         for acard in justplayerhand {
@@ -296,11 +351,12 @@ class ScoringHand {
                 return 0
             }
         }
-        
+        ScoreHistory().addToHistory(playername, card: justplayerhand[0], othercards: [justplayerhand[1],justplayerhand[2],justplayerhand[3]], scoretype: "flush", pointvalue: count)
+
         return count
     }
     
-    func fiveflush(handandcutcardORcrib: [Card]) -> Int {
+    func fiveflush(playername: String, handandcutcardORcrib: [Card]) -> Int {
         var count = 0
         let suitchecker = handandcutcardORcrib[0].suit.description()
         for acard in handandcutcardORcrib {
@@ -310,11 +366,12 @@ class ScoringHand {
                 return 0
             }
         }
-        
+        ScoreHistory().addToHistory(playername, card: handandcutcardORcrib[0], othercards: [handandcutcardORcrib[1],handandcutcardORcrib[2],handandcutcardORcrib[3],handandcutcardORcrib[4]], scoretype: "flush", pointvalue: count)
+
         return count
     }
     
-    //ADD Good Jack!!!
+    //ADD Good Jack!!!?
     
 }
 
@@ -326,7 +383,7 @@ struct CPUOrder {
     var historylist = History().showPlayHistory()
     
     func orderByValue(cardlist: [Card]) -> [Card] {
-        let valueorderlist = cardlist.sort { $0.rank.rawValue < $1.rank.rawValue }
+        let valueorderlist = cardlist.sort { $0.rank.value() < $1.rank.value() }
         return valueorderlist
     }
     
@@ -355,7 +412,7 @@ class CPUScoringRun {
     }
     
     func checkruncount(somecard: Card) {
-        Constants.someruncount += somecard.rank.rawValue
+        Constants.someruncount += somecard.rank.value()
     }
     
     // MARK: - Run Scoring
@@ -390,7 +447,7 @@ class CPUScoringRun {
         let orderlist = CPUOrder().orderByValue(history)
         var count = 0
         for acard in orderlist {
-            count += acard.rank.rawValue
+            count += acard.rank.value()
         }
         if count == 15 || count == 31 {
             return 2
@@ -488,7 +545,7 @@ class CPUScoringHand {
     func jackinhand(somehand: [Card]) -> Int {
         var count = 0
         for acard in somehand {
-            if acard.rank.description() == "jack" && acard.suit.description() == CribbageDeck().cutcard().suit.description() {
+            if acard.rank.description() == "jack" && acard.suit.description() == CribbageDeck().getCutCardCard().suit.description() {
                 count += 1
             }
         }
@@ -501,18 +558,18 @@ class CPUScoringHand {
         let threedict = makeSubDecksOf3From4(ahand)
         
         for (_, value) in twodict {
-            if value[0].rank.rawValue == value[1].rank.rawValue {
+            if value[0].rank.description() == value[1].rank.description() {
                 count += 2
             }
         }
         
         for (_, value) in threedict {
-            if value[0].rank.rawValue == value[1].rank.rawValue && value[1].rank.rawValue == value[2].rank.rawValue {
+            if value[0].rank.description() == value[1].rank.description() && value[1].rank.description() == value[2].rank.description() {
                 count += 4
             }
         }
         
-        if ahand[0].rank.rawValue == ahand[1].rank.rawValue && ahand[1].rank.rawValue == ahand[2].rank.rawValue && ahand[2].rank.rawValue == ahand[3].rank.rawValue {
+        if ahand[0].rank.description() == ahand[1].rank.description() && ahand[1].rank.description() == ahand[2].rank.description() && ahand[2].rank.description() == ahand[3].rank.description() {
             count += 6
         }
         
@@ -525,18 +582,18 @@ class CPUScoringHand {
         let threedict = makeSubDecksOf3From4(ahand)
         
         for (_, value) in twodict {
-            if value[0].rank.rawValue + value[1].rank.rawValue == 15 {
+            if value[0].rank.value() + value[1].rank.value() == 15 {
                 count += 2
             }
         }
         
         for (_, value) in threedict {
-            if value[0].rank.rawValue + value[1].rank.rawValue + value[2].rank.rawValue == 15 {
+            if value[0].rank.value() + value[1].rank.value() + value[2].rank.value() == 15 {
                 count += 2
             }
         }
         
-        if ahand[0].rank.rawValue + ahand[1].rank.rawValue + ahand[2].rank.rawValue +  ahand[3].rank.rawValue == 15 {
+        if ahand[0].rank.value() + ahand[1].rank.value() + ahand[2].rank.value() +  ahand[3].rank.value() == 15 {
             count += 2
         }
         
@@ -546,7 +603,7 @@ class CPUScoringHand {
     func straight(ahand: [Card]) -> Int{
         var count = 0
         let threedict = makeSubDecksOf3From4(ahand)
-        let sorthand = ahand.sort { $0.rank.rawValue < $1.rank.rawValue }
+        let sorthand = ahand.sort { $0.rank.value() < $1.rank.value() }
         
         if sorthand[0].rank.ordinal() == sorthand[1].rank.ordinal() + 1 && sorthand[1].rank.ordinal() == sorthand[2].rank.ordinal() + 1 && sorthand[2].rank.ordinal() == sorthand[3].rank.ordinal() + 1 && sorthand[3].rank.ordinal() == sorthand[4].rank.ordinal() + 1 {
             count += 5

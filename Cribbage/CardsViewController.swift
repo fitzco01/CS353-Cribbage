@@ -31,6 +31,8 @@ class CardsViewController: UIViewController {
     private struct Constants {
         static var playerdidgo = false
         static var computerdidgo = false
+        static var playerscore = 0
+        static var computerscore = 0
     }
     
     override func viewDidLoad() {
@@ -39,28 +41,42 @@ class CardsViewController: UIViewController {
         let firstplayername = CribbageDeck().whoDidntDealIt()
         
         if firstplayername == "Player" {
-            let (p1,p2,p3,p4,pc) = CribbageDeck().hand("Player"
+            let (p1,p2,p3,p4) = CribbageDeck().hand("Player"
             )
-            print("PLAYER CARDS + cut \(p1,p2,p3,p4,pc)")
+            print("PLAYER CARDS + cut \(p1,p2,p3,p4)")
             Card1.image = UIImage(named: p1.description())
             Card2.image = UIImage(named: p2.description())
             Card3.image = UIImage(named: p3.description())
             Card4.image = UIImage(named: p4.description())
-            CutCard.image = UIImage(named: pc.description())
-            //edit this text later!!!
-            whoScored.text = "PLAYER"
+            CutCard.image = UIImage(named: CribbageDeck().getCutCard())
+            
+            let old = Constants.playerscore
+            Constants.playerscore += CribbageDeck().scoreHand("Player")
+            
+            PlayerScore.text = "Player Score: \(Constants.playerscore)"
+            
+            whoScored.text = "Player scored \(Constants.playerscore - old) points!"
+            
+            
             Dealer.text = "Dealer: Computer"
             Constants.playerdidgo = true
         } else if firstplayername == "Computer" {
-            let (c1,c2,c3,c4,cc) = CribbageDeck().hand("Computer")
-            print("COMPUTER CARDS + Cut \(c1,c2,c3,c4,cc)")
+            let (c1,c2,c3,c4) = CribbageDeck().hand("Computer")
+            print("COMPUTER CARDS + Cut \(c1,c2,c3,c4)")
             Card1.image = UIImage(named: c1.description())
             Card2.image = UIImage(named: c2.description())
             Card3.image = UIImage(named: c3.description())
             Card4.image = UIImage(named: c4.description())
-            CutCard.image = UIImage(named: cc.description())
-            //edit this text later!!!
-            whoScored.text = "COMPUTER"
+            CutCard.image = UIImage(named: CribbageDeck().getCutCard())
+            
+            
+            let old = Constants.computerscore
+            Constants.computerscore += CribbageDeck().scoreShortHand("Computer")
+            
+            CPUScore.text = "CPU Score: \(Constants.computerscore)"
+            
+            whoScored.text = "Computer scored \(Constants.computerscore - old) points!"
+
             Dealer.text = "Dealer: Player"
             Constants.computerdidgo = true
         } else {
@@ -85,28 +101,40 @@ class CardsViewController: UIViewController {
     override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
         if identifier == "CardsToCrib" {
             if Constants.computerdidgo && !Constants.playerdidgo {
-                let (p1,p2,p3,p4,pc) = CribbageDeck().hand("Player")
-                print("PLAYER CARDS + cut \(p1,p2,p3,p4,pc)")
+                let (p1,p2,p3,p4) = CribbageDeck().hand("Player")
+                print("PLAYER CARDS + cut \(p1,p2,p3,p4)")
                 Card1.image = UIImage(named: p1.description())
                 Card2.image = UIImage(named: p2.description())
                 Card3.image = UIImage(named: p3.description())
                 Card4.image = UIImage(named: p4.description())
-                CutCard.image = UIImage(named: pc.description())
-                //edit this text later!!!
-                whoScored.text = "Player"
+                CutCard.image = UIImage(named: CribbageDeck().getCutCard())
+                
+                let old = Constants.playerscore
+                Constants.playerscore += CribbageDeck().scoreHand("Player")
+                
+                PlayerScore.text = "Player Score: \(Constants.playerscore)"
+                
+                whoScored.text = "Player scored \(Constants.playerscore - old) points!"
+                
                 Constants.playerdidgo = true
                 print("FALSE 1")
                 return false
             } else if Constants.playerdidgo && !Constants.computerdidgo {
-                let (c1,c2,c3,c4,cc) = CribbageDeck().hand("Computer")
-                print("COMPUTER CARDS + Cut \(c1,c2,c3,c4,cc)")
+                let (c1,c2,c3,c4) = CribbageDeck().hand("Computer")
+                print("COMPUTER CARDS + Cut \(c1,c2,c3,c4)")
                 Card1.image = UIImage(named: c1.description())
                 Card2.image = UIImage(named: c2.description())
                 Card3.image = UIImage(named: c3.description())
                 Card4.image = UIImage(named: c4.description())
-                CutCard.image = UIImage(named: cc.description())
-                //edit this text later!!!
-                whoScored.text = "COMPUTER"
+                CutCard.image = UIImage(named: CribbageDeck().getCutCard())
+
+                let old = Constants.computerscore
+                Constants.computerscore += CribbageDeck().scoreShortHand("Computer")
+                
+                CPUScore.text = "CPU Score: \(Constants.computerscore)"
+                
+                whoScored.text = "Computer scored \(Constants.computerscore - old) points!"
+                
                 Constants.computerdidgo = true
                 print("FALSE 2")
                 return false

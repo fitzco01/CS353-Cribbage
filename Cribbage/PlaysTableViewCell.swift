@@ -23,5 +23,4 @@ class PlaysTableViewCell: UITableViewCell {
         playNumberLabel.text = playnumber
         imageLabel.image = UIImage(named: card.description())
     }
-
 }

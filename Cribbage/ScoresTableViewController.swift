@@ -31,24 +31,60 @@ class ScoresTableViewController: UITableViewController {
     // MARK: - Table view data source
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
+        return 1
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return 0
+        if ScoreHistory().getCard().count == ScoreHistory().getCards().count  && ScoreHistory().getCards().count == ScoreHistory().getNames().count && ScoreHistory().getNames().count == ScoreHistory().getScoreType().count && ScoreHistory().getNames().count == ScoreHistory().getScoreType().count {
+            return ScoreHistory().getCard().count
+        } else {
+            print("ERROR: THE SCORE HISTORY LISTS ARE NOT EQUAL 1!")
+            return 0
+        }
     }
 
-    /*
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier", forIndexPath: indexPath)
+        let cell = tableView.dequeueReusableCellWithIdentifier("ScoreCell", forIndexPath: indexPath) as! ScoresTableViewCell
+        
+        let card = ScoreHistory().getCard()[indexPath.row]
+        let player = ScoreHistory().getNames()[indexPath.row]
+        let othercards = ScoreHistory().getCards()[indexPath.row]
+        let scoretype = ScoreHistory().getScoreType()[indexPath.row]
+        let pointtotal = ScoreHistory().getPointValue()[indexPath.row]
+        let count: Int
+        var description = ""
+        
+        if ScoreHistory().getCard().count == ScoreHistory().getCards().count  && ScoreHistory().getCards().count == ScoreHistory().getNames().count && ScoreHistory().getNames().count == ScoreHistory().getScoreType().count && ScoreHistory().getNames().count == ScoreHistory().getScoreType().count {
+            count = ScoreHistory().getPointValue().count - indexPath.row
+        } else {
+            print("ERROR: THE SCORE HISTORY LISTS ARE NOT EQUAL 2!")
+            count = 0
+        }
+        
+        for acard in othercards {
+            description += acard.description() + ","
+        }
+        
+        var newdescription = description.substringToIndex(description.endIndex.predecessor())
+        newdescription += "."
+        
+        if scoretype == "nibs" {
+            newdescription = "no other cards"
+        }
 
-        // Configure the cell...
-
+        cell.configure(card, othercards: newdescription, scoretype: scoretype, player: player, scorenumber: "Score #\(count)", points: pointtotal)
+        
         return cell
     }
-    */
+    
+    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        let othercards = ScoreHistory().getCards()[indexPath.row]
+        var height = 100
+        for _ in othercards {
+            height += 20
+        }
+        return CGFloat(height)
+    }
 
     /*
     // Override to support conditional editing of the table view.

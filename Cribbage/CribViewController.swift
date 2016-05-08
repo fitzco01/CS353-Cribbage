@@ -19,13 +19,12 @@ class CribViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         let L = CribbageDeck().getTheCrib()
-        let cCard = CribbageDeck().getCutCard()
         print("CRIB CARDS \(L)")
         Crib1.image = UIImage(named: L[0].description())
         Crib2.image = UIImage(named: L[1].description())
         Crib3.image = UIImage(named: L[2].description())
         Crib4.image = UIImage(named: L[3].description())
-        CutCard.image = UIImage(named:cCard)
+        CutCard.image = UIImage(named: CribbageDeck().getCutCard())
         // Do any additional setup after loading the view.
     }
 
@@ -34,12 +33,16 @@ class CribViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    private struct Constants {
+        static var count = 0
+    }
 
-    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        Constants.count += 1
+        print("SEGUE \(Constants.count)")
         CribbageDeck().restart()
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.

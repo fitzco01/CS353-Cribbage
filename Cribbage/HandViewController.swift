@@ -510,7 +510,7 @@ class HandViewController: UIViewController {
     
     func cutCardDisplay() -> String {
         if Constants.crib >= 1 {
-            Constants.cutcard = CribbageDeck().cutcard().description()
+            Constants.cutcard = CribbageDeck().getCutCard()
             print("sample cutcard \(Constants.cutcard)")
 
         }
@@ -572,9 +572,8 @@ class HandViewController: UIViewController {
      
     override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
         if identifier == "RunToCards" {
-            print("1\(Constants.playercount)")
-            print("2\(CribbageDeck().cpuHandLength())")
             if CribbageDeck().cpuHandLength() == 0 && Constants.playercount == 6 && !Constants.pause {
+                History().deleteHistory()
                 return true
             } else {
                 return false
