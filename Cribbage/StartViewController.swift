@@ -19,7 +19,6 @@ class StartViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         // Do any additional setup after loading the view.
     }
 
@@ -29,6 +28,7 @@ class StartViewController: UIViewController {
     }
     
     func setBackground(imagename: String) {
+        print(imagename)
         backgroundImage.image = UIImage(named: imagename)
     }
     

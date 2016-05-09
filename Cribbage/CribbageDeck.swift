@@ -21,6 +21,11 @@ class CribbageDeck {
         static var cribcards: [Card] = []
         static var starthand = 0
         static var cutcard: [Card] = []
+        static var cardback = "LutherCard"
+    }
+    
+    func setCard(imagename: String) {
+        Constants.cardback = imagename
     }
 
     func rankFromDescription(cardname: String) -> Rank {
@@ -359,7 +364,7 @@ class CribbageDeck {
         HVC.c5Display(Constants.playerDict["Player"]!.hand[4].description())
         HVC.c6Display(Constants.playerDict["Player"]!.hand[5].description())
         HVC.cutCardDisplay()
-        HVC.lastCardDisplay("bicycleback")
+        HVC.lastCardDisplay(Constants.cardback)
         
         Constants.starthand = 0
         Constants.count = 0
@@ -371,5 +376,6 @@ class CribbageDeck {
         }
     }
     //fix popover views!!!
+    //doesn't segue to finalviewcontroller for some reason...
     //fix autolayout!!!
 }

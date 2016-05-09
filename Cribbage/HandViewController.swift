@@ -395,21 +395,20 @@ class HandViewController: UIViewController {
      }
     
     override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
-        if identifier == "RunToCards" {
-            if CribbageDeck().cpuHandLength() == 0 && Constants.playercount == 6 && !Constants.pause {                    
-                return true
-            } else {
-
-                return false
-            }
-        } else if identifier == "RunToFinal" {
+        if identifier == "RunToFinal" {
             if PlayerScores().winner("Player") || PlayerScores().winner("Computer") {
                 return true
             } else {
                 return false
             }
         }
-        else {
+        else if identifier == "RunToCards" {
+            if CribbageDeck().cpuHandLength() == 0 && Constants.playercount == 6 && !Constants.pause {
+                return true
+            } else {
+                return false
+            }
+        } else {
             return true
         }
     }

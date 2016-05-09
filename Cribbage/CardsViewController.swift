@@ -114,7 +114,13 @@ class CardsViewController: UIViewController {
     }
     
     override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
-        if identifier == "CardsToCrib" {
+        if identifier == "RunToFinal" {
+            if PlayerScores().winner("Player") || PlayerScores().winner("Computer") {
+                return true
+            } else {
+                return false
+            }
+        } else if identifier == "CardsToCrib" {
             if Constants.computerdidgo && !Constants.playerdidgo {
                 let (p1,p2,p3,p4) = CribbageDeck().hand("Player")
                 print("PLAYER CARDS + cut \(p1,p2,p3,p4)")
@@ -142,7 +148,7 @@ class CardsViewController: UIViewController {
                 Card3.image = UIImage(named: c3.description())
                 Card4.image = UIImage(named: c4.description())
                 CutCard.image = UIImage(named: CribbageDeck().getCutCard())
-
+                
                 let old = PlayerScores().getScore("Computer")
                 CribbageDeck().scoreShortHand("Computer")
                 CPUScore.text = "CPU Score: \(PlayerScores().getScore("Computer"))"
@@ -157,12 +163,6 @@ class CardsViewController: UIViewController {
                 Constants.playerdidgo = false
                 Constants.computerdidgo = false
                 return true
-            }
-        } else if identifier == "RunToFinal" {
-            if PlayerScores().winner("Player") || PlayerScores().winner("Computer") {
-                return true
-            } else {
-                return false
             }
         } else {
             print("TRUE 2")

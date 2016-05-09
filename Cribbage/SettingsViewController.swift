@@ -26,17 +26,20 @@ class SettingsViewController: UIViewController {
     }
     
     @IBOutlet weak var image1: UIImageView! { didSet {
+        self.image1.userInteractionEnabled = true
         image1.image = UIImage(named: Constants.imageName1)
         }
     }
     
     @IBOutlet weak var image2: UIImageView! { didSet {
-        image1.image = UIImage(named: Constants.imageName2)
+        self.image2.userInteractionEnabled = true
+        image2.image = UIImage(named: Constants.imageName2)
         }
     }
     
     @IBOutlet weak var image3: UIImageView! { didSet {
-        image1.image = UIImage(named: Constants.imageName3)
+        self.image3.userInteractionEnabled = true
+        image3.image = UIImage(named: Constants.imageName3)
         }
     }
     
@@ -58,10 +61,13 @@ class SettingsViewController: UIViewController {
         switch whichImage {
         case 1:
             HandViewController().setCard(Constants.imageName1)
+            CribbageDeck().setCard(Constants.imageName1)
         case 2:
             HandViewController().setCard(Constants.imageName2)
+            CribbageDeck().setCard(Constants.imageName2)
         case 3:
             HandViewController().setCard(Constants.imageName3)
+            CribbageDeck().setCard(Constants.imageName3)
         default:
             print("ERROR PICKING CARD BACK")
         }
@@ -72,16 +78,19 @@ class SettingsViewController: UIViewController {
                 CardsViewController().setBackground(Constants.imageName1)
                 CribViewController().setBackground(Constants.imageName1)
                 StartViewController().setBackground(Constants.imageName1)
+                print("IMAGING \(StartViewController().setBackground(Constants.imageName1))")
             case 2:
                 HandViewController().setBackground(Constants.imageName2)
                 CardsViewController().setBackground(Constants.imageName2)
                 CribViewController().setBackground(Constants.imageName2)
                 StartViewController().setBackground(Constants.imageName2)
+                print("IMAGING \(StartViewController().setBackground(Constants.imageName2))")
             case 3:
                 HandViewController().setBackground(Constants.imageName3)
                 CardsViewController().setBackground(Constants.imageName3)
                 CribViewController().setBackground(Constants.imageName3)
                 StartViewController().setBackground(Constants.imageName3)
+                print("IMAGING \(StartViewController().setBackground(Constants.imageName3))")
             default:
                 print("ERROR PICKING BACKGROUND")
             }
@@ -98,6 +107,11 @@ class SettingsViewController: UIViewController {
         Constants.imageName2 = "LutherCard"
         Constants.imageName3 = "ISUCard"
         Constants.whichType = "Card"
+        print(Constants.imageName1)
+        print(Constants.imageName2)
+        print(Constants.imageName3)
+
+
     }
     
     func setBackground() {
@@ -105,6 +119,9 @@ class SettingsViewController: UIViewController {
         Constants.imageName2 = "Marble"
         Constants.imageName3 = "Space"
         Constants.whichType = "Background"
+        print(Constants.imageName1)
+        print(Constants.imageName2)
+        print(Constants.imageName3)
     }
 
     override func didReceiveMemoryWarning() {
