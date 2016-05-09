@@ -17,6 +17,11 @@ class CardsViewController: UIViewController {
     }
     @IBOutlet weak var Dealer: UILabel!
     
+    @IBOutlet weak var backgroundImage: UIImageView! { didSet {
+        backgroundImage.image = UIImage(named: "Wood")
+        }
+    }
+    
     @IBOutlet weak var whoScored: UILabel!
     @IBOutlet weak var CPUScore: UILabel!
     @IBOutlet weak var PlayerScore: UILabel!
@@ -30,6 +35,10 @@ class CardsViewController: UIViewController {
     private struct Constants {
         static var playerdidgo = false
         static var computerdidgo = false
+    }
+    
+    func setBackground(imagename: String) {
+        backgroundImage.image = UIImage(named: imagename)
     }
     
     override func viewDidLoad() {
@@ -148,6 +157,12 @@ class CardsViewController: UIViewController {
                 Constants.playerdidgo = false
                 Constants.computerdidgo = false
                 return true
+            }
+        } else if identifier == "RunToFinal" {
+            if PlayerScores().winner("Player") || PlayerScores().winner("Computer") {
+                return true
+            } else {
+                return false
             }
         } else {
             print("TRUE 2")

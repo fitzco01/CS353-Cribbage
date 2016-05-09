@@ -16,6 +16,15 @@ class HandViewController: UIViewController {
         }
     }
     
+
+    func setBackground(imagename: String) {
+        backgroundImage.image = UIImage(named: imagename)
+    }
+    
+    func setCard(imagename: String) {
+        Constants.cardback = imagename
+    }
+    
     //MARK: - ViewDidLoad
     
     override func viewDidLoad() {
@@ -32,32 +41,36 @@ class HandViewController: UIViewController {
     // MARK: - Constants
     
     private struct Constants {
-        static var cutcard = "bicycleback"
-        static var lastcard = "bicycleback"
-        static var c1 = "bicycleback"
-        static var c2 = "bicycleback"
-        static var c3 = "bicycleback"
-        static var c4 = "bicycleback"
-        static var c5 = "bicycleback"
-        static var c6 = "bicycleback"
-        
+        static var cardback = "LutherCard"
+        static var cutcard = Constants.cardback
+        static var lastcard = Constants.cardback
+        static var c1 = Constants.cardback
+        static var c2 = Constants.cardback
+        static var c3 = Constants.cardback
+        static var c4 = Constants.cardback
+        static var c5 = Constants.cardback
+        static var c6 = Constants.cardback
+        static var didntplay = false
         static var crib = 0
-        
         static var computerturn = true
-        
         static var playercango = true
         static var computercango = true
         static var playercount = 0
-        
         static var imagestring = ""
         static var pause = false
+        static var cardOptions = [""]
     }
     
     //MARK: - Outlets
+    
 
+    @IBOutlet weak var backgroundImage: UIImageView! { didSet {
+        backgroundImage.image = UIImage(named: "Wood")
+        }
+    }
     @IBAction func Next(sender: UIButton) {
         if CribbageDeck().cpuHandLength() == 0 {
-            Constants.computercango = CribbageDeck().canPlay("Computer")
+            (_, Constants.computercango) = CribbageDeck().canPlay("Computer")
             if !Constants.computercango {
                 if ScoringRun().getruncount() != 31 {
                     ScoringRun().lastcard(History().mostRecentPlayer().name)
@@ -65,7 +78,7 @@ class HandViewController: UIViewController {
                 }
                 print("deleting history 3")
                 History().deleteHistory()
-                lastCard.image = UIImage(named: "bicycleback")
+                lastCard.image = UIImage(named: Constants.cardback)
                 print("TURN 5 \(Constants.computerturn)")
                 ScoringRun().resetruncount()
             }
@@ -77,7 +90,7 @@ class HandViewController: UIViewController {
             performSegueWithIdentifier("RunToCards", sender: sender)
             
         } else if Constants.computerturn {
-            Constants.computercango = CribbageDeck().canPlay("Computer")
+            (_, Constants.computercango) = CribbageDeck().canPlay("Computer")
             if !Constants.computercango {
                 if ScoringRun().getruncount() != 31 {
                     ScoringRun().lastcard(History().mostRecentPlayer().name)
@@ -85,7 +98,7 @@ class HandViewController: UIViewController {
                 }
                 print("deleting history 3")
                 History().deleteHistory()
-                lastCard.image = UIImage(named: "bicycleback")
+                lastCard.image = UIImage(named: Constants.cardback)
                 print("TURN 5 \(Constants.computerturn)")
                 ScoringRun().resetruncount()
             } else {
@@ -123,7 +136,7 @@ class HandViewController: UIViewController {
     }
     
     @IBOutlet weak var cutCard: UIImageView! { didSet {
-        cutCard.image = UIImage(named: "bicycleback")
+        cutCard.image = UIImage(named: Constants.cardback)
         }
     }
     
@@ -215,7 +228,7 @@ class HandViewController: UIViewController {
             cutCard.image = UIImage(named: CribbageDeck().getCutCard())
             if Constants.computerturn {
                 
-                Constants.computercango = CribbageDeck().canPlay("Computer")
+                (_, Constants.computercango) = CribbageDeck().canPlay("Computer")
                 if Constants.computercango {
                     Constants.imagestring = CribbageDeck().computerPlay()
                     
@@ -223,7 +236,7 @@ class HandViewController: UIViewController {
                     print("TURN 1 \(Constants.computerturn)")
                     switchturn()
                 } else {
-                    Constants.playercango = CribbageDeck().canPlay("Player")
+                    (_, Constants.playercango) = CribbageDeck().canPlay("Player")
                     if Constants.playercango {
                         switchturn()
                     } else {
@@ -233,26 +246,34 @@ class HandViewController: UIViewController {
                         }
                         print("deleting history 1")
                         History().deleteHistory()
-                        lastCard.image = UIImage(named: "bicycleback")
+                        lastCard.image = UIImage(named: Constants.cardback)
                         print("TURN 2 \(Constants.computerturn)")
                         ScoringRun().resetruncount()
                     }
                 }
             } else {
-                Constants.playercango = CribbageDeck().canPlay("Player")
+                (Constants.cardOptions, Constants.playercango) = CribbageDeck().canPlay("Player")
                 if Constants.playercango {
                     
                     Constants.playercount += 1
+                    print(Constants.cardOptions)
+                    print(cardname)
+                    print(!Constants.cardOptions.contains(cardname))
+                    if !Constants.cardOptions.contains(cardname) && CribbageDeck().cpuHandLength() != 0 {
+                        whichHand.userInteractionEnabled = false
+                        Constants.didntplay = true
+                    } else {
                     
-                    whichHand.image = UIImage(named: "bicycleback")
+                        whichHand.image = UIImage(named: Constants.cardback)
                     
-                    CribbageDeck().play(cardname)
-                    lastCardDisplay(cardname)
-                    whichHand.userInteractionEnabled = false
-                    print("TURN 3 \(Constants.computerturn)")
-                    switchturn()
+                        CribbageDeck().play(cardname)
+                        lastCardDisplay(cardname)
+                        whichHand.userInteractionEnabled = false
+                        print("TURN 3 \(Constants.computerturn)")
+                        switchturn()
+                    }
                 } else {
-                    Constants.computercango = CribbageDeck().canPlay("Computer")
+                    (_, Constants.computercango) = CribbageDeck().canPlay("Computer")
                     if Constants.computercango {
                         print("TURN 4 \(Constants.computerturn)")
 
@@ -264,11 +285,15 @@ class HandViewController: UIViewController {
                         }
                         print("deleting history 2")
                         History().deleteHistory()
-                        lastCard.image = UIImage(named: "bicycleback")
+                        lastCard.image = UIImage(named: Constants.cardback)
                         print("TURN 5 \(Constants.computerturn)")
                         ScoringRun().resetruncount()
                     }
                 }
+            }
+            if Constants.didntplay {
+                whichHand.userInteractionEnabled = true
+                Constants.didntplay = false
             }
             CPUScore.text = "CPU Score: \(PlayerScores().getScore("Computer"))"
             PlayerScore.text = "Player Score: \(PlayerScores().getScore("Player"))"
@@ -377,14 +402,15 @@ class HandViewController: UIViewController {
 
                 return false
             }
-        } else {
+        } else if identifier == "RunToFinal" {
+            if PlayerScores().winner("Player") || PlayerScores().winner("Computer") {
+                return true
+            } else {
+                return false
+            }
+        }
+        else {
             return true
         }
     }
-    
-    //List of things to do!!!
-    //fix autolayout (all views and all sizes)
-    //add a thing for when the game ends (maybe another view, which goes to the start view?)
-    //check to see if the score is >121 every time someone scores (for the thing above)
-    //add buttons to change the background color and back of the cards
 }

@@ -64,8 +64,6 @@ class BestPlay {
     
     func pickACard(cpuhand: [Card]) -> (Card, [Card])? {
         
-        print("HERE 1")
-        
         let C = CPUScoringRun()
         
         var finalcard: Card = cpuhand[0]
@@ -84,20 +82,13 @@ class BestPlay {
                     Constants.newCardValue += C.SomeOfAKind(acard)
                     Constants.newCardValue += C.straight(acard)
                     
-                    print("HERE 2")
-                
                     if Constants.newCardValue >= Constants.oldCardValue {
                     
                         finalcard = acard
                         Constants.oldCardValue = Constants.newCardValue
-                        
-                        print("HERE 3")
-                        
                     }
                 } else {
-                    
-                    print("Dikembe Mutumbo")
-                    
+                    print("Computer's card denied")
                 }
             }
         }
@@ -109,8 +100,6 @@ class BestPlay {
             }
         }
         
-        print("HERE 4")
-
         return (finalcard, remainingcards)
     }
 }

@@ -21,6 +21,15 @@ class CribViewController: UIViewController {
     @IBOutlet weak var computerScore: UILabel!
     @IBOutlet weak var playerScore: UILabel!
     
+    @IBOutlet weak var backgroundImage: UIImageView! { didSet {
+        backgroundImage.image = UIImage(named: "Wood")
+        }
+    }
+    
+    func setBackground(imagename: String) {
+        backgroundImage.image = UIImage(named: imagename)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         let L = CribbageDeck().getTheCrib()
@@ -56,5 +65,17 @@ class CribViewController: UIViewController {
         CribbageDeck().restart()
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+    }
+    
+    override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
+        if identifier == "RunToFinal" {
+            if PlayerScores().winner("Player") || PlayerScores().winner("Computer") {
+                return true
+            } else {
+                return false
+            }
+        } else {
+            return true
+        }
     }
 }

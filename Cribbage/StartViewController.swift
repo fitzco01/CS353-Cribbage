@@ -12,6 +12,10 @@ class StartViewController: UIViewController {
     @IBAction func newGame(sender: UIButton) {
         CribbageDeck().start()
     }
+    @IBOutlet weak var backgroundImage: UIImageView! { didSet {
+        backgroundImage.image = UIImage(named: "Wood")
+        }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,6 +28,10 @@ class StartViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    func setBackground(imagename: String) {
+        backgroundImage.image = UIImage(named: imagename)
+    }
+    
     /*
     // MARK: - Navigation
 
@@ -33,4 +41,16 @@ class StartViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
+    
+    override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
+        if identifier == "ChangeTheBackground" {
+            SettingsViewController().setBackground()
+            return true
+        } else if identifier == "ChangeTheCard" {
+            SettingsViewController().setCard()
+            return true
+        } else {
+            return true
+        }
+    }
 }

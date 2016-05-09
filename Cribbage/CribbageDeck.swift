@@ -12,23 +12,14 @@ import UIKit
 class CribbageDeck {
 
     private struct Constants {
-        
         static var rankDict: [String: Rank] = [:]
         static var suitDict: [String: Suit] = [:]
-        
         static var playerDict: [String: Player] = [:]
-        
         static var someshuffleddeck: [Card] = []
-        
         static var count = 0
-        
-        
         static var tempcpuhand: [Card] = []
-        
         static var cribcards: [Card] = []
-        
         static var starthand = 0
-        
         static var cutcard: [Card] = []
     }
 
@@ -118,9 +109,6 @@ class CribbageDeck {
     }
     
     func cpuHandLength() -> Int {
-        print("COUNT \(Constants.playerDict["Computer"]!.hand.count)")
-        print("HAND \(Constants.playerDict["Computer"]!.hand)")
-
         return Constants.playerDict["Computer"]!.hand.count
     }
     
@@ -260,20 +248,25 @@ class CribbageDeck {
         PlayerScores().addScore(name, newpoints: score)
     }
     
-    func canPlay(name: String) -> Bool {
-        var value = 15
+    func canPlay(name: String) -> ([String], Bool) {
+        var possibleplay = [""]
+        possibleplay.removeAll()
+        var bool = true
         for acard in Constants.playerDict[name]!.hand {
-            if acard.rank.value() < value {
-                value = acard.rank.value()
+            if acard.rank.value() + ScoringRun().getruncount() <= 31 {
+                bool = true
+                possibleplay.append(acard.description())
+            } else {
+                bool = false
             }
         }
-        print("VALUE \(value)")
-        print("RUN COUNT \(ScoringRun().getruncount())")
-        if value + ScoringRun().getruncount() <= 31 {
-            return true
-        } else {
-            return false
+        if possibleplay.count > 0 {
+            bool = true
         }
+        if possibleplay.count == 0 {
+            bool = false
+        }
+        return (possibleplay, bool)
     }
     
     func cutcard() -> Card {
@@ -377,5 +370,6 @@ class CribbageDeck {
 
         }
     }
-
+    //fix popover views!!!
+    //fix autolayout!!!
 }

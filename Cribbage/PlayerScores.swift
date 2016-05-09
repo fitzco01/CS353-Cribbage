@@ -25,4 +25,12 @@ class PlayerScores {
     func getScore(playername: String) -> Int {
         return Constants.playerScoreDict[playername]!
     }
+    
+    func winner(playername: String) -> Bool {
+        if Constants.playerScoreDict[playername]! >= 121 {
+            return true
+        } else {
+            return false
+        }
+    }
 }
