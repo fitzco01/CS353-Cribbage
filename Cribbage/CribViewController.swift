@@ -25,13 +25,18 @@ class CribViewController: UIViewController {
         backgroundImage.image = UIImage(named: "Wood")
         }
     }
-    
-    func setBackground(imagename: String) {
-        backgroundImage.image = UIImage(named: imagename)
+
+    func setBackground() {
+        if backgroundImage != nil {
+            backgroundImage.image = UIImage(named: SettingsViewController().pickedBackground())
+        }
+
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        backgroundImage.image = UIImage(named: "Wood")
+        setBackground()
         let L = CribbageDeck().getTheCrib()
 
         Crib1.image = UIImage(named: L[0].description())

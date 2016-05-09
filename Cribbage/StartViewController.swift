@@ -12,14 +12,23 @@ class StartViewController: UIViewController {
     @IBAction func newGame(sender: UIButton) {
         CribbageDeck().start()
     }
+    
     @IBOutlet weak var backgroundImage: UIImageView! { didSet {
         backgroundImage.image = UIImage(named: "Wood")
         }
     }
 
     override func viewDidLoad() {
+        backgroundImage.image = UIImage(named: "Wood")
+        setBackground()
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        backgroundImage.image = UIImage(named: "Wood")
+        setBackground()
+        super.viewWillAppear(animated)
     }
 
     override func didReceiveMemoryWarning() {
@@ -27,9 +36,10 @@ class StartViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    func setBackground(imagename: String) {
-        print(imagename)
-        backgroundImage.image = UIImage(named: imagename)
+    func setBackground() {
+        if backgroundImage != nil {
+            backgroundImage.image = UIImage(named: SettingsViewController().pickedBackground())
+        }
     }
     
     /*

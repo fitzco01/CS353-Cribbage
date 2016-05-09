@@ -16,25 +16,33 @@ class HandViewController: UIViewController {
         }
     }
     
-
-    func setBackground(imagename: String) {
-        backgroundImage.image = UIImage(named: imagename)
+    func setBackground() {
+        if backgroundImage != nil {
+            backgroundImage.image = UIImage(named: SettingsViewController().pickedBackground())
+        }
     }
     
-    func setCard(imagename: String) {
-        Constants.cardback = imagename
+    func setCard() {
+        Constants.cardback = SettingsViewController().pickedCard()
     }
     
     //MARK: - ViewDidLoad
     
     override func viewDidLoad() {
-        super.viewDidLoad()
-        lastCard.image = UIImage(named:Constants.lastcard)
+        backgroundImage.image = UIImage(named: Constants.background)
+        setBackground()
+        setCard()
+        Constants.lastcard = Constants.cardback
+        print("FUCK \(Constants.lastcard)")
+        Constants.cutcard = Constants.cardback
+        lastCard.image = UIImage(named: Constants.lastcard)
+        cutCard.image = UIImage(named: Constants.cutcard)
         Constants.crib = 0
         Constants.playercount = 2
         Constants.computercango = true
         Constants.playercango = true
         updateUI()
+        super.viewDidLoad()
         //Do any additional setup after loading the view.
     }
     
@@ -42,6 +50,7 @@ class HandViewController: UIViewController {
     
     private struct Constants {
         static var cardback = "LutherCard"
+        static var background = "Wood"
         static var cutcard = Constants.cardback
         static var lastcard = Constants.cardback
         static var c1 = Constants.cardback
@@ -63,11 +72,11 @@ class HandViewController: UIViewController {
     
     //MARK: - Outlets
     
-
     @IBOutlet weak var backgroundImage: UIImageView! { didSet {
-        backgroundImage.image = UIImage(named: "Wood")
+        backgroundImage.image = UIImage(named: Constants.background)
         }
     }
+
     @IBAction func Next(sender: UIButton) {
         if CribbageDeck().cpuHandLength() == 0 {
             (_, Constants.computercango) = CribbageDeck().canPlay("Computer")
@@ -130,7 +139,6 @@ class HandViewController: UIViewController {
     
     @IBOutlet weak var lastCard: UIImageView! { didSet {
         lastCard.image = UIImage(named: Constants.lastcard)
-        print("lastcard \(Constants.lastcard)")
         updateUI()
         }
     }

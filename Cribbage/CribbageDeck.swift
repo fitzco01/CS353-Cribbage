@@ -375,7 +375,6 @@ class CribbageDeck {
 
         }
     }
-    //fix popover views!!!
-    //doesn't segue to finalviewcontroller for some reason...
+    //final popover view doesn't segue to finalviewcontroller for some reason!!!
     //fix autolayout!!!
 }

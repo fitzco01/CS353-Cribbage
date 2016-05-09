@@ -37,12 +37,16 @@ class CardsViewController: UIViewController {
         static var computerdidgo = false
     }
     
-    func setBackground(imagename: String) {
-        backgroundImage.image = UIImage(named: imagename)
+    func setBackground() {
+        if backgroundImage != nil {
+            backgroundImage.image = UIImage(named: SettingsViewController().pickedBackground())
+        }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        backgroundImage.image = UIImage(named: "Wood")
+        setBackground()
         
         if History().playLength() != 0 {
             if ScoringRun().getruncount() != 31 {
