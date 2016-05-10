@@ -191,9 +191,7 @@ class ScoringRun {
     
     func jackflip(playername: String) -> Int {
         if CribbageDeck().getCutCardCard().rank.description() == "jack" {
-            
             ScoreHistory().addToHistory(playername, card: CribbageDeck().getCutCardCard(), othercards: [CribbageDeck().getCutCardCard()], scoretype: "nibs", pointvalue: 2)
-            
             return 2
         } else {
             return 0

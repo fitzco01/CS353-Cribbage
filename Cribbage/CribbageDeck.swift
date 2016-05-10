@@ -153,7 +153,7 @@ class CribbageDeck {
         }
 
         if Constants.count == 0 {
-            score += ScoringRun().jackflip("Player")
+            score += ScoringRun().jackflip(whoDealtIt())
             Constants.count += 1
         }
         
@@ -185,7 +185,7 @@ class CribbageDeck {
         }
         
         if Constants.count == 0 {
-            score += ScoringRun().jackflip("Computer")
+            score += ScoringRun().jackflip(whoDealtIt())
             Constants.count += 1
         }
         
@@ -369,11 +369,11 @@ class CribbageDeck {
         Constants.starthand = 0
         Constants.count = 0
         
-        if Constants.playerDict["Computer"]!.isDealer {
+        //if Constants.playerDict["Computer"]!.isDealer {
             HVC.switchturn()
-            print("TURN 7 playerturn")
+            //print("TURN 7 playerturn")
 
-        }
+        //}
     }
     //final popover view doesn't segue to finalviewcontroller for some reason!!!
     //fix autolayout!!!

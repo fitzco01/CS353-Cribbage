@@ -78,12 +78,7 @@ class ScoresTableViewController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        let othercards = ScoreHistory().getCards()[indexPath.row]
-        var height = 100
-        for _ in othercards {
-            height += 30
-        }
-        return CGFloat(height)
+        return 250
     }
 
     /*
