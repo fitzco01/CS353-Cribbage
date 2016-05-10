@@ -8,6 +8,8 @@
 
 import Foundation
 
+//MARK: - Score History
+
 class ScoreHistory {
     private struct Constants {
         static var namelist = [String]()
@@ -23,6 +25,14 @@ class ScoreHistory {
         Constants.othercardlist.insert(othercards, atIndex: 0)
         Constants.scoretype.insert(scoretype, atIndex: 0)
         Constants.pointtotal.insert(pointvalue, atIndex: 0)
+    }
+    
+    func deleteScoreHistory() {
+        Constants.namelist.removeAll()
+        Constants.cardlist.removeAll()
+        Constants.othercardlist.removeAll()
+        Constants.scoretype.removeAll()
+        Constants.pointtotal.removeAll()
     }
     
     func getPointValue() -> [Int] {

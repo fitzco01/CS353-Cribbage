@@ -8,7 +8,12 @@
 
 import UIKit
 
+//MARK: - Start View Controller
+
 class StartViewController: UIViewController {
+    
+    //MARK: - Outlets
+    
     @IBAction func newGame(sender: UIButton) {
         CribbageDeck().start()
     }
@@ -18,6 +23,8 @@ class StartViewController: UIViewController {
         }
     }
 
+    //MARK: - View Did Load
+    
     override func viewDidLoad() {
         backgroundImage.image = UIImage(named: "Wood")
         setBackground()
@@ -25,16 +32,22 @@ class StartViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
     
+    //MARK: - View Will Appear
+    
     override func viewWillAppear(animated: Bool) {
         backgroundImage.image = UIImage(named: "Wood")
         setBackground()
         super.viewWillAppear(animated)
     }
+    
+    //MARK: - Memory Warning
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    //MARK: - Background
     
     func setBackground() {
         if backgroundImage != nil {
@@ -43,7 +56,7 @@ class StartViewController: UIViewController {
     }
     
     /*
-    // MARK: - Navigation
+    //MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -51,6 +64,8 @@ class StartViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
+    
+    //MARK: - Should Perform Segue
     
     override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
         if identifier == "ChangeTheBackground" {

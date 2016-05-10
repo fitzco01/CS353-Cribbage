@@ -8,6 +8,8 @@
 
 import Foundation
 
+//MARK: - History
+
 class History {
     private struct Constants {
         static var playList: [Card] = []

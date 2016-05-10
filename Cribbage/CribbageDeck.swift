@@ -9,7 +9,12 @@
 import Foundation
 import UIKit
 
+//MARK: - Cribbage Deck
+//MARK: - Main Brain
+
 class CribbageDeck {
+    
+    //MARK: - Constants
 
     private struct Constants {
         static var rankDict: [String: Rank] = [:]
@@ -22,6 +27,7 @@ class CribbageDeck {
         static var starthand = 0
         static var cutcard: [Card] = []
         static var cardback = "LutherCard"
+        static var done = false
     }
     
     func setCard(imagename: String) {
@@ -81,9 +87,6 @@ class CribbageDeck {
                 deck.append(thecard)
             }
         }
-        for acard in deck {
-            print(acard.description())
-        }
         return deck
     }
     
@@ -119,15 +122,12 @@ class CribbageDeck {
     
     func hand(playername: String) -> (Card, Card, Card, Card) {
         if playername == "Player" {
-            print("PLAYERS HAND \(Constants.playerDict["Player"]!.shorthand)")
-            
             return ((Constants.playerDict["Player"]!.shorthand[0]),(Constants.playerDict["Player"]!.shorthand[1]),(Constants.playerDict["Player"]!.shorthand[2]),(Constants.playerDict["Player"]!.shorthand[3]))
         } else if playername == "Computer" {
-            print("COMPUTERS HAND \(Constants.playerDict["Computer"]!.shorthand)")
-
             return ((Constants.playerDict["Computer"]!.shorthand[0]),(Constants.playerDict["Computer"]!.shorthand[1]),(Constants.playerDict["Computer"]!.shorthand[2]),(Constants.playerDict["Computer"]!.shorthand[3]))
         } else {
             print("ERROR NAMING THE PLAYER")
+            //Dummy Return Values
             var templist: [Card] = []
             for acard in (Constants.playerDict["Player"]!.hand) {
                 templist.append(acard)
@@ -136,7 +136,7 @@ class CribbageDeck {
         }
     }
     
-    func play(cardname: String) {
+    func play(cardname: String) -> Bool {
         
         let rank = rankFromDescription(cardname)
         let suit = suitFromDescription(cardname)
@@ -165,10 +165,11 @@ class CribbageDeck {
         score += ScoringRun().SomeOfAKind("Player")
         score += ScoringRun().straight("Player")
         
-        PlayerScores().addScore("Player", newpoints: score)
+        Constants.done = PlayerScores().addScore("Player", newpoints: score)
+        return Constants.done
     }
     
-    func computerPlay() -> String {
+    func computerPlay() -> (String, Bool) {
         
         var score = 0
         if Constants.starthand == 0 {
@@ -177,7 +178,6 @@ class CribbageDeck {
             
             Constants.playerDict["Computer"]!.somenewhand(newcpuhand["Computer Hand"]!)
             Constants.playerDict["Computer"]!.somenewshorthand(newcpuhand["Computer Hand"]!)
-            print("NEW SHORTHAND \(Constants.playerDict["Computer"]!.shorthand)")
             
             for acard in newcpuhand["Crib Cards"]! {
                 Constants.cribcards.append(acard)
@@ -188,11 +188,7 @@ class CribbageDeck {
             score += ScoringRun().jackflip(whoDealtIt())
             Constants.count += 1
         }
-        
-        print("\n THISHAND \n \(Constants.playerDict["Computer"]!.hand) \n")
         let (selectedcard, newhand) = BestPlay().pickACard(Constants.playerDict["Computer"]!.hand)!
-        
-        print("SELECTEDCARD\(selectedcard.description())")
         
         History().playHistory(selectedcard)
         History().playerHistory(Constants.playerDict["Computer"]!)
@@ -204,9 +200,9 @@ class CribbageDeck {
         score += ScoringRun().SomeOfAKind("Computer")
         score += ScoringRun().straight("Computer")
         
-        PlayerScores().addScore("Computer", newpoints: score)
+        Constants.done = PlayerScores().addScore("Computer", newpoints: score)
         
-        return selectedcard.description()
+        return (selectedcard.description(), Constants.done)
     }
     
     func getTheCrib() -> ([Card]) {
@@ -221,7 +217,7 @@ class CribbageDeck {
         return Constants.playerDict["Player"]!.hand
     }
     
-    func scoreCrib(name: String) {
+    func scoreCrib(name: String) -> Bool {
         let S = ScoringHand()
 
         var cribCardsWithCut = Constants.cribcards
@@ -234,13 +230,13 @@ class CribbageDeck {
         score += S.straight(name, ahand: cribCardsWithCut)
         score += S.SomeOfAKind(name, ahand: cribCardsWithCut)
         
-        PlayerScores().addScore(name, newpoints: score)
+        Constants.done = PlayerScores().addScore(name, newpoints: score)
+        return Constants.done
     }
     
-    func scoreShortHand(name: String) {
+    func scoreShortHand(name: String) -> Bool {
         let S = ScoringHand()
         var handWithCut = Constants.playerDict[name]!.shorthand
-        print("Computer hand \(handWithCut)")
         handWithCut.append(Constants.cutcard[0])
         var score = 0
         score += S.fifteencount(name, ahand: handWithCut)
@@ -250,7 +246,8 @@ class CribbageDeck {
         score += S.straight(name, ahand: handWithCut)
         score += S.SomeOfAKind(name, ahand: handWithCut)
         
-        PlayerScores().addScore(name, newpoints: score)
+        Constants.done = PlayerScores().addScore(name, newpoints: score)
+        return Constants.done
     }
     
     func canPlay(name: String) -> ([String], Bool) {
@@ -326,7 +323,6 @@ class CribbageDeck {
         Constants.count = 0
         if Constants.playerDict["Computer"]!.isDealer {
             HVC.switchturn()
-            print("TURN 6 playerturn")
         }
     }
     
@@ -369,12 +365,6 @@ class CribbageDeck {
         Constants.starthand = 0
         Constants.count = 0
         
-        //if Constants.playerDict["Computer"]!.isDealer {
-            HVC.switchturn()
-            //print("TURN 7 playerturn")
-
-        //}
+        HVC.switchturn()
     }
-    //final popover view doesn't segue to finalviewcontroller for some reason!!!
-    //fix autolayout!!!
 }

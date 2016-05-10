@@ -8,7 +8,11 @@
 
 import UIKit
 
+//MARK: - Settings View Controller
+
 class SettingsViewController: UIViewController {
+    
+    //MARK: - Constants
     
     private struct Constants {
         static var imageName1 = ""
@@ -18,6 +22,9 @@ class SettingsViewController: UIViewController {
         static var pickedCardName = "LutherCard"
         static var pickedBackgroundName = "Wood"
     }
+    
+    //MARK: - Outlets
+    
     @IBAction func done(sender: UIBarButtonItem) {
         presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
     }
@@ -57,6 +64,8 @@ class SettingsViewController: UIViewController {
         imageTap(3)
     }
     
+    //MARK: - Image Tap
+    
     func imageTap(whichImage: Int) {
         if Constants.whichType == "Card" {
         switch whichImage {
@@ -82,11 +91,15 @@ class SettingsViewController: UIViewController {
             }
         }
     }
+    
+    //MARK: - View Did Load
         
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
     }
+    
+    //MARK: - Card
     
     func setCard() {
         Constants.imageName1 = "bicycleback"
@@ -94,6 +107,12 @@ class SettingsViewController: UIViewController {
         Constants.imageName3 = "ISUCard"
         Constants.whichType = "Card"
     }
+    
+    func pickedCard() -> String {
+        return Constants.pickedCardName
+    }
+    
+    //MARK: - Background
     
     func setBackground() {
         Constants.imageName1 = "Wood"
@@ -105,16 +124,13 @@ class SettingsViewController: UIViewController {
     func pickedBackground() -> String {
         return Constants.pickedBackgroundName
     }
-    
-    func pickedCard() -> String {
-        return Constants.pickedCardName
-    }
+
+    //MARK: - Memory Warning
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
 
     /*
     // MARK: - Navigation

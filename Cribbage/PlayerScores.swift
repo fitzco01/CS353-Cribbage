@@ -8,7 +8,11 @@
 
 import Foundation
 
+//MARK: - Player Scores
+
 class PlayerScores {
+    
+    //MARK: - Constants
     
     private struct Constants {
         static var playerScoreDict = [String: Int]()
@@ -18,19 +22,16 @@ class PlayerScores {
         Constants.playerScoreDict[playername] = 0
     }
     
-    func addScore(playername: String, newpoints: Int) {
+    func addScore(playername: String, newpoints: Int) -> Bool {
         Constants.playerScoreDict[playername]! += newpoints
-    }
-    
-    func getScore(playername: String) -> Int {
-        return Constants.playerScoreDict[playername]!
-    }
-    
-    func winner(playername: String) -> Bool {
         if Constants.playerScoreDict[playername]! >= 121 {
             return true
         } else {
             return false
         }
+    }
+    
+    func getScore(playername: String) -> Int {
+        return Constants.playerScoreDict[playername]!
     }
 }

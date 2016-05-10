@@ -8,6 +8,8 @@
 
 import Foundation
 
+//MARK: - Player
+
 struct Player {
     var hand: [Card]
     var shorthand: [Card]

@@ -8,12 +8,18 @@
 
 import UIKit
 
+//MARK: - Play Table View Cell
+
 class PlaysTableViewCell: UITableViewCell {
+    
+    //MARK: - Outlets
 
     @IBOutlet weak var playerLabel: UILabel!
     @IBOutlet weak var cardLabel: UILabel!
     @IBOutlet weak var imageLabel: UIImageView!
     @IBOutlet weak var playNumberLabel: UILabel!
+    
+    //MARK: - Configure
     
     func configure(card: Card, player: Player, playnumber: String) {
         playerLabel.text = player.name

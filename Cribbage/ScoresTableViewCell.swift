@@ -8,13 +8,19 @@
 
 import UIKit
 
+//MARK: - Score Table View Cell
+
 class ScoresTableViewCell: UITableViewCell {
+    
+    //MARK: - Outlets
 
     @IBOutlet weak var imageLabel: UIImageView!
     @IBOutlet weak var playerLabel: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet weak var scoreNumberLabel: UILabel!
     @IBOutlet weak var pointLabel: UILabel!
+    
+    //MARK: - Configure
     
     func configure(card: Card, othercards: String, scoretype: String, player: String, scorenumber: String, points: Int) {
         playerLabel.text = player

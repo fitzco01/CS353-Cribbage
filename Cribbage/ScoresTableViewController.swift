@@ -8,11 +8,18 @@
 
 import UIKit
 
+//MARK: - Score Table View
+
 class ScoresTableViewController: UITableViewController {
+    
+    //MARK: - Outlets
 
     @IBAction func done(sender: UIBarButtonItem) {
         presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
     }
+    
+    //MARK: - View Did Load
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -22,13 +29,15 @@ class ScoresTableViewController: UITableViewController {
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
+    
+    //MARK: - Memory Warning
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
 
-    // MARK: - Table view data source
+    // MARK: - Table View Data Source
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1

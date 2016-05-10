@@ -8,7 +8,11 @@
 
 import Foundation
 
+//MARK: - Bestplay
+
 class BestPlay {
+    
+    //MARK: - Constants
     
     private struct Constants {
         static var count = 0
@@ -18,6 +22,7 @@ class BestPlay {
         static var oldCardValue = 0
     }
     
+    //MARK: - Best Hand
     
     func createAHand(computerhand: [Card]) -> [String : [Card]] {
         let S = CPUScoringHand()
@@ -62,6 +67,8 @@ class BestPlay {
         return finaldict
     }
     
+    //MARK: - Best Card
+    
     func pickACard(cpuhand: [Card]) -> (Card, [Card])? {
         
         let C = CPUScoringRun()
@@ -73,9 +80,6 @@ class BestPlay {
         
         if History().playLength() != 0 {
             for acard in cpuhand {
-                print(acard)
-                print(acard.rank.value())
-                print(ScoringRun().getruncount())
                 if acard.rank.value() + ScoringRun().getruncount() <= 31 {
                     C.addcard(acard)
                     Constants.newCardValue += C.fifteencount(acard)

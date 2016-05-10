@@ -28,7 +28,11 @@ struct Order {
     }
 }
 
+//MARK: - Run Scoring
+
 class ScoringRun {
+    
+    //MARK: - Constants
     
     private struct Constants {
         static var boolpoints = false
@@ -43,8 +47,6 @@ class ScoringRun {
         Constants.someruncount = 0
     }
     
-    // MARK: - Run Scoring
-
     func straight(playername: String) -> Int {
         var count = 0
         var checklist = [Card]()
@@ -200,9 +202,11 @@ class ScoringRun {
     
 }
 
+//MARK: - Hand Scoring
+
 class ScoringHand {
     
-    // MARK: - SubDecks
+    //MARK: - Subdecks of Five
     
     func makeSubDecksOf2From5(somehand: [Card]) -> [String:[Card]] {
         var subdeckdict2 = ["twodeck1": [somehand[0],somehand[1]]]
@@ -231,9 +235,6 @@ class ScoringHand {
         subdeckdict3["threedeck9"] = [somehand[1],somehand[3],somehand[4]]
         subdeckdict3["threedeck10"] = [somehand[2],somehand[3],somehand[4]]
         
-        for (_, value) in subdeckdict3 {
-            print("VALUES \(value)")
-        }
         return subdeckdict3
     }
     
@@ -246,8 +247,6 @@ class ScoringHand {
 
         return subdeckdict4
     }
-    
-    // MARK: - Hand Scoring
     
     func jackinhand(playername: String, somehand: [Card]) -> Int {
         var count = 0
@@ -343,7 +342,6 @@ class ScoringHand {
         let fourdict = makeSubDecksOf4From5(ahand)
         let sorthand = ahand.sort { $0.rank.ordinal() < $1.rank.ordinal() }
         
-        print("straight check 1 \(sorthand)")
         if sorthand[0].rank.ordinal() == sorthand[1].rank.ordinal() - 1 && sorthand[1].rank.ordinal() == sorthand[2].rank.ordinal() - 1 && sorthand[2].rank.ordinal() == sorthand[3].rank.ordinal() - 1 && sorthand[3].rank.ordinal() == sorthand[4].rank.ordinal() - 1 {
             count = 5
             
@@ -354,7 +352,6 @@ class ScoringHand {
         
         for (_, value) in fourdict {
             let sorthand = value.sort { $0.rank.ordinal() < $1.rank.ordinal() }
-            print("straight check 2 \(sorthand)")
 
             if sorthand[0].rank.ordinal() == sorthand[1].rank.ordinal() - 1 && sorthand[1].rank.ordinal() == sorthand[2].rank.ordinal() - 1 && sorthand[2].rank.ordinal() == sorthand[3].rank.ordinal() - 1 {
                 count += 4
@@ -364,7 +361,6 @@ class ScoringHand {
         if count == 0 {
             for (_, value) in threedict {
                 let sorthand = value.sort { $0.rank.ordinal() < $1.rank.ordinal() }
-                print("straight check 3 \(sorthand)")
 
                 if sorthand[0].rank.ordinal() == sorthand[1].rank.ordinal() - 1 && sorthand[1].rank.ordinal() == sorthand[2].rank.ordinal() - 1 {
                     count += 3
@@ -408,7 +404,7 @@ class ScoringHand {
     }
 }
 
-// MARK: - Scoring Checks for computer cards
+// MARK: Computer Ordering
 
 struct CPUOrder {
     var historylist = History().showPlayHistory()
@@ -428,12 +424,15 @@ struct CPUOrder {
     }
 }
 
+//MARK: - Computer Scoring Run
+
 class CPUScoringRun {
+    
+    //MARK: - Constants
     
     private struct Constants {
         static var boolpoints = false
         static var someruncount = 0
-        
         static var checkthislist: [Card] = []
     }
     
@@ -447,7 +446,6 @@ class CPUScoringRun {
         Constants.someruncount += somecard.rank.value()
     }
     
-    // MARK: - Run Scoring
     func straight(cardone: Card) -> Int {
         var history = addcard(cardone)
         //newest card at the end
@@ -551,7 +549,12 @@ class CPUScoringRun {
     }
 }
 
+//MARK: Computer Hand Scoring
+
 class CPUScoringHand {
+    
+    //MARK: - Subdecks of Six
+    
     func makeSubDecksOf4From6(somehand: [Card]) -> [String: [Card]] {
         
         var subdeckdict4to6 = ["sixdeck1": [somehand[0],somehand[1],somehand[2],somehand[3]]]
@@ -648,7 +651,6 @@ class CPUScoringHand {
         if ahand[0].rank.value() + ahand[1].rank.value() + ahand[2].rank.value() +  ahand[3].rank.value() == 15 {
             count += 2
         }
-        
         return count
     }
     
@@ -657,7 +659,6 @@ class CPUScoringHand {
         let threedict = makeSubDecksOf3From4(ahand)
         let sorthand = ahand.sort { $0.rank.ordinal() < $1.rank.ordinal() }
         
-        print("straight check 6 \(sorthand)")
         if sorthand[0].rank.ordinal() == sorthand[1].rank.ordinal() - 1 && sorthand[1].rank.ordinal() == sorthand[2].rank.ordinal() - 1 && sorthand[2].rank.ordinal() == sorthand[3].rank.ordinal() - 1 {
             count += 4
                 
@@ -667,14 +668,12 @@ class CPUScoringHand {
         if count == 0 {
             for (_, value) in threedict {
                 let sorthand = value.sort { $0.rank.ordinal() < $1.rank.ordinal() }
-                print("straight check 7 \(sorthand)")
 
                 if sorthand[0].rank.ordinal() == sorthand[1].rank.ordinal() - 1 && sorthand[1].rank.ordinal() == sorthand[2].rank.ordinal() - 1 {
                     count += 3
                 }
             }
         }
-        
         return count
     }
     
@@ -688,7 +687,6 @@ class CPUScoringHand {
                 return 0
             }
         }
-        
         return count
     }
 }

@@ -8,12 +8,19 @@
 
 import UIKit
 
+//MARK: - Cards View Controller
+
 class CardsViewController: UIViewController {
+    
+    //MARK: - Outlets
 
     @IBAction func Next(sender: UIButton) {
         if Constants.computerdidgo && Constants.playerdidgo {
             performSegueWithIdentifier("CardsToCrib", sender: sender)
-        } 
+        }
+        if Constants.done {
+            performSegueWithIdentifier("CardsToFinal", sender: self)
+        }
     }
     @IBOutlet weak var Dealer: UILabel!
     
@@ -35,13 +42,18 @@ class CardsViewController: UIViewController {
     private struct Constants {
         static var playerdidgo = false
         static var computerdidgo = false
+        static var done = false
     }
+    
+    //MARK: - Background
     
     func setBackground() {
         if backgroundImage != nil {
             backgroundImage.image = UIImage(named: SettingsViewController().pickedBackground())
         }
     }
+    
+    //MARK: - View Did Load
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -53,7 +65,6 @@ class CardsViewController: UIViewController {
                 ScoringRun().lastcard(History().mostRecentPlayer().name)
                 PlayerScores().addScore(History().mostRecentPlayer().name, newpoints: 1)
             }
-            print("deleting history 4")
             History().deleteHistory()
             ScoringRun().resetruncount()
         }
@@ -63,7 +74,6 @@ class CardsViewController: UIViewController {
         
         if firstplayername == "Player" {
             let (p1,p2,p3,p4) = CribbageDeck().hand("Player")
-            print("PLAYER CARDS + cut \(p1,p2,p3,p4)")
             Card1.image = UIImage(named: p1.description())
             Card2.image = UIImage(named: p2.description())
             Card3.image = UIImage(named: p3.description())
@@ -71,7 +81,10 @@ class CardsViewController: UIViewController {
             CutCard.image = UIImage(named: CribbageDeck().getCutCard())
             
             let old = PlayerScores().getScore("Player")
-            CribbageDeck().scoreShortHand("Player")
+            Constants.done = CribbageDeck().scoreShortHand("Player")
+            if Constants.done {
+                performSegueWithIdentifier("CardsToFinal", sender: self)
+            }
             
             PlayerScore.text = "Player Score: \(PlayerScores().getScore("Player"))"
             CPUScore.text = "CPU Score: \(PlayerScores().getScore("Computer"))"
@@ -82,7 +95,6 @@ class CardsViewController: UIViewController {
             Constants.playerdidgo = true
         } else if firstplayername == "Computer" {
             let (c1,c2,c3,c4) = CribbageDeck().hand("Computer")
-            print("COMPUTER CARDS + Cut \(c1,c2,c3,c4)")
             Card1.image = UIImage(named: c1.description())
             Card2.image = UIImage(named: c2.description())
             Card3.image = UIImage(named: c3.description())
@@ -90,7 +102,7 @@ class CardsViewController: UIViewController {
             CutCard.image = UIImage(named: CribbageDeck().getCutCard())
             
             let old = PlayerScores().getScore("Computer")
-            CribbageDeck().scoreShortHand("Computer")
+            Constants.done = CribbageDeck().scoreShortHand("Computer")
             
             CPUScore.text = "CPU Score: \(PlayerScores().getScore("Computer"))"
             PlayerScore.text = "Player Score: \(PlayerScores().getScore("Player"))"
@@ -103,13 +115,16 @@ class CardsViewController: UIViewController {
         }
         // Do any additional setup after loading the view.
     }
+    
+    //MARK: - Memory Warning
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
-    // MARK: - Navigation
+    //MARK: - Navigation
+    //MARK: - Segue
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -117,17 +132,12 @@ class CardsViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     
+    //MARK: - Should Perform Segue
+    
     override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
-        if identifier == "RunToFinal" {
-            if PlayerScores().winner("Player") || PlayerScores().winner("Computer") {
-                return true
-            } else {
-                return false
-            }
-        } else if identifier == "CardsToCrib" {
+        if identifier == "CardsToCrib" {
             if Constants.computerdidgo && !Constants.playerdidgo {
                 let (p1,p2,p3,p4) = CribbageDeck().hand("Player")
-                print("PLAYER CARDS + cut \(p1,p2,p3,p4)")
                 Card1.image = UIImage(named: p1.description())
                 Card2.image = UIImage(named: p2.description())
                 Card3.image = UIImage(named: p3.description())
@@ -135,18 +145,19 @@ class CardsViewController: UIViewController {
                 CutCard.image = UIImage(named: CribbageDeck().getCutCard())
                 
                 let old = PlayerScores().getScore("Player")
-                CribbageDeck().scoreShortHand("Player")
+                Constants.done = CribbageDeck().scoreShortHand("Player")
+                if Constants.done {
+                    performSegueWithIdentifier("CardsToFinal", sender: self)
+                }
                 
                 PlayerScore.text = "Player Score: \(PlayerScores().getScore("Player"))"
                 CPUScore.text = "CPU Score: \(PlayerScores().getScore("Computer"))"
                 whoScored.text = "Player scored \(PlayerScores().getScore("Player") - old) points!"
                 
                 Constants.playerdidgo = true
-                print("FALSE 1")
                 return false
             } else if Constants.playerdidgo && !Constants.computerdidgo {
                 let (c1,c2,c3,c4) = CribbageDeck().hand("Computer")
-                print("COMPUTER CARDS + Cut \(c1,c2,c3,c4)")
                 Card1.image = UIImage(named: c1.description())
                 Card2.image = UIImage(named: c2.description())
                 Card3.image = UIImage(named: c3.description())
@@ -154,22 +165,22 @@ class CardsViewController: UIViewController {
                 CutCard.image = UIImage(named: CribbageDeck().getCutCard())
                 
                 let old = PlayerScores().getScore("Computer")
-                CribbageDeck().scoreShortHand("Computer")
+                Constants.done = CribbageDeck().scoreShortHand("Computer")
+                if Constants.done {
+                    performSegueWithIdentifier("CardsToFinal", sender: self)
+                }
                 CPUScore.text = "CPU Score: \(PlayerScores().getScore("Computer"))"
                 PlayerScore.text = "Player Score: \(PlayerScores().getScore("Player"))"
                 whoScored.text = "Computer scored \(PlayerScores().getScore("Computer") - old) points!"
                 
                 Constants.computerdidgo = true
-                print("FALSE 2")
                 return false
             } else {
-                print("TRUE 1")
                 Constants.playerdidgo = false
                 Constants.computerdidgo = false
                 return true
             }
         } else {
-            print("TRUE 2")
             return true
         }
     }

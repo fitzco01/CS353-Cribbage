@@ -8,6 +8,10 @@
 
 import Foundation
 
+//MARK: - Card
+
+//MARK: - Suit
+
 enum Suit: Int {
     case spades, hearts, diamonds, clubs
     func description() -> String {
