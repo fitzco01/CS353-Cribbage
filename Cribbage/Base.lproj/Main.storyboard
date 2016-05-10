@@ -626,7 +626,7 @@
                                 <variation key="heightClass=compact-widthClass=regular" ambiguous="YES" misplaced="YES">
                                     <rect key="frame" x="20" y="64" width="768" height="148"/>
                                 </variation>
-                                <variation key="heightClass=regular-widthClass=compact" ambiguous="YES" misplaced="YES">
+                                <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
                                     <rect key="frame" x="20" y="64" width="369" height="356"/>
                                 </variation>
                                 <variation key="heightClass=regular-widthClass=regular" ambiguous="YES" misplaced="YES">
@@ -674,7 +674,7 @@
                                 <variation key="heightClass=compact-widthClass=regular" ambiguous="YES" misplaced="YES">
                                     <rect key="frame" x="20" y="220" width="248" height="172"/>
                                 </variation>
-                                <variation key="heightClass=regular-widthClass=compact" ambiguous="YES" misplaced="YES">
+                                <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
                                     <rect key="frame" x="20" y="428" width="114" height="170"/>
                                 </variation>
                                 <variation key="heightClass=regular-widthClass=regular" ambiguous="YES" misplaced="YES">
@@ -699,7 +699,7 @@
                                 <variation key="heightClass=compact-widthClass=regular" ambiguous="YES" misplaced="YES">
                                     <rect key="frame" x="532" y="220" width="248" height="172"/>
                                 </variation>
-                                <variation key="heightClass=regular-widthClass=compact" ambiguous="YES" misplaced="YES">
+                                <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
                                     <rect key="frame" x="269" y="428" width="111" height="170"/>
                                 </variation>
                                 <variation key="heightClass=regular-widthClass=regular" ambiguous="YES" misplaced="YES">
@@ -744,7 +744,7 @@
                                 <variation key="heightClass=compact-widthClass=regular" ambiguous="YES" misplaced="YES">
                                     <rect key="frame" x="276" y="220" width="248" height="172"/>
                                 </variation>
-                                <variation key="heightClass=regular-widthClass=compact" ambiguous="YES" misplaced="YES">
+                                <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
                                     <rect key="frame" x="148" y="428" width="113" height="170"/>
                                 </variation>
                                 <variation key="heightClass=regular-widthClass=regular" ambiguous="YES" misplaced="YES">
@@ -2089,9 +2089,6 @@
                                             <variation key="heightClass=compact-widthClass=regular" ambiguous="YES" misplaced="YES">
                                                 <rect key="frame" x="8" y="0.0" width="60" height="91"/>
                                             </variation>
-                                            <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
-                                                <rect key="frame" x="8" y="0.0" width="60" height="91"/>
-                                            </variation>
                                             <variation key="heightClass=regular-widthClass=regular" fixedFrame="YES">
                                                 <rect key="frame" x="8" y="0.0" width="60" height="91"/>
                                             </variation>
@@ -2112,9 +2109,6 @@
                                             </variation>
                                             <variation key="heightClass=compact-widthClass=regular" ambiguous="YES" misplaced="YES">
                                                 <rect key="frame" x="76" y="44" width="324" height="55"/>
-                                            </variation>
-                                            <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
-                                                <rect key="frame" x="76" y="44" width="316" height="47"/>
                                             </variation>
                                             <variation key="heightClass=regular-widthClass=regular" fixedFrame="YES">
                                                 <rect key="frame" x="76" y="44" width="316" height="47"/>
@@ -2157,9 +2151,6 @@
                                             <variation key="heightClass=compact-widthClass=regular" ambiguous="YES" misplaced="YES">
                                                 <rect key="frame" x="76" y="8" width="228" height="28"/>
                                             </variation>
-                                            <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
-                                                <rect key="frame" x="76" y="8" width="238" height="28"/>
-                                            </variation>
                                             <variation key="heightClass=regular-widthClass=regular" fixedFrame="YES">
                                                 <rect key="frame" x="76" y="8" width="238" height="28"/>
                                             </variation>
@@ -2200,9 +2191,6 @@
                                             </variation>
                                             <variation key="heightClass=compact-widthClass=regular" ambiguous="YES" misplaced="YES">
                                                 <rect key="frame" x="312" y="8" width="80" height="28"/>
-                                            </variation>
-                                            <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
-                                                <rect key="frame" x="322" y="8" width="70" height="28"/>
                                             </variation>
                                             <variation key="heightClass=regular-widthClass=regular" fixedFrame="YES">
                                                 <rect key="frame" x="322" y="8" width="70" height="28"/>
@@ -2416,9 +2404,6 @@
                                             <variation key="heightClass=compact-widthClass=regular" ambiguous="YES" misplaced="YES">
                                                 <rect key="frame" x="8" y="8" width="69" height="83"/>
                                             </variation>
-                                            <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
-                                                <rect key="frame" x="8" y="8" width="45" height="68"/>
-                                            </variation>
                                             <variation key="heightClass=regular-widthClass=regular" fixedFrame="YES">
                                                 <rect key="frame" x="8" y="8" width="69" height="68"/>
                                             </variation>
@@ -2458,9 +2443,6 @@
                                             </variation>
                                             <variation key="heightClass=compact-widthClass=regular" ambiguous="YES" misplaced="YES">
                                                 <rect key="frame" x="85" y="8" width="183" height="28"/>
-                                            </variation>
-                                            <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
-                                                <rect key="frame" x="61" y="8" width="208" height="28"/>
                                             </variation>
                                             <variation key="heightClass=regular-widthClass=regular" fixedFrame="YES">
                                                 <rect key="frame" x="85" y="8" width="183" height="28"/>
@@ -2503,9 +2485,6 @@
                                             <variation key="heightClass=compact-widthClass=regular" ambiguous="YES" misplaced="YES">
                                                 <rect key="frame" x="276" y="8" width="116" height="28"/>
                                             </variation>
-                                            <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
-                                                <rect key="frame" x="277" y="8" width="115" height="28"/>
-                                            </variation>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="How They Scored" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tc4-s1-w3t">
                                             <rect key="frame" x="85" y="44" width="183" height="47"/>
@@ -2523,9 +2502,6 @@
                                             </variation>
                                             <variation key="heightClass=compact-widthClass=regular" ambiguous="YES" misplaced="YES">
                                                 <rect key="frame" x="85" y="44" width="183" height="55"/>
-                                            </variation>
-                                            <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
-                                                <rect key="frame" x="61" y="44" width="208" height="32"/>
                                             </variation>
                                             <variation key="heightClass=regular-widthClass=regular" fixedFrame="YES">
                                                 <rect key="frame" x="85" y="44" width="183" height="32"/>
@@ -2547,9 +2523,6 @@
                                             </variation>
                                             <variation key="heightClass=compact-widthClass=regular" ambiguous="YES" misplaced="YES">
                                                 <rect key="frame" x="276" y="43" width="116" height="56"/>
-                                            </variation>
-                                            <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
-                                                <rect key="frame" x="277" y="44" width="115" height="32"/>
                                             </variation>
                                             <variation key="heightClass=regular-widthClass=regular" fixedFrame="YES">
                                                 <rect key="frame" x="276" y="44" width="116" height="18"/>
@@ -2792,7 +2765,7 @@
                                 <variation key="heightClass=compact-widthClass=regular" ambiguous="YES" misplaced="YES">
                                     <rect key="frame" x="20" y="28" width="69" height="20"/>
                                 </variation>
-                                <variation key="heightClass=regular-widthClass=compact" ambiguous="YES" misplaced="YES">
+                                <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
                                     <rect key="frame" x="20" y="224" width="25" height="75"/>
                                 </variation>
                                 <variation key="heightClass=regular-widthClass=regular" ambiguous="YES" misplaced="YES">
@@ -2834,7 +2807,7 @@
                                 <variation key="heightClass=compact-widthClass=regular" ambiguous="YES" misplaced="YES">
                                     <rect key="frame" x="20" y="86" width="360" height="270"/>
                                 </variation>
-                                <variation key="heightClass=regular-widthClass=compact" ambiguous="YES" misplaced="YES">
+                                <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
                                     <rect key="frame" x="53" y="245" width="25" height="99"/>
                                 </variation>
                                 <variation key="heightClass=regular-widthClass=regular" ambiguous="YES" misplaced="YES">
@@ -2871,7 +2844,7 @@
                                 <variation key="heightClass=compact-widthClass=regular" ambiguous="YES" misplaced="YES">
                                     <rect key="frame" x="20" y="28" width="360" height="50"/>
                                 </variation>
-                                <variation key="heightClass=regular-widthClass=compact" ambiguous="YES" misplaced="YES">
+                                <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
                                     <rect key="frame" x="53" y="234" width="25" height="12"/>
                                 </variation>
                                 <variation key="heightClass=regular-widthClass=regular" ambiguous="YES" misplaced="YES">
@@ -2920,7 +2893,7 @@
                                 <variation key="heightClass=compact-widthClass=regular" ambiguous="YES" misplaced="YES">
                                     <rect key="frame" x="20" y="364" width="360" height="21"/>
                                 </variation>
-                                <variation key="heightClass=regular-widthClass=compact" ambiguous="YES" misplaced="YES">
+                                <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
                                     <rect key="frame" x="86" y="234" width="294" height="12"/>
                                 </variation>
                                 <variation key="heightClass=regular-widthClass=regular" ambiguous="YES" misplaced="YES">
@@ -2941,7 +2914,7 @@
                                 <variation key="heightClass=compact-widthClass=regular" ambiguous="YES" misplaced="YES">
                                     <rect key="frame" x="20" y="206" width="100" height="150"/>
                                 </variation>
-                                <variation key="heightClass=regular-widthClass=compact" ambiguous="YES" misplaced="YES">
+                                <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
                                     <rect key="frame" x="20" y="307" width="25" height="37"/>
                                 </variation>
                                 <variation key="heightClass=regular-widthClass=regular" ambiguous="YES" misplaced="YES">
@@ -2978,7 +2951,7 @@
                                 <variation key="heightClass=compact-widthClass=regular" ambiguous="YES" misplaced="YES">
                                     <rect key="frame" x="344" y="20" width="100" height="150"/>
                                 </variation>
-                                <variation key="heightClass=regular-widthClass=compact" ambiguous="YES" misplaced="YES">
+                                <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
                                     <rect key="frame" x="53" y="178" width="25" height="38"/>
                                 </variation>
                                 <variation key="heightClass=regular-widthClass=regular" ambiguous="YES" misplaced="YES">
@@ -3015,7 +2988,7 @@
                                 <variation key="heightClass=compact-widthClass=regular" ambiguous="YES" misplaced="YES">
                                     <rect key="frame" x="236" y="20" width="100" height="150"/>
                                 </variation>
-                                <variation key="heightClass=regular-widthClass=compact" ambiguous="YES" misplaced="YES">
+                                <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
                                     <rect key="frame" x="20" y="178" width="25" height="38"/>
                                 </variation>
                                 <variation key="heightClass=regular-widthClass=regular" ambiguous="YES" misplaced="YES">
@@ -3069,7 +3042,7 @@
                                 <variation key="heightClass=compact-widthClass=regular" ambiguous="YES" misplaced="YES">
                                     <rect key="frame" x="20" y="20" width="100" height="150"/>
                                 </variation>
-                                <variation key="heightClass=regular-widthClass=compact" ambiguous="YES" misplaced="YES">
+                                <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
                                     <rect key="frame" x="20" y="20" width="25" height="150"/>
                                 </variation>
                                 <variation key="heightClass=regular-widthClass=regular" ambiguous="YES" misplaced="YES">
@@ -3124,7 +3097,7 @@
                                 <variation key="heightClass=compact-widthClass=regular" ambiguous="YES" misplaced="YES">
                                     <rect key="frame" x="20" y="364" width="360" height="28"/>
                                 </variation>
-                                <variation key="heightClass=regular-widthClass=compact" ambiguous="YES" misplaced="YES">
+                                <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
                                     <rect key="frame" x="86" y="254" width="294" height="90"/>
                                 </variation>
                                 <variation key="heightClass=regular-widthClass=regular" ambiguous="YES" misplaced="YES">
@@ -3170,7 +3143,7 @@
                                 <variation key="heightClass=compact-widthClass=regular" ambiguous="YES" misplaced="YES">
                                     <rect key="frame" x="20" y="28" width="360" height="36"/>
                                 </variation>
-                                <variation key="heightClass=regular-widthClass=compact" ambiguous="YES" misplaced="YES">
+                                <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
                                     <rect key="frame" x="86" y="20" width="294" height="150"/>
                                 </variation>
                                 <variation key="heightClass=regular-widthClass=regular" ambiguous="YES" misplaced="YES">
@@ -3228,7 +3201,7 @@
                                 <variation key="heightClass=compact-widthClass=regular" ambiguous="YES" misplaced="YES">
                                     <rect key="frame" x="20" y="28" width="360" height="328"/>
                                 </variation>
-                                <variation key="heightClass=regular-widthClass=compact" ambiguous="YES" misplaced="YES">
+                                <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
                                     <rect key="frame" x="86" y="178" width="294" height="38"/>
                                 </variation>
                                 <variation key="heightClass=regular-widthClass=regular" ambiguous="YES" misplaced="YES">
@@ -3279,7 +3252,7 @@
                                 <variation key="heightClass=compact-widthClass=regular" ambiguous="YES" misplaced="YES">
                                     <rect key="frame" x="128" y="20" width="100" height="150"/>
                                 </variation>
-                                <variation key="heightClass=regular-widthClass=compact" ambiguous="YES" misplaced="YES">
+                                <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
                                     <rect key="frame" x="53" y="20" width="25" height="150"/>
                                 </variation>
                                 <variation key="heightClass=regular-widthClass=regular" ambiguous="YES" misplaced="YES">
@@ -3653,7 +3626,7 @@
                                 <variation key="heightClass=compact-widthClass=regular" ambiguous="YES" misplaced="YES">
                                     <rect key="frame" x="20" y="20" width="69" height="20"/>
                                 </variation>
-                                <variation key="heightClass=regular-widthClass=compact" ambiguous="YES" misplaced="YES">
+                                <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
                                     <rect key="frame" x="20" y="207" width="14" height="50"/>
                                 </variation>
                             </label>
@@ -3692,7 +3665,7 @@
                                 <variation key="heightClass=compact-widthClass=regular" ambiguous="YES" misplaced="YES">
                                     <rect key="frame" x="20" y="136" width="360" height="222"/>
                                 </variation>
-                                <variation key="heightClass=regular-widthClass=compact" ambiguous="YES" misplaced="YES">
+                                <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
                                     <rect key="frame" x="150" y="207" width="221" height="100"/>
                                 </variation>
                             </label>
@@ -3724,7 +3697,7 @@
                                 <variation key="heightClass=compact-widthClass=regular" ambiguous="YES" misplaced="YES">
                                     <rect key="frame" x="20" y="78" width="360" height="50"/>
                                 </variation>
-                                <variation key="heightClass=regular-widthClass=compact" ambiguous="YES" misplaced="YES">
+                                <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
                                     <rect key="frame" x="42" y="315" width="100" height="29"/>
                                 </variation>
                             </label>
@@ -3756,7 +3729,7 @@
                                 <variation key="heightClass=compact-widthClass=regular" ambiguous="YES" misplaced="YES">
                                     <rect key="frame" x="20" y="20" width="360" height="50"/>
                                 </variation>
-                                <variation key="heightClass=regular-widthClass=compact" ambiguous="YES" misplaced="YES">
+                                <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
                                     <rect key="frame" x="42" y="207" width="100" height="100"/>
                                 </variation>
                             </label>
@@ -3804,7 +3777,7 @@
                                 <variation key="heightClass=compact-widthClass=compact" ambiguous="YES" misplaced="YES">
                                     <rect key="frame" x="20" y="20" width="95" height="150"/>
                                 </variation>
-                                <variation key="heightClass=regular-widthClass=compact" ambiguous="YES" misplaced="YES">
+                                <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
                                     <rect key="frame" x="20" y="20" width="14" height="150"/>
                                 </variation>
                             </imageView>
@@ -3852,7 +3825,7 @@
                                 <variation key="heightClass=compact-widthClass=regular" ambiguous="YES" misplaced="YES">
                                     <rect key="frame" x="20" y="20" width="100" height="150"/>
                                 </variation>
-                                <variation key="heightClass=regular-widthClass=compact" ambiguous="YES" misplaced="YES">
+                                <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
                                     <rect key="frame" x="42" y="20" width="100" height="150"/>
                                 </variation>
                             </imageView>
@@ -3886,7 +3859,7 @@
                                 <variation key="heightClass=compact-widthClass=regular" ambiguous="YES" misplaced="YES">
                                     <rect key="frame" x="20" y="20" width="100" height="150"/>
                                 </variation>
-                                <variation key="heightClass=regular-widthClass=compact" ambiguous="YES" misplaced="YES">
+                                <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
                                     <rect key="frame" x="20" y="178" width="14" height="21"/>
                                 </variation>
                             </imageView>
@@ -3917,7 +3890,7 @@
                                 <variation key="heightClass=compact-widthClass=compact" ambiguous="YES" misplaced="YES">
                                     <rect key="frame" x="284" y="20" width="80" height="120"/>
                                 </variation>
-                                <variation key="heightClass=regular-widthClass=compact" ambiguous="YES" misplaced="YES">
+                                <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
                                     <rect key="frame" x="42" y="178" width="100" height="21"/>
                                 </variation>
                             </imageView>
@@ -3932,7 +3905,7 @@
                                 <variation key="heightClass=compact-widthClass=compact" ambiguous="YES" misplaced="YES">
                                     <rect key="frame" x="20" y="176" width="80" height="120"/>
                                 </variation>
-                                <variation key="heightClass=regular-widthClass=compact" ambiguous="YES" misplaced="YES">
+                                <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
                                     <rect key="frame" x="20" y="265" width="14" height="79"/>
                                 </variation>
                             </imageView>
@@ -3979,7 +3952,7 @@
                                 <variation key="heightClass=compact-widthClass=regular" ambiguous="YES" misplaced="YES">
                                     <rect key="frame" x="20" y="366" width="360" height="26"/>
                                 </variation>
-                                <variation key="heightClass=regular-widthClass=compact" ambiguous="YES" misplaced="YES">
+                                <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
                                     <rect key="frame" x="150" y="315" width="230" height="29"/>
                                 </variation>
                                 <connections>
@@ -4028,7 +4001,7 @@
                                 <variation key="heightClass=compact-widthClass=regular" ambiguous="YES" misplaced="YES">
                                     <rect key="frame" x="20" y="20" width="360" height="338"/>
                                 </variation>
-                                <variation key="heightClass=regular-widthClass=compact" ambiguous="YES" misplaced="YES">
+                                <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
                                     <rect key="frame" x="150" y="178" width="221" height="21"/>
                                 </variation>
                             </label>
@@ -4063,7 +4036,7 @@
                                 <variation key="heightClass=compact-widthClass=regular" ambiguous="YES" misplaced="YES">
                                     <rect key="frame" x="20" y="20" width="360" height="150"/>
                                 </variation>
-                                <variation key="heightClass=regular-widthClass=compact" ambiguous="YES" misplaced="YES">
+                                <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
                                     <rect key="frame" x="150" y="20" width="221" height="150"/>
                                 </variation>
                                 <connections>
