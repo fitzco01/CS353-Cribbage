@@ -43,6 +43,12 @@ class HandViewController: UIViewController {
         Constants.computercango = true
         Constants.playercango = true
         Constants.playerwent = false
+        let turn = CribbageDeck().whoDealtIt()
+        if turn == "Computer" {
+            Constants.computerturn = false
+        } else if turn == "Player" {
+            Constants.computerturn = true
+        }
         updateUI()
         super.viewDidLoad()
         //Do any additional setup after loading the view.

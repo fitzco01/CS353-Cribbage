@@ -57,7 +57,7 @@ class ScoresTableViewController: UITableViewController {
         
         let card = ScoreHistory().getCard()[indexPath.row]
         let player = ScoreHistory().getNames()[indexPath.row]
-        let othercards = ScoreHistory().getCards()[indexPath.row]
+        var othercards = ScoreHistory().getCards()[indexPath.row]
         let scoretype = ScoreHistory().getScoreType()[indexPath.row]
         let pointtotal = ScoreHistory().getPointValue()[indexPath.row]
         let count: Int
@@ -70,14 +70,24 @@ class ScoresTableViewController: UITableViewController {
             count = 0
         }
         
+        var loop = 0
         for acard in othercards {
-            description += acard.description() + ","
+            if scoretype == "last card" && othercards.count > 1 {
+                if loop == 0 {
+                    loop += 1
+                } else {
+                    description += acard.description() + ","
+                }
+            } else if scoretype == "last card" && othercards.count == 1 {
+                description = "no other cards,"
+            } else {
+                description += acard.description() + ","
+            }
         }
-        
         var newdescription = description.substringToIndex(description.endIndex.predecessor())
         newdescription += "."
         
-        if scoretype == "nibs" || (scoretype == "last card" && History().playLength() == 1) {
+        if scoretype == "nibs" {
             newdescription = "no other cards."
         }
 

@@ -153,7 +153,7 @@ class CribbageDeck {
         }
 
         if Constants.count == 0 {
-            score += ScoringRun().jackflip(whoDealtIt())
+            PlayerScores().addScore(whoDealtIt(), newpoints: ScoringRun().jackflip(whoDealtIt()))
             Constants.count += 1
         }
         
@@ -185,7 +185,7 @@ class CribbageDeck {
         }
         
         if Constants.count == 0 {
-            score += ScoringRun().jackflip(whoDealtIt())
+            PlayerScores().addScore(whoDealtIt(), newpoints: ScoringRun().jackflip(whoDealtIt()))
             Constants.count += 1
         }
         let (selectedcard, newhand) = BestPlay().pickACard(Constants.playerDict["Computer"]!.hand)!
@@ -240,9 +240,12 @@ class CribbageDeck {
         handWithCut.append(Constants.cutcard[0])
         var score = 0
         score += S.fifteencount(name, ahand: handWithCut)
-        score += S.fourflush(name, justplayerhand: Constants.playerDict[name]!.shorthand)
         score += S.jackinhand(name, somehand: Constants.playerDict[name]!.shorthand)
+        let test = score
         score += S.fiveflush(name, handandcutcardORcrib: handWithCut)
+        if test == score {
+            score += S.fourflush(name, justplayerhand: Constants.playerDict[name]!.shorthand)
+        }
         score += S.straight(name, ahand: handWithCut)
         score += S.SomeOfAKind(name, ahand: handWithCut)
         
