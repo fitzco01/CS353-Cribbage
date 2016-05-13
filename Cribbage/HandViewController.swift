@@ -286,7 +286,7 @@ class HandViewController: UIViewController {
                     if Constants.playercango {
                         switchturn()
                     } else {
-                        if ScoringRun().getruncount() != 31 {
+                        if ScoringRun().getruncount() != 31 || (CribbageDeck().cpuHandLength() == 0 && CribbageDeck().showPlayerHand().count == 0) {
                             ScoringRun().lastcard(History().mostRecentPlayer().name)
                             PlayerScores().addScore(History().mostRecentPlayer().name, newpoints: 1)
                         }
@@ -322,7 +322,7 @@ class HandViewController: UIViewController {
                         
                         switchturn()
                     } else {
-                        if ScoringRun().getruncount() != 31 {
+                        if ScoringRun().getruncount() != 31 || (CribbageDeck().cpuHandLength() == 0 && CribbageDeck().showPlayerHand().count == 0) {
                             ScoringRun().lastcard(History().mostRecentPlayer().name)
                             PlayerScores().addScore(History().mostRecentPlayer().name, newpoints: 1)
                         }
