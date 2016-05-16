@@ -57,7 +57,7 @@ class ScoresTableViewController: UITableViewController {
         
         let card = ScoreHistory().getCard()[indexPath.row]
         let player = ScoreHistory().getNames()[indexPath.row]
-        var othercards = ScoreHistory().getCards()[indexPath.row]
+        let othercards = ScoreHistory().getCards()[indexPath.row]
         let scoretype = ScoreHistory().getScoreType()[indexPath.row]
         let pointtotal = ScoreHistory().getPointValue()[indexPath.row]
         let count: Int
