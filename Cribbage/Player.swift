@@ -64,6 +64,7 @@ struct Player {
     }
 
     // YAY
+    // IT WORKS
     
     func printhand() -> [String] {
         var printlist: [String] = []
