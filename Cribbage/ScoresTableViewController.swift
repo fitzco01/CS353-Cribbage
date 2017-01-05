@@ -14,8 +14,8 @@ class ScoresTableViewController: UITableViewController {
     
     //MARK: - Outlets
 
-    @IBAction func done(sender: UIBarButtonItem) {
-        presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
+    @IBAction func done(_ sender: UIBarButtonItem) {
+        presentingViewController?.dismiss(animated: true, completion: nil)
     }
     
     //MARK: - View Did Load
@@ -39,11 +39,11 @@ class ScoresTableViewController: UITableViewController {
 
     // MARK: - Table View Data Source
 
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
 
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if ScoreHistory().getCard().count == ScoreHistory().getCards().count  && ScoreHistory().getCards().count == ScoreHistory().getNames().count && ScoreHistory().getNames().count == ScoreHistory().getScoreType().count && ScoreHistory().getNames().count == ScoreHistory().getScoreType().count {
             return ScoreHistory().getCard().count
         } else {
@@ -52,19 +52,19 @@ class ScoresTableViewController: UITableViewController {
         }
     }
 
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("ScoreCell", forIndexPath: indexPath) as! ScoresTableViewCell
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "ScoreCell", for: indexPath) as! ScoresTableViewCell
         
-        let card = ScoreHistory().getCard()[indexPath.row]
-        let player = ScoreHistory().getNames()[indexPath.row]
-        let othercards = ScoreHistory().getCards()[indexPath.row]
-        let scoretype = ScoreHistory().getScoreType()[indexPath.row]
-        let pointtotal = ScoreHistory().getPointValue()[indexPath.row]
+        let card = ScoreHistory().getCard()[(indexPath as NSIndexPath).row]
+        let player = ScoreHistory().getNames()[(indexPath as NSIndexPath).row]
+        let othercards = ScoreHistory().getCards()[(indexPath as NSIndexPath).row]
+        let scoretype = ScoreHistory().getScoreType()[(indexPath as NSIndexPath).row]
+        let pointtotal = ScoreHistory().getPointValue()[(indexPath as NSIndexPath).row]
         let count: Int
         var description = ""
         
         if ScoreHistory().getCard().count == ScoreHistory().getCards().count  && ScoreHistory().getCards().count == ScoreHistory().getNames().count && ScoreHistory().getNames().count == ScoreHistory().getScoreType().count && ScoreHistory().getNames().count == ScoreHistory().getScoreType().count {
-            count = ScoreHistory().getPointValue().count - indexPath.row
+            count = ScoreHistory().getPointValue().count - (indexPath as NSIndexPath).row
         } else {
             print("ERROR: THE SCORE HISTORY LISTS ARE NOT EQUAL 2!")
             count = 0
@@ -84,7 +84,7 @@ class ScoresTableViewController: UITableViewController {
                 description += acard.description() + ","
             }
         }
-        var newdescription = description.substringToIndex(description.endIndex.predecessor())
+        var newdescription = description.substring(to: description.characters.index(before: description.endIndex))
         newdescription += "."
         
         if scoretype == "nibs" {
@@ -96,7 +96,7 @@ class ScoresTableViewController: UITableViewController {
         return cell
     }
     
-    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 250
     }
 

@@ -14,13 +14,13 @@ class PlaysTableViewController: UITableViewController {
     
     //MARK: - Outlets
     
-    @IBAction func done(sender: UIBarButtonItem) {
-        presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
+    @IBAction func done(_ sender: UIBarButtonItem) {
+        presentingViewController?.dismiss(animated: true, completion: nil)
     }
     
     //MARK: - Copy Card
     
-    func getCard(cardname: String) -> Card{
+    func getCard(_ cardname: String) -> Card{
         let suit = CribbageDeck().suitFromDescription(cardname)
         let rank = CribbageDeck().rankFromDescription(cardname)
         let mycard = Card(rank: rank, suit: suit)
@@ -48,11 +48,11 @@ class PlaysTableViewController: UITableViewController {
 
     // MARK: - Table View Data Source
 
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
 
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         if History().playLength() == History().playerLength() {
             return History().playerLength()
@@ -62,15 +62,15 @@ class PlaysTableViewController: UITableViewController {
         }
     }
 
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("PlayCell", forIndexPath: indexPath) as! PlaysTableViewCell
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "PlayCell", for: indexPath) as! PlaysTableViewCell
 
-        let card = History().showPlayHistory()[indexPath.row]
-        let player = History().showPlayerHistory()[indexPath.row]
+        let card = History().showPlayHistory()[(indexPath as NSIndexPath).row]
+        let player = History().showPlayerHistory()[(indexPath as NSIndexPath).row]
         let count: Int
         
         if History().playLength() == History().playerLength() {
-            count = History().playLength() - indexPath.row
+            count = History().playLength() - (indexPath as NSIndexPath).row
         } else {
             print("ERROR: THE HISTORY LISTS ARE NOT EQUAL!")
             count = 0

@@ -16,7 +16,7 @@ class CribbageDeck {
     
     //MARK: - Constants
 
-    private struct Constants {
+    fileprivate struct Constants {
         static var rankDict: [String: Rank] = [:]
         static var suitDict: [String: Suit] = [:]
         static var playerDict: [String: Player] = [:]
@@ -30,19 +30,19 @@ class CribbageDeck {
         static var done = false
     }
     
-    func setCard(imagename: String) {
+    func setCard(_ imagename: String) {
         Constants.cardback = imagename
     }
 
-    func rankFromDescription(cardname: String) -> Rank {
+    func rankFromDescription(_ cardname: String) -> Rank {
         return Constants.rankDict[cardname]!
     }
     
-    func suitFromDescription(cardname: String) -> Suit {
+    func suitFromDescription(_ cardname: String) -> Suit {
         return Constants.suitDict[cardname]!
     }
     
-    func playerFromName(playername: String) -> Player {
+    func playerFromName(_ playername: String) -> Player {
         return Constants.playerDict[playername]!
     }
     
@@ -66,7 +66,7 @@ class CribbageDeck {
         return temp
     }
     
-    func addToCrib(acard: Card) {
+    func addToCrib(_ acard: Card) {
         Constants.cribcards.append(acard)
     }
     
@@ -98,10 +98,10 @@ class CribbageDeck {
         return ahand
     }
     
-    func shuffle(somedeck: [Card]) -> [Card] {
+    func shuffle(_ somedeck: [Card]) -> [Card] {
         var adeck = somedeck
         while adeck.count != 0 {
-            let pop = adeck.removeAtIndex(Int(arc4random_uniform(UInt32(adeck.count))))
+            let pop = adeck.remove(at: Int(arc4random_uniform(UInt32(adeck.count))))
             Constants.someshuffleddeck.append(pop)
         }
         return Constants.someshuffleddeck
@@ -120,7 +120,7 @@ class CribbageDeck {
         return Constants.playerDict["Computer"]!.hand.count
     }
     
-    func hand(playername: String) -> (Card, Card, Card, Card) {
+    func hand(_ playername: String) -> (Card, Card, Card, Card) {
         if playername == "Player" {
             return ((Constants.playerDict["Player"]!.shorthand[0]),(Constants.playerDict["Player"]!.shorthand[1]),(Constants.playerDict["Player"]!.shorthand[2]),(Constants.playerDict["Player"]!.shorthand[3]))
         } else if playername == "Computer" {
@@ -136,7 +136,7 @@ class CribbageDeck {
         }
     }
     
-    func play(cardname: String) -> Bool {
+    func play(_ cardname: String) -> Bool {
         
         let rank = rankFromDescription(cardname)
         let suit = suitFromDescription(cardname)
@@ -209,7 +209,7 @@ class CribbageDeck {
         return Constants.cribcards
     }
     
-    func createPlayer(hand: [Card], deals: Bool, name: String) -> Player {
+    func createPlayer(_ hand: [Card], deals: Bool, name: String) -> Player {
         return Player(hand: hand, shorthand: hand, isDealer: deals, name: name)
     }
     
@@ -217,7 +217,7 @@ class CribbageDeck {
         return Constants.playerDict["Player"]!.hand
     }
     
-    func scoreCrib(name: String) -> Bool {
+    func scoreCrib(_ name: String) -> Bool {
         let S = ScoringHand()
 
         var cribCardsWithCut = Constants.cribcards
@@ -234,7 +234,7 @@ class CribbageDeck {
         return Constants.done
     }
     
-    func scoreShortHand(name: String) -> Bool {
+    func scoreShortHand(_ name: String) -> Bool {
         let S = ScoringHand()
         var handWithCut = Constants.playerDict[name]!.shorthand
         handWithCut.append(Constants.cutcard[0])
@@ -253,7 +253,7 @@ class CribbageDeck {
         return Constants.done
     }
     
-    func canPlay(name: String) -> ([String], Bool) {
+    func canPlay(_ name: String) -> ([String], Bool) {
         var possibleplay = [""]
         possibleplay.removeAll()
         var bool = true
@@ -280,11 +280,11 @@ class CribbageDeck {
         return Constants.cutcard[0]
     }
     
-    func removeCardFromPlayer(cardname: String) {
+    func removeCardFromPlayer(_ cardname: String) {
         Constants.playerDict["Player"]!.deletecardfromhandbystring(cardname)
     }
     
-    func removeCardFromPlayerShortHand(cardname: String) {
+    func removeCardFromPlayerShortHand(_ cardname: String) {
         let newcribcard = Constants.playerDict["Player"]!.deletecardfromshorthandbystring(cardname)
         addToCrib(newcribcard)
     }

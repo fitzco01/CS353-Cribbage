@@ -1,0 +1,132 @@
+
+/* Class = "UILabel"; text = "Dealer:"; ObjectID = "79d-a6-LhG"; */
+"79d-a6-LhG.text" = "Dealer:";
+
+/* Class = "UILabel"; text = "Dealer:"; ObjectID = "90V-yb-ReZ"; */
+"90V-yb-ReZ.text" = "Dealer:";
+
+/* Class = "UIButton"; normalTitle = "New Game"; ObjectID = "Acn-PW-YRO"; */
+"Acn-PW-YRO.normalTitle" = "New Game";
+
+/* Class = "UINavigationItem"; title = "Current Run History"; ObjectID = "BKB-ju-wnO"; */
+"BKB-ju-wnO.title" = "Current Run History";
+
+/* Class = "UILabel"; text = "Last Card"; ObjectID = "C1G-3m-hjc"; */
+"C1G-3m-hjc.text" = "Last Card";
+
+/* Class = "UINavigationItem"; title = "History of Scores"; ObjectID = "EFx-sq-0r9"; */
+"EFx-sq-0r9.title" = "History of Scores";
+
+/* Class = "UIButton"; normalTitle = "Next"; ObjectID = "ElF-6b-8RM"; */
+"ElF-6b-8RM.normalTitle" = "Next";
+
+/* Class = "UILabel"; text = "Player Score:"; ObjectID = "FtW-Tr-XuG"; */
+"FtW-Tr-XuG.text" = "Player Score:";
+
+/* Class = "UIButton"; normalTitle = "New Game"; ObjectID = "HGG-by-vOF"; */
+"HGG-by-vOF.normalTitle" = "New Game";
+
+/* Class = "UIButton"; normalTitle = "Next"; ObjectID = "HKk-wc-1rW"; */
+"HKk-wc-1rW.normalTitle" = "Next";
+
+/* Class = "UILabel"; text = "CPU Score:"; ObjectID = "LLV-VZ-5R0"; */
+"LLV-VZ-5R0.text" = "CPU Score:";
+
+/* Class = "UILabel"; text = "Final Score: Blank to Blank"; ObjectID = "N50-IB-oVu"; */
+"N50-IB-oVu.text" = "Final Score: Blank to Blank";
+
+/* Class = "UILabel"; text = "Dealer:"; ObjectID = "P9g-p4-vkU"; */
+"P9g-p4-vkU.text" = "Dealer:";
+
+/* Class = "UILabel"; text = "Cut Card"; ObjectID = "Pj2-9c-idh"; */
+"Pj2-9c-idh.text" = "Cut Card";
+
+/* Class = "UIButton"; normalTitle = "Next"; ObjectID = "R5y-Pa-y3Z"; */
+"R5y-Pa-y3Z.normalTitle" = "Next";
+
+/* Class = "UIButton"; normalTitle = "Score History"; ObjectID = "Sac-UE-rdU"; */
+"Sac-UE-rdU.normalTitle" = "Score History";
+
+/* Class = "UIButton"; normalTitle = "Run History"; ObjectID = "UYi-zm-Ur0"; */
+"UYi-zm-Ur0.normalTitle" = "Run History";
+
+/* Class = "UILabel"; text = "Player"; ObjectID = "Uzh-xf-qOE"; */
+"Uzh-xf-qOE.text" = "Player";
+
+/* Class = "UIButton"; normalTitle = "Score History"; ObjectID = "W30-ao-F3K"; */
+"W30-ao-F3K.normalTitle" = "Score History";
+
+/* Class = "UILabel"; text = "Cut Card"; ObjectID = "WBx-k1-zK8"; */
+"WBx-k1-zK8.text" = "Cut Card";
+
+/* Class = "UIBarButtonItem"; title = "Back"; ObjectID = "Y42-Ki-0v8"; */
+"Y42-Ki-0v8.title" = "Back";
+
+/* Class = "UIButton"; normalTitle = "Score History"; ObjectID = "YaH-nY-Vt4"; */
+"YaH-nY-Vt4.normalTitle" = "Score History";
+
+/* Class = "UIBarButtonItem"; title = "Back"; ObjectID = "YfP-Ea-mGs"; */
+"YfP-Ea-mGs.title" = "Back";
+
+/* Class = "UILabel"; text = "Name Scored Blank Points!"; ObjectID = "ZQV-g1-690"; */
+"ZQV-g1-690.text" = "Name Scored Blank Points!";
+
+/* Class = "UILabel"; text = "Play #"; ObjectID = "aba-qG-OBo"; */
+"aba-qG-OBo.text" = "Play #";
+
+/* Class = "UILabel"; text = "CPU Score:"; ObjectID = "bcB-zT-cPU"; */
+"bcB-zT-cPU.text" = "CPU Score:";
+
+/* Class = "UILabel"; text = "CPU Score:"; ObjectID = "dv8-A9-4ps"; */
+"dv8-A9-4ps.text" = "CPU Score:";
+
+/* Class = "UILabel"; text = "Card"; ObjectID = "f4M-Cy-QSo"; */
+"f4M-Cy-QSo.text" = "Card";
+
+/* Class = "UILabel"; text = "Cribbage by Connor Fitzpatrick"; ObjectID = "fY2-aJ-mDj"; */
+"fY2-aJ-mDj.text" = "Cribbage by Connor Fitzpatrick";
+
+/* Class = "UIButton"; normalTitle = "Score History"; ObjectID = "h4C-Wq-iEw"; */
+"h4C-Wq-iEw.normalTitle" = "Score History";
+
+/* Class = "UILabel"; text = "Pick a Blank"; ObjectID = "iTe-Io-Vf9"; */
+"iTe-Io-Vf9.text" = "Pick a Blank";
+
+/* Class = "UIButton"; normalTitle = "Change Deck"; ObjectID = "jju-er-8jM"; */
+"jju-er-8jM.normalTitle" = "Change Deck";
+
+/* Class = "UILabel"; text = "Player Score:"; ObjectID = "me3-vF-cXD"; */
+"me3-vF-cXD.text" = "Player Score:";
+
+/* Class = "UILabel"; text = "Blank Won!"; ObjectID = "mo4-DE-lap"; */
+"mo4-DE-lap.text" = "Blank Won!";
+
+/* Class = "UIBarButtonItem"; title = "Done"; ObjectID = "pyG-qw-C3u"; */
+"pyG-qw-C3u.title" = "Done";
+
+/* Class = "UILabel"; text = "Player Score:"; ObjectID = "qtf-qp-37L"; */
+"qtf-qp-37L.text" = "Player Score:";
+
+/* Class = "UILabel"; text = "Cut Card"; ObjectID = "rHR-KR-g3B"; */
+"rHR-KR-g3B.text" = "Cut Card";
+
+/* Class = "UILabel"; text = "Name Scored Blank Points!"; ObjectID = "rqd-dT-Bor"; */
+"rqd-dT-Bor.text" = "Name Scored Blank Points!";
+
+/* Class = "UIButton"; normalTitle = "Change Background"; ObjectID = "sE2-9P-9Ni"; */
+"sE2-9P-9Ni.normalTitle" = "Change Background";
+
+/* Class = "UILabel"; text = "Points:"; ObjectID = "skC-k9-YvM"; */
+"skC-k9-YvM.text" = "Points:";
+
+/* Class = "UILabel"; text = "Score #"; ObjectID = "tLv-xo-Sui"; */
+"tLv-xo-Sui.text" = "Score #";
+
+/* Class = "UILabel"; text = "Player"; ObjectID = "tM0-RK-V2k"; */
+"tM0-RK-V2k.text" = "Player";
+
+/* Class = "UILabel"; text = "How They Scored"; ObjectID = "tc4-s1-w3t"; */
+"tc4-s1-w3t.text" = "How They Scored";
+
+/* Class = "UILabel"; text = "Cribbage for iOS"; ObjectID = "v7k-Nw-Osv"; */
+"v7k-Nw-Osv.text" = "Cribbage for iOS";

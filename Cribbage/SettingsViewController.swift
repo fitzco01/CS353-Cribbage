@@ -14,7 +14,7 @@ class SettingsViewController: UIViewController {
     
     //MARK: - Constants
     
-    private struct Constants {
+    fileprivate struct Constants {
         static var imageName1 = ""
         static var imageName2 = ""
         static var imageName3 = ""
@@ -25,8 +25,8 @@ class SettingsViewController: UIViewController {
     
     //MARK: - Outlets
     
-    @IBAction func done(sender: UIBarButtonItem) {
-        presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
+    @IBAction func done(_ sender: UIBarButtonItem) {
+        presentingViewController?.dismiss(animated: true, completion: nil)
     }
     
     @IBOutlet weak var whatToChange: UILabel! { didSet {
@@ -35,38 +35,38 @@ class SettingsViewController: UIViewController {
     }
     
     @IBOutlet weak var image1: UIImageView! { didSet {
-        self.image1.userInteractionEnabled = true
+        self.image1.isUserInteractionEnabled = true
         image1.image = UIImage(named: Constants.imageName1)
         }
     }
     
     @IBOutlet weak var image2: UIImageView! { didSet {
-        self.image2.userInteractionEnabled = true
+        self.image2.isUserInteractionEnabled = true
         image2.image = UIImage(named: Constants.imageName2)
         }
     }
     
     @IBOutlet weak var image3: UIImageView! { didSet {
-        self.image3.userInteractionEnabled = true
+        self.image3.isUserInteractionEnabled = true
         image3.image = UIImage(named: Constants.imageName3)
         }
     }
     
-    @IBAction func image1Tap(sender: UITapGestureRecognizer) {
+    @IBAction func image1Tap(_ sender: UITapGestureRecognizer) {
         imageTap(1)
     }
     
-    @IBAction func image2Tap(sender: UITapGestureRecognizer) {
+    @IBAction func image2Tap(_ sender: UITapGestureRecognizer) {
         imageTap(2)
     }
     
-    @IBAction func image3Tap(sender: UITapGestureRecognizer) {
+    @IBAction func image3Tap(_ sender: UITapGestureRecognizer) {
         imageTap(3)
     }
     
     //MARK: - Image Tap
     
-    func imageTap(whichImage: Int) {
+    func imageTap(_ whichImage: Int) {
         if Constants.whichType == "Card" {
         switch whichImage {
             case 1:

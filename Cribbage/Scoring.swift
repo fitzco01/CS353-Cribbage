@@ -14,12 +14,12 @@ struct Order {
     var historylist = History().showPlayHistory()
     
     func orderByValue() -> [Card] {
-        let valueorderlist = historylist.sort { $0.rank.value() < $1.rank.value() }
+        let valueorderlist = historylist.sorted { $0.rank.value() < $1.rank.value() }
         return valueorderlist
     }
     
     func orderByOrdinal() -> [Card] {
-        let valueorderlist = historylist.sort { $0.rank.ordinal() < $1.rank.ordinal() }
+        let valueorderlist = historylist.sorted { $0.rank.ordinal() < $1.rank.ordinal() }
         return valueorderlist
     }
     
@@ -34,12 +34,12 @@ class ScoringRun {
     
     //MARK: - Constants
     
-    private struct Constants {
+    fileprivate struct Constants {
         static var boolpoints = false
         static var someruncount = 0
     }
     
-    func updateruncount(somecard: Card) {
+    func updateruncount(_ somecard: Card) {
         Constants.someruncount += somecard.rank.value()
     }
     
@@ -47,14 +47,14 @@ class ScoringRun {
         Constants.someruncount = 0
     }
     
-    func straight(playername: String) -> Int {
+    func straight(_ playername: String) -> Int {
         var count = 0
         var checklist = [Card]()
         var finalcards = [Card]()
         finalcards.removeAll()
         for acard in History().showPlayHistory() {
-            checklist.insert(acard, atIndex: 0)
-            let valueorderlist = checklist.sort { $0.rank.ordinal() < $1.rank.ordinal() }
+            checklist.insert(acard, at: 0)
+            let valueorderlist = checklist.sorted { $0.rank.ordinal() < $1.rank.ordinal() }
 
             if valueorderlist.count == 3 {
                 if valueorderlist[0].rank.ordinal() == valueorderlist[1].rank.ordinal() - 1 && valueorderlist[1].rank.ordinal() == valueorderlist[2].rank.ordinal() - 1 {
@@ -118,7 +118,7 @@ class ScoringRun {
         return count
     }
     
-    func fifteencount(playername: String) -> Int {
+    func fifteencount(_ playername: String) -> Int {
         var count = 0
         for acard in History().showPlayHistory() {
             count += acard.rank.value()
@@ -135,7 +135,7 @@ class ScoringRun {
         }
     }
     
-    func SomeOfAKind(playername: String) -> Int {
+    func SomeOfAKind(_ playername: String) -> Int {
         var historylist = Order().getHistory()
         
         var count = 0
@@ -186,12 +186,12 @@ class ScoringRun {
         return Constants.someruncount
     }
     
-    func lastcard(playername: String) -> Int {
+    func lastcard(_ playername: String) -> Int {
         ScoreHistory().addToHistory(playername, card: History().mostRecentPlay(), othercards: History().showPlayHistory(), scoretype: "last card", pointvalue: 1)
         return 1
     }
     
-    func jackflip(playername: String) -> Int {
+    func jackflip(_ playername: String) -> Int {
         if CribbageDeck().getCutCardCard().rank.description() == "jack" {
             ScoreHistory().addToHistory(playername, card: CribbageDeck().getCutCardCard(), othercards: [CribbageDeck().getCutCardCard()], scoretype: "nibs", pointvalue: 2)
             return 2
@@ -208,7 +208,7 @@ class ScoringHand {
     
     //MARK: - Subdecks of Five
     
-    func makeSubDecksOf2From5(somehand: [Card]) -> [String:[Card]] {
+    func makeSubDecksOf2From5(_ somehand: [Card]) -> [String:[Card]] {
         var subdeckdict2 = ["twodeck1": [somehand[0],somehand[1]]]
         subdeckdict2["twodeck2"] = [somehand[0],somehand[2]]
         subdeckdict2["twodeck3"] = [somehand[0],somehand[3]]
@@ -223,7 +223,7 @@ class ScoringHand {
         return subdeckdict2
     }
     
-    func makeSubDecksOf3From5(somehand: [Card]) -> [String:[Card]] {
+    func makeSubDecksOf3From5(_ somehand: [Card]) -> [String:[Card]] {
         var subdeckdict3 = ["threedeck1": [somehand[0],somehand[1],somehand[2]]]
         subdeckdict3["threedeck2"] = [somehand[0],somehand[1],somehand[3]]
         subdeckdict3["threedeck5"] = [somehand[0],somehand[1],somehand[4]]
@@ -238,7 +238,7 @@ class ScoringHand {
         return subdeckdict3
     }
     
-    func makeSubDecksOf4From5(somehand: [Card]) -> [String:[Card]] {
+    func makeSubDecksOf4From5(_ somehand: [Card]) -> [String:[Card]] {
         var subdeckdict4 = ["fourdeck1": [somehand[0],somehand[1],somehand[2],somehand[3]]]
         subdeckdict4["fourdeck2"] = [somehand[0],somehand[1],somehand[2],somehand[4]]
         subdeckdict4["fourdeck3"] = [somehand[0],somehand[1],somehand[3],somehand[4]]
@@ -248,7 +248,7 @@ class ScoringHand {
         return subdeckdict4
     }
     
-    func jackinhand(playername: String, somehand: [Card]) -> Int {
+    func jackinhand(_ playername: String, somehand: [Card]) -> Int {
         var count = 0
         for acard in somehand {
             if acard.rank.description() == "jack" && acard.suit.description() == CribbageDeck().getCutCardCard().suit.description() {
@@ -260,7 +260,7 @@ class ScoringHand {
         return count
     }
 
-    func SomeOfAKind(playername: String, ahand: [Card]) -> Int {
+    func SomeOfAKind(_ playername: String, ahand: [Card]) -> Int {
         var count = 0
         let twodict = makeSubDecksOf2From5(ahand)
         let threedict = makeSubDecksOf3From5(ahand)
@@ -299,7 +299,7 @@ class ScoringHand {
         return count
     }
     
-    func fifteencount(playername: String, ahand: [Card]) -> Int {
+    func fifteencount(_ playername: String, ahand: [Card]) -> Int {
         var count = 0
         let twodict = makeSubDecksOf2From5(ahand)
         let threedict = makeSubDecksOf3From5(ahand)
@@ -336,11 +336,11 @@ class ScoringHand {
         return count
     }
     
-    func straight(playername: String, ahand: [Card]) -> Int{
+    func straight(_ playername: String, ahand: [Card]) -> Int{
         var count = 0
         let threedict = makeSubDecksOf3From5(ahand)
         let fourdict = makeSubDecksOf4From5(ahand)
-        let sorthand = ahand.sort { $0.rank.ordinal() < $1.rank.ordinal() }
+        let sorthand = ahand.sorted { $0.rank.ordinal() < $1.rank.ordinal() }
         
         if sorthand[0].rank.ordinal() == sorthand[1].rank.ordinal() - 1 && sorthand[1].rank.ordinal() == sorthand[2].rank.ordinal() - 1 && sorthand[2].rank.ordinal() == sorthand[3].rank.ordinal() - 1 && sorthand[3].rank.ordinal() == sorthand[4].rank.ordinal() - 1 {
             count = 5
@@ -351,7 +351,7 @@ class ScoringHand {
         }
         
         for (_, value) in fourdict {
-            let sorthand = value.sort { $0.rank.ordinal() < $1.rank.ordinal() }
+            let sorthand = value.sorted { $0.rank.ordinal() < $1.rank.ordinal() }
 
             if sorthand[0].rank.ordinal() == sorthand[1].rank.ordinal() - 1 && sorthand[1].rank.ordinal() == sorthand[2].rank.ordinal() - 1 && sorthand[2].rank.ordinal() == sorthand[3].rank.ordinal() - 1 {
                 count += 4
@@ -360,7 +360,7 @@ class ScoringHand {
         }
         if count == 0 {
             for (_, value) in threedict {
-                let sorthand = value.sort { $0.rank.ordinal() < $1.rank.ordinal() }
+                let sorthand = value.sorted { $0.rank.ordinal() < $1.rank.ordinal() }
 
                 if sorthand[0].rank.ordinal() == sorthand[1].rank.ordinal() - 1 && sorthand[1].rank.ordinal() == sorthand[2].rank.ordinal() - 1 {
                     count += 3
@@ -373,7 +373,7 @@ class ScoringHand {
         return count
     }
     
-    func fourflush(playername: String, justplayerhand: [Card]) -> Int {
+    func fourflush(_ playername: String, justplayerhand: [Card]) -> Int {
         var count = 0
         let suitchecker = justplayerhand[0].suit.description()
         for acard in justplayerhand {
@@ -388,7 +388,7 @@ class ScoringHand {
         return count
     }
     
-    func fiveflush(playername: String, handandcutcardORcrib: [Card]) -> Int {
+    func fiveflush(_ playername: String, handandcutcardORcrib: [Card]) -> Int {
         var count = 0
         let suitchecker = handandcutcardORcrib[0].suit.description()
         for acard in handandcutcardORcrib {
@@ -409,13 +409,13 @@ class ScoringHand {
 struct CPUOrder {
     var historylist = History().showPlayHistory()
     
-    func orderByValue(cardlist: [Card]) -> [Card] {
-        let valueorderlist = cardlist.sort { $0.rank.value() < $1.rank.value() }
+    func orderByValue(_ cardlist: [Card]) -> [Card] {
+        let valueorderlist = cardlist.sorted { $0.rank.value() < $1.rank.value() }
         return valueorderlist
     }
     
-    func orderByOrdinal(cardlist: [Card]) -> [Card] {
-        let valueorderlist = cardlist.sort { $0.rank.ordinal() < $1.rank.ordinal() }
+    func orderByOrdinal(_ cardlist: [Card]) -> [Card] {
+        let valueorderlist = cardlist.sorted { $0.rank.ordinal() < $1.rank.ordinal() }
         return valueorderlist
     }
     
@@ -430,33 +430,33 @@ class CPUScoringRun {
     
     //MARK: - Constants
     
-    private struct Constants {
+    fileprivate struct Constants {
         static var boolpoints = false
         static var someruncount = 0
         static var checkthislist: [Card] = []
     }
     
-    func addcard(somecard: Card) -> [Card] {
+    func addcard(_ somecard: Card) -> [Card] {
         Constants.checkthislist = CPUOrder().getHistory()
         Constants.checkthislist.append(somecard)
         return Constants.checkthislist
     }
     
-    func checkruncount(somecard: Card) {
+    func checkruncount(_ somecard: Card) {
         Constants.someruncount += somecard.rank.value()
     }
     
-    func straight(cardone: Card) -> Int {
+    func straight(_ cardone: Card) -> Int {
         var history = addcard(cardone)
         //newest card at the end
         history.removeLast()
-        history.insert(cardone, atIndex: 0)
+        history.insert(cardone, at: 0)
         
         var count = 0
         var checklist = [Card]()
         for acard in history {
-            checklist.insert(acard, atIndex: 0)
-            let valueorderlist = checklist.sort { $0.rank.ordinal() < $1.rank.ordinal() }
+            checklist.insert(acard, at: 0)
+            let valueorderlist = checklist.sorted { $0.rank.ordinal() < $1.rank.ordinal() }
             
             if valueorderlist.count == 3 {
                 if valueorderlist[0].rank.ordinal() == valueorderlist[1].rank.ordinal() - 1 && valueorderlist[1].rank.ordinal() == valueorderlist[2].rank.ordinal() - 1 {
@@ -492,7 +492,7 @@ class CPUScoringRun {
         return count
     }
     
-    func fifteencount(cardone: Card) -> Int {
+    func fifteencount(_ cardone: Card) -> Int {
         
         let history = addcard(cardone)
         var count = 0
@@ -506,7 +506,7 @@ class CPUScoringRun {
         }
     }
     
-    func SomeOfAKind(cardone: Card) -> Int {
+    func SomeOfAKind(_ cardone: Card) -> Int {
         var historylist = addcard(cardone)
         
         var count = 0
@@ -555,7 +555,7 @@ class CPUScoringHand {
     
     //MARK: - Subdecks of Six
     
-    func makeSubDecksOf4From6(somehand: [Card]) -> [String: [Card]] {
+    func makeSubDecksOf4From6(_ somehand: [Card]) -> [String: [Card]] {
         
         var subdeckdict4to6 = ["sixdeck1": [somehand[0],somehand[1],somehand[2],somehand[3]]]
         subdeckdict4to6["sixdeck2"] = [somehand[0],somehand[1],somehand[2],somehand[4]]
@@ -576,7 +576,7 @@ class CPUScoringHand {
         return subdeckdict4to6
     }
     
-    func makeSubDecksOf2From4(somehand: [Card]) -> [String: [Card]] {
+    func makeSubDecksOf2From4(_ somehand: [Card]) -> [String: [Card]] {
         var subdeckdict4to2 = ["twofourdeck1": [somehand[0],somehand[1]]]
         subdeckdict4to2["twofourdeck2"] = [somehand[0], somehand[2]]
         subdeckdict4to2["twofourdeck3"] = [somehand[0], somehand[3]]
@@ -587,7 +587,7 @@ class CPUScoringHand {
         return subdeckdict4to2
     }
     
-    func makeSubDecksOf3From4(somehand: [Card]) -> [String: [Card]] {
+    func makeSubDecksOf3From4(_ somehand: [Card]) -> [String: [Card]] {
         var subdeckdict4to3 = ["threefourdeck1": [somehand[0], somehand[1], somehand[2]]]
         subdeckdict4to3["threefourdeck2"] = [somehand[0], somehand[1], somehand[3]]
         subdeckdict4to3["threefourdeck3"] = [somehand[0], somehand[2], somehand[3]]
@@ -597,7 +597,7 @@ class CPUScoringHand {
     }
     
 
-    func jackinhand(somehand: [Card]) -> Int {
+    func jackinhand(_ somehand: [Card]) -> Int {
         var count = 0
         for acard in somehand {
             if acard.rank.description() == "jack" && acard.suit.description() == CribbageDeck().getCutCardCard().suit.description() {
@@ -607,7 +607,7 @@ class CPUScoringHand {
         return count
     }
     
-    func SomeOfAKind(ahand: [Card]) -> Int {
+    func SomeOfAKind(_ ahand: [Card]) -> Int {
         var count = 0
         let twodict = makeSubDecksOf2From4(ahand)
         let threedict = makeSubDecksOf3From4(ahand)
@@ -631,7 +631,7 @@ class CPUScoringHand {
         return count
     }
     
-    func fifteencount(ahand: [Card]) -> Int {
+    func fifteencount(_ ahand: [Card]) -> Int {
         var count = 0
         let twodict = makeSubDecksOf2From4(ahand)
         let threedict = makeSubDecksOf3From4(ahand)
@@ -654,10 +654,10 @@ class CPUScoringHand {
         return count
     }
     
-    func straight(ahand: [Card]) -> Int{
+    func straight(_ ahand: [Card]) -> Int{
         var count = 0
         let threedict = makeSubDecksOf3From4(ahand)
-        let sorthand = ahand.sort { $0.rank.ordinal() < $1.rank.ordinal() }
+        let sorthand = ahand.sorted { $0.rank.ordinal() < $1.rank.ordinal() }
         
         if sorthand[0].rank.ordinal() == sorthand[1].rank.ordinal() - 1 && sorthand[1].rank.ordinal() == sorthand[2].rank.ordinal() - 1 && sorthand[2].rank.ordinal() == sorthand[3].rank.ordinal() - 1 {
             count += 4
@@ -667,7 +667,7 @@ class CPUScoringHand {
         
         if count == 0 {
             for (_, value) in threedict {
-                let sorthand = value.sort { $0.rank.ordinal() < $1.rank.ordinal() }
+                let sorthand = value.sorted { $0.rank.ordinal() < $1.rank.ordinal() }
 
                 if sorthand[0].rank.ordinal() == sorthand[1].rank.ordinal() - 1 && sorthand[1].rank.ordinal() == sorthand[2].rank.ordinal() - 1 {
                     count += 3
@@ -677,7 +677,7 @@ class CPUScoringHand {
         return count
     }
     
-    func fourflush(justplayerhand: [Card]) -> Int {
+    func fourflush(_ justplayerhand: [Card]) -> Int {
         var count = 0
         let suitchecker = justplayerhand[0].suit.description()
         for acard in justplayerhand {

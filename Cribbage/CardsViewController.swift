@@ -14,12 +14,12 @@ class CardsViewController: UIViewController {
     
     //MARK: - Outlets
 
-    @IBAction func Next(sender: UIButton) {
+    @IBAction func Next(_ sender: UIButton) {
         if Constants.computerdidgo && Constants.playerdidgo {
-            performSegueWithIdentifier("CardsToCrib", sender: sender)
+            performSegue(withIdentifier: "CardsToCrib", sender: sender)
         }
         if Constants.done {
-            performSegueWithIdentifier("CardsToFinal", sender: self)
+            performSegue(withIdentifier: "CardsToFinal", sender: self)
         }
     }
     @IBOutlet weak var Dealer: UILabel!
@@ -39,7 +39,7 @@ class CardsViewController: UIViewController {
     @IBOutlet weak var Card3: UIImageView!
     @IBOutlet weak var Card4: UIImageView!
     
-    private struct Constants {
+    fileprivate struct Constants {
         static var playerdidgo = false
         static var computerdidgo = false
         static var done = false
@@ -83,7 +83,7 @@ class CardsViewController: UIViewController {
             let old = PlayerScores().getScore("Player")
             Constants.done = CribbageDeck().scoreShortHand("Player")
             if Constants.done {
-                performSegueWithIdentifier("CardsToFinal", sender: self)
+                performSegue(withIdentifier: "CardsToFinal", sender: self)
             }
             
             PlayerScore.text = "Player Score: \(PlayerScores().getScore("Player"))"
@@ -127,14 +127,14 @@ class CardsViewController: UIViewController {
     //MARK: - Segue
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
     }
     
     //MARK: - Should Perform Segue
     
-    override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
+    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
         if identifier == "CardsToCrib" {
             if Constants.computerdidgo && !Constants.playerdidgo {
                 let (p1,p2,p3,p4) = CribbageDeck().hand("Player")
@@ -147,7 +147,7 @@ class CardsViewController: UIViewController {
                 let old = PlayerScores().getScore("Player")
                 Constants.done = CribbageDeck().scoreShortHand("Player")
                 if Constants.done {
-                    performSegueWithIdentifier("CardsToFinal", sender: self)
+                    performSegue(withIdentifier: "CardsToFinal", sender: self)
                 }
                 
                 PlayerScore.text = "Player Score: \(PlayerScores().getScore("Player"))"
@@ -167,7 +167,7 @@ class CardsViewController: UIViewController {
                 let old = PlayerScores().getScore("Computer")
                 Constants.done = CribbageDeck().scoreShortHand("Computer")
                 if Constants.done {
-                    performSegueWithIdentifier("CardsToFinal", sender: self)
+                    performSegue(withIdentifier: "CardsToFinal", sender: self)
                 }
                 CPUScore.text = "CPU Score: \(PlayerScores().getScore("Computer"))"
                 PlayerScore.text = "Player Score: \(PlayerScores().getScore("Player"))"

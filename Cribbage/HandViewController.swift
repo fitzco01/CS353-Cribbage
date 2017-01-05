@@ -56,7 +56,7 @@ class HandViewController: UIViewController {
     
     //MARK: - Constants
     
-    private struct Constants {
+    fileprivate struct Constants {
         static var cardback = "LutherCard"
         static var background = "Wood"
         static var cutcard = Constants.cardback
@@ -87,7 +87,7 @@ class HandViewController: UIViewController {
         }
     }
 
-    @IBAction func Next(sender: UIButton) {
+    @IBAction func Next(_ sender: UIButton) {
         if CribbageDeck().cpuHandLength() == 0 {
             (_, Constants.computercango) = CribbageDeck().canPlay("Computer")
             if !Constants.computercango {
@@ -104,7 +104,7 @@ class HandViewController: UIViewController {
             PlayerScore.text = "Player Score: \(PlayerScores().getScore("Player"))"
             
             Constants.pause = false
-            performSegueWithIdentifier("RunToCards", sender: sender)
+            performSegue(withIdentifier: "RunToCards", sender: sender)
             
         } else if Constants.computerturn || !Constants.playercango || CribbageDeck().showPlayerHand().count == 0 {
             if !Constants.playercango {
@@ -123,7 +123,7 @@ class HandViewController: UIViewController {
                 } else {
                     (Constants.imagestring, Constants.done) = CribbageDeck().computerPlay()
                     if Constants.done {
-                        performSegueWithIdentifier("RunToFinal", sender: self)
+                        performSegue(withIdentifier: "RunToFinal", sender: self)
                     }
                     
                     lastCard.image = UIImage(named: Constants.imagestring)
@@ -165,42 +165,42 @@ class HandViewController: UIViewController {
     }
     
     @IBOutlet weak var Hand1: UIImageView! { didSet {
-        self.Hand1.userInteractionEnabled = true
+        self.Hand1.isUserInteractionEnabled = true
         Hand1.image = UIImage(named: Constants.c1)
         }
     }
     
     @IBOutlet weak var Hand2: UIImageView! {
         didSet {
-            self.Hand2.userInteractionEnabled = true
+            self.Hand2.isUserInteractionEnabled = true
             Hand2.image = UIImage(named: Constants.c2)
         }
     }
     
     @IBOutlet weak var Hand3: UIImageView! {
         didSet {
-            self.Hand3.userInteractionEnabled = true
+            self.Hand3.isUserInteractionEnabled = true
             Hand3.image = UIImage(named: Constants.c3)
         }
     }
     
     @IBOutlet weak var Hand4: UIImageView! {
         didSet {
-            self.Hand4.userInteractionEnabled = true
+            self.Hand4.isUserInteractionEnabled = true
             Hand4.image = UIImage(named: Constants.c4)
         }
     }
     
     @IBOutlet weak var Hand5: UIImageView! {
         didSet {
-            self.Hand5.userInteractionEnabled = true
+            self.Hand5.isUserInteractionEnabled = true
             Hand5.image = UIImage(named: Constants.c5)
         }
     }
     
     @IBOutlet weak var Hand6: UIImageView! {
         didSet {
-            self.Hand6.userInteractionEnabled = true
+            self.Hand6.isUserInteractionEnabled = true
             Hand6.image = UIImage(named: Constants.c6)
         }
     }
@@ -210,34 +210,34 @@ class HandViewController: UIViewController {
         return Constants.computerturn
     }
     
-    @IBAction func Card1Tap(sender: UITapGestureRecognizer) {
+    @IBAction func Card1Tap(_ sender: UITapGestureRecognizer) {
         forTheCardTaps(Hand1, whichTap: 1)
     }
     
-    @IBAction func Card2Tap(sender: UITapGestureRecognizer) {
+    @IBAction func Card2Tap(_ sender: UITapGestureRecognizer) {
         forTheCardTaps(Hand2, whichTap: 2)
     }
     
-    @IBAction func Card3Tap(sender: UITapGestureRecognizer) {
+    @IBAction func Card3Tap(_ sender: UITapGestureRecognizer) {
         forTheCardTaps(Hand3, whichTap: 3)
 
     }
     
-    @IBAction func Card4Tap(sender: UITapGestureRecognizer) {
+    @IBAction func Card4Tap(_ sender: UITapGestureRecognizer) {
         forTheCardTaps(Hand4, whichTap: 4)
     }
     
-    @IBAction func Card5Tap(sender: UITapGestureRecognizer) {
+    @IBAction func Card5Tap(_ sender: UITapGestureRecognizer) {
         forTheCardTaps(Hand5, whichTap: 5)
     }
 
-    @IBAction func Card6Tap(sender: UITapGestureRecognizer) {
+    @IBAction func Card6Tap(_ sender: UITapGestureRecognizer) {
         forTheCardTaps(Hand6, whichTap: 6)
     }
     
     //MARK: - Card Taps
     
-    func forTheCardTaps(whichHand: UIImageView!, whichTap: Int) {
+    func forTheCardTaps(_ whichHand: UIImageView!, whichTap: Int) {
         var cardname = ""
         switch whichTap {
         case 1:
@@ -264,7 +264,7 @@ class HandViewController: UIViewController {
             
             Constants.crib += 1
             whichHand.image = nil
-            whichHand.userInteractionEnabled = false
+            whichHand.isUserInteractionEnabled = false
             if Constants.crib == 2 {
                 cutCardDisplay()
             }
@@ -276,7 +276,7 @@ class HandViewController: UIViewController {
                 if Constants.computercango {
                     (Constants.imagestring, Constants.done) = CribbageDeck().computerPlay()
                     if Constants.done {
-                        performSegueWithIdentifier("RunToFinal", sender: self)
+                        performSegue(withIdentifier: "RunToFinal", sender: self)
                     }
                     
                     lastCard.image = UIImage(named: Constants.imagestring)
@@ -301,7 +301,7 @@ class HandViewController: UIViewController {
                     
                     Constants.playercount += 1
                     if !Constants.cardOptions.contains(cardname) && CribbageDeck().cpuHandLength() != 0 {
-                        whichHand.userInteractionEnabled = false
+                        whichHand.isUserInteractionEnabled = false
                         Constants.didntplay = true
                     } else {
                         
@@ -309,10 +309,10 @@ class HandViewController: UIViewController {
                         
                         Constants.done = CribbageDeck().play(cardname)
                         if Constants.done {
-                            performSegueWithIdentifier("RunToFinal", sender: self)
+                            performSegue(withIdentifier: "RunToFinal", sender: self)
                         }
                         lastCardDisplay(cardname)
-                        whichHand.userInteractionEnabled = false
+                        whichHand.isUserInteractionEnabled = false
                         Constants.playerwent = true
                         switchturn()
                     }
@@ -333,7 +333,7 @@ class HandViewController: UIViewController {
                 }
             }
             if Constants.didntplay {
-                whichHand.userInteractionEnabled = true
+                whichHand.isUserInteractionEnabled = true
                 Constants.didntplay = false
             }
             CPUScore.text = "CPU Score: \(PlayerScores().getScore("Computer"))"
@@ -343,7 +343,7 @@ class HandViewController: UIViewController {
     
     //MARK: - Card Displays
     
-    func lastCardDisplay(card: String) -> String {
+    func lastCardDisplay(_ card: String) -> String {
         Constants.lastcard = card
         updateUI()
         return Constants.lastcard
@@ -356,32 +356,32 @@ class HandViewController: UIViewController {
         return Constants.cutcard
     }
     
-    func c1Display(card: String) -> String {
+    func c1Display(_ card: String) -> String {
         Constants.c1 = card
         return Constants.c1
     }
     
-    func c2Display(card: String) -> String {
+    func c2Display(_ card: String) -> String {
         Constants.c2 = card
         return Constants.c2
     }
     
-    func c3Display(card: String) -> String {
+    func c3Display(_ card: String) -> String {
         Constants.c3 = card
         return Constants.c3
     }
     
-    func c4Display(card: String) -> String {
+    func c4Display(_ card: String) -> String {
         Constants.c4 = card
         return Constants.c4
     }
     
-    func c5Display(card: String) -> String {
+    func c5Display(_ card: String) -> String {
         Constants.c5 = card
         return Constants.c5
     }
     
-    func c6Display(card: String) -> String {
+    func c6Display(_ card: String) -> String {
         Constants.c6 = card
         return Constants.c6
     }
@@ -397,13 +397,13 @@ class HandViewController: UIViewController {
     //MARK: - Segue
     
      // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Pass the selected object to the new view controller.
     }
     
     //MARK: - Should Perform Segue
     
-    override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
+    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
         if identifier == "RunToCards" {
             if CribbageDeck().cpuHandLength() == 0 && Constants.playercount == 6 && !Constants.pause {
                 return true

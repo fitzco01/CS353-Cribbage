@@ -17,7 +17,7 @@ class FinalViewController: UIViewController {
     @IBOutlet weak var whoWon: UILabel!
     @IBOutlet weak var finalScore: UILabel!
     
-    @IBAction func newGame(sender: UIButton) {
+    @IBAction func newGame(_ sender: UIButton) {
         History().deleteHistory()
         ScoreHistory().deleteScoreHistory()
     }

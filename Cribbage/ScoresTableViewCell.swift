@@ -22,7 +22,7 @@ class ScoresTableViewCell: UITableViewCell {
     
     //MARK: - Configure
     
-    func configure(card: Card, othercards: String, scoretype: String, player: String, scorenumber: String, points: Int) {
+    func configure(_ card: Card, othercards: String, scoretype: String, player: String, scorenumber: String, points: Int) {
         playerLabel.text = player
         descriptionLabel.text = "Scored a \(scoretype) with \(card.description()) and \(othercards)"
         scoreNumberLabel.text = scorenumber

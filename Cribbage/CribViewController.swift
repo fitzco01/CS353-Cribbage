@@ -25,9 +25,9 @@ class CribViewController: UIViewController {
     @IBOutlet weak var computerScore: UILabel!
     @IBOutlet weak var playerScore: UILabel!
     
-    @IBAction func next(sender: AnyObject) {
+    @IBAction func next(_ sender: AnyObject) {
         if Constants.done {
-            performSegueWithIdentifier("CribToFinal", sender: self)
+            performSegue(withIdentifier: "CribToFinal", sender: self)
         }
     }
     
@@ -47,7 +47,7 @@ class CribViewController: UIViewController {
     
     //MARK: - Constants
     
-    private struct Constants {
+    fileprivate struct Constants {
         static var done = false
     }
     
@@ -89,7 +89,7 @@ class CribViewController: UIViewController {
     //MARK: - Segue
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         CribbageDeck().restart()
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.

@@ -16,7 +16,7 @@ struct Player {
     var isDealer: Bool
     var name: String
     
-    mutating func makehand(somehand: [Card]) {
+    mutating func makehand(_ somehand: [Card]) {
         var myhand = somehand
         for _ in myhand {
             let pop = myhand.popLast()
@@ -24,24 +24,24 @@ struct Player {
         }
     }
     
-    mutating func somenewhand(somehand: [Card]) {
+    mutating func somenewhand(_ somehand: [Card]) {
         self.hand = somehand
     }
     
-    mutating func somenewshorthand(somehand: [Card]) {
+    mutating func somenewshorthand(_ somehand: [Card]) {
         self.shorthand = somehand
     }
     
-    mutating func deletecardfromhand(index: Int) -> [Card] {
-        self.hand.removeAtIndex(index)
+    mutating func deletecardfromhand(_ index: Int) -> [Card] {
+        self.hand.remove(at: index)
         return self.hand
     }
     
-    mutating func deletecardfromhandbystring(cardname: String) -> [Card] {
+    mutating func deletecardfromhandbystring(_ cardname: String) -> [Card] {
         var loop = 0
         for acard in self.hand {
             if acard.description() == cardname {
-                self.hand.removeAtIndex(loop)
+                self.hand.remove(at: loop)
             }
             loop += 1
         }
@@ -49,13 +49,13 @@ struct Player {
         return self.hand
     }
     
-    mutating func deletecardfromshorthandbystring(cardname: String) -> Card {
+    mutating func deletecardfromshorthandbystring(_ cardname: String) -> Card {
         var loop = 0
         var deletedcard = [Card]()
         deletedcard.removeAll()
         for acard in self.shorthand {
             if acard.description() == cardname {
-                deletedcard.append(self.shorthand.removeAtIndex(loop))
+                deletedcard.append(self.shorthand.remove(at: loop))
             }
             loop += 1
         }
@@ -75,14 +75,14 @@ struct Player {
         return name
     }
     
-    mutating func vanishingHand(runcarddescription: String) {
+    mutating func vanishingHand(_ runcarddescription: String) {
         
-        if let i = shorthand.indexOf({$0.description() == runcarddescription}) {
-            shorthand.removeAtIndex(i)
+        if let i = shorthand.index(where: {$0.description() == runcarddescription}) {
+            shorthand.remove(at: i)
         }
     }
     
-    func cannotPlay(total: Int) -> Bool {
+    func cannotPlay(_ total: Int) -> Bool {
         var cannotplay = true
         if shorthand.count == 0 {
             return cannotplay

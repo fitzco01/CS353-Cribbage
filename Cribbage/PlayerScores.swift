@@ -14,15 +14,15 @@ class PlayerScores {
     
     //MARK: - Constants
     
-    private struct Constants {
+    fileprivate struct Constants {
         static var playerScoreDict = [String: Int]()
     }
     
-    func addPlayers(playername: String) {
+    func addPlayers(_ playername: String) {
         Constants.playerScoreDict[playername] = 0
     }
     
-    func addScore(playername: String, newpoints: Int) -> Bool {
+    func addScore(_ playername: String, newpoints: Int) -> Bool {
         Constants.playerScoreDict[playername]! += newpoints
         if Constants.playerScoreDict[playername]! >= 121 {
             return true
@@ -31,7 +31,7 @@ class PlayerScores {
         }
     }
     
-    func getScore(playername: String) -> Int {
+    func getScore(_ playername: String) -> Int {
         return Constants.playerScoreDict[playername]!
     }
 }

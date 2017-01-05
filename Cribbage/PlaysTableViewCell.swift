@@ -21,7 +21,7 @@ class PlaysTableViewCell: UITableViewCell {
     
     //MARK: - Configure
     
-    func configure(card: Card, player: Player, playnumber: String) {
+    func configure(_ card: Card, player: Player, playnumber: String) {
         playerLabel.text = player.name
         cardLabel.text = card.description()
         playNumberLabel.text = playnumber

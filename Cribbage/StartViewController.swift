@@ -14,7 +14,7 @@ class StartViewController: UIViewController {
     
     //MARK: - Outlets
     
-    @IBAction func newGame(sender: UIButton) {
+    @IBAction func newGame(_ sender: UIButton) {
         CribbageDeck().start()
     }
     
@@ -34,7 +34,7 @@ class StartViewController: UIViewController {
     
     //MARK: - View Will Appear
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         backgroundImage.image = UIImage(named: "Wood")
         setBackground()
         super.viewWillAppear(animated)
@@ -67,7 +67,7 @@ class StartViewController: UIViewController {
     
     //MARK: - Should Perform Segue
     
-    override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
+    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
         if identifier == "ChangeTheBackground" {
             SettingsViewController().setBackground()
             return true

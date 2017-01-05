@@ -11,7 +11,7 @@ import Foundation
 //MARK: - Score History
 
 class ScoreHistory {
-    private struct Constants {
+    fileprivate struct Constants {
         static var namelist = [String]()
         static var cardlist = [Card]()
         static var othercardlist = [[Card]]()
@@ -19,12 +19,12 @@ class ScoreHistory {
         static var pointtotal = [Int]()
     }
     
-    func addToHistory(name: String, card: Card, othercards: [Card], scoretype: String, pointvalue: Int) {
-        Constants.namelist.insert(name, atIndex: 0)
-        Constants.cardlist.insert(card, atIndex: 0)
-        Constants.othercardlist.insert(othercards, atIndex: 0)
-        Constants.scoretype.insert(scoretype, atIndex: 0)
-        Constants.pointtotal.insert(pointvalue, atIndex: 0)
+    func addToHistory(_ name: String, card: Card, othercards: [Card], scoretype: String, pointvalue: Int) {
+        Constants.namelist.insert(name, at: 0)
+        Constants.cardlist.insert(card, at: 0)
+        Constants.othercardlist.insert(othercards, at: 0)
+        Constants.scoretype.insert(scoretype, at: 0)
+        Constants.pointtotal.insert(pointvalue, at: 0)
     }
     
     func deleteScoreHistory() {

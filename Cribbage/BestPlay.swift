@@ -14,7 +14,7 @@ class BestPlay {
     
     //MARK: - Constants
     
-    private struct Constants {
+    fileprivate struct Constants {
         static var count = 0
         static var newcount = 0
         static var keystring = ""
@@ -24,7 +24,7 @@ class BestPlay {
     
     //MARK: - Best Hand
     
-    func createAHand(computerhand: [Card]) -> [String : [Card]] {
+    func createAHand(_ computerhand: [Card]) -> [String : [Card]] {
         let S = CPUScoringHand()
         let fourdict = S.makeSubDecksOf4From6(computerhand)
         
@@ -53,7 +53,7 @@ class BestPlay {
         for acard in newhand {
             for bcard in cribcards {
                 if acard.description() == bcard.description() {
-                    cribcards.removeAtIndex(pos)
+                    cribcards.remove(at: pos)
                 }
                 pos += 1
             }
@@ -69,7 +69,7 @@ class BestPlay {
     
     //MARK: - Best Card
     
-    func pickACard(cpuhand: [Card]) -> (Card, [Card])? {
+    func pickACard(_ cpuhand: [Card]) -> (Card, [Card])? {
         
         let C = CPUScoringRun()
         

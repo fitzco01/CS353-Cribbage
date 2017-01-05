@@ -11,7 +11,7 @@ import Foundation
 //MARK: - History
 
 class History {
-    private struct Constants {
+    fileprivate struct Constants {
         static var playList: [Card] = []
         static var playerList: [Player] = []
     }
@@ -21,12 +21,12 @@ class History {
         Constants.playerList.removeAll()
     }
     
-    func playHistory(card: Card) -> [Card] {
-        Constants.playList.insert(card, atIndex: 0)
+    func playHistory(_ card: Card) -> [Card] {
+        Constants.playList.insert(card, at: 0)
         return Constants.playList
     }
     
-    func getHistoryAtIndex(index: Int) -> Card {
+    func getHistoryAtIndex(_ index: Int) -> Card {
         return Constants.playList[index]
     }
     
@@ -42,8 +42,8 @@ class History {
         return returnlist
     }
     
-    func playerHistory(player: Player) -> [Player] {
-        Constants.playerList.insert(player, atIndex: 0)
+    func playerHistory(_ player: Player) -> [Player] {
+        Constants.playerList.insert(player, at: 0)
         return Constants.playerList
     }
     
