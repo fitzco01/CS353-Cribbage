@@ -126,5 +126,3 @@ class PlaysTableViewController: UITableViewController {
     }
     */
 }
-
-

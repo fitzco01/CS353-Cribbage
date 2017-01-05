@@ -62,6 +62,7 @@ struct Player {
         loop = 0
         return deletedcard[0]
     }
+    //TEST
     
     func printhand() -> [String] {
         var printlist: [String] = []
