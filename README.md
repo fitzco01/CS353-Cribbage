@@ -1,1 +1,1 @@
-This is a simple iOS application.
+This is a iOS application to play Cribbage against a computer opponent.
